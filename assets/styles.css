@@ -211,7 +211,8 @@ p{margin:0 0 1em}
 
 /* CTA band */
 .cta-band{background:var(--navy);color:#fff;border-radius:24px;padding:clamp(32px,5vw,56px);display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center;position:relative;overflow:hidden}
-.cta-band::after{content:"";position:absolute;right:-120px;top:-120px;width:340px;height:340px;border:56px solid rgba(0,166,166,.35);border-radius:50%}
+.cta-band::after{content:"";position:absolute;right:-120px;top:-120px;width:340px;height:340px;border:56px solid rgba(0,166,166,.35);border-radius:50%;pointer-events:none;z-index:0}
+.cta-band>*{position:relative;z-index:1}
 .cta-band h2{color:#fff}
 .cta-band p{color:#C9D8E6}
 .cta-band .btn-row{justify-content:flex-end;margin:0;position:relative}
