@@ -77,7 +77,7 @@ def icon(name):
     }
     return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{P[name]}</svg>'
 
-SECTOR_ICONS = ["fuel", "food", "retail", "bank", "auto", "logistics", "mall", "hotel", "ev", "telecom", "edu", "factory"]
+SECTOR_ICONS = ["fuel", "ev", "food", "retail", "bank", "auto", "logistics", "mall", "hotel", "telecom", "edu", "factory"]
 
 # ---------------------------------------------------------------- CONTENT
 CONTENT = {
@@ -95,6 +95,7 @@ CONTENT = {
   "cta": {"h2": "Saha operasyonunuzu birlikte tasarlayalım.", "p": "Pilot kapsamını seçili lokasyonlarla başlatır, sonuçlara göre bölgesel ve Türkiye geneli operasyona ölçekleriz.", "b1": "Pilot Başlat", "b2": "İletişim"},
   "sectors_list": [
     ("Akaryakıt İstasyonları", "Kanopi, totem, pompa adası, otopark ve saha çevresi."),
+    ("EV Şarj İstasyonları", "Cihaz çevresi, kablo düzeni, park cebi ve yönlendirme. Audit30 ile skorlanır."),
     ("Restoran & Fast Food", "Cephe, cam, tabela, dış oturma ve arabaya servis alanı."),
     ("Perakende & Mağazacılık", "Vitrin, görsel alan, mobilya, giriş ve mağaza çevresi."),
     ("Bankacılık", "Şube girişi, ATM kabini, cam ve cephe, banko ve seperatörler."),
@@ -102,7 +103,6 @@ CONTENT = {
     ("Lojistik & Depo", "Saha girişi, yükleme alanı, zemin çizgileri ve bariyerler."),
     ("AVM & Plaza", "Ortak dış alanlar, yönlendirme, kolon kaplamaları ve otopark."),
     ("Otel & Turizm", "Giriş, cephe, peyzaj elemanları ve havuz çevresi mobilyası."),
-    ("EV Şarj İstasyonları", "Cihaz çevresi, kablo düzeni, park cebi ve yönlendirme. Audit30 ile skorlanır."),
     ("Telekom", "Mağaza, bayi ve saha noktası tabela, vitrin ve giriş alanları."),
     ("Eğitim", "Kampüs dış alanı, bahçe mobilyası, yönlendirme ve korkuluklar."),
     ("Fabrika & Tesis", "Giriş, totem, yol çizgileri, bariyer ve güvenlik binası çevresi."),
@@ -270,6 +270,7 @@ CONTENT = {
   "cta": {"h2": "Let's design your field operation together.", "p": "We start with a pilot on selected sites and scale to regional or nationwide operations based on the results.", "b1": "Start a Pilot", "b2": "Contact"},
   "sectors_list": [
     ("Fuel Stations", "Canopy, totem, pump islands, car park and site surroundings."),
+    ("EV Charging Stations", "Charger surroundings, cable management, bays and wayfinding. Scored with Audit30."),
     ("Restaurants & QSR", "Façade, glass, signage, outdoor seating and drive-thru."),
     ("Retail", "Shopfront, visual areas, furniture, entrance and store surroundings."),
     ("Banking", "Branch entrance, ATM cabin, glass and façade, counters and partitions."),
@@ -277,7 +278,6 @@ CONTENT = {
     ("Logistics & Warehousing", "Site entrance, loading areas, floor markings and barriers."),
     ("Shopping Malls & Plazas", "Common outdoor areas, wayfinding, column cladding and car park."),
     ("Hotels & Tourism", "Entrance, façade, landscape elements and poolside furniture."),
-    ("EV Charging Stations", "Charger surroundings, cable management, bays and wayfinding. Scored with Audit30."),
     ("Telecom", "Store, dealer and field-point signage, shopfront and entrances."),
     ("Education", "Campus exteriors, garden furniture, wayfinding and railings."),
     ("Factories & Facilities", "Entrance, totem, road markings, barriers and gatehouse surroundings."),
