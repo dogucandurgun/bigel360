@@ -84,7 +84,7 @@ SECTOR_ICONS = ["fuel", "ev", "food", "retail", "bank", "auto", "logistics", "ma
 CONTENT = {
 "tr": {
   "meta_suffix": " | BİGEL",
-  "nav": {"solutions": "Çözümler", "sectors": "Sektörler", "tiers": "Abonelikler", "how": "Nasıl Çalışıyoruz", "pilot": "Pilot", "about": "Hakkımızda", "cta": "Teklif Al", "menu": "Menü"},
+  "nav": {"solutions": "Çözümler", "sectors": "Sektörler", "tiers": "Abonelikler", "how": "Nasıl Çalışıyoruz", "pilot": "Pilot Başvurusu", "about": "Hakkımızda", "cta": "Teklif Al", "menu": "Menü"},
   "products": {
     "clean":    {"name": "BİGEL CLEAN", "cat": "Temizlik Operasyonları", "tag": "Standart her noktada aynı.", "short": "Kanopi, tabela, totem, cephe ve otopark için planlı dış alan temizliği. Öncesi ve sonrası fotoğrafla doğrulanır."},
     "care":     {"name": "BİGEL CARE", "cat": "Bakım Operasyonları", "tag": "Arızayı beklemeden, sahayı koruyun.", "short": "Küçük bakım, onarım ve saha müdahalesi. Tespitten fotoğraflı kapanışa tek iş emri akışı."},
@@ -254,7 +254,7 @@ CONTENT = {
               "eyebrow": "İletişim", "h1": "Saha operasyonunuzu birlikte tasarlayalım.", "lead": "Teklif, pilot veya demo görüşmesi için formu doldurun. Aynı iş günü içinde dönüş yapıyoruz.",
               "f": {"name": "Ad Soyad", "company": "Şirket", "email": "E-posta", "phone": "Telefon", "count": "Lokasyon sayısı", "counts": ["1–10", "11–50", "51–250", "251–1.000", "1.000+"], "solution": "İlgilendiğiniz çözüm", "solutions": ["BİGEL CLEAN", "BİGEL CARE", "BİGEL AUDIT / AUDIT 100", "EV Audit30", "BİGEL FIELD360", "Abonelik paketleri", "Birden fazla"], "msg": "İhtiyacınız", "msg_ph": "Lokasyon yapınız, hizmet ihtiyacınız ve öncelikleriniz…", "consent": "Kişisel verilerimin talebimle ilgili iletişim amacıyla işlenmesini kabul ediyorum.", "send": "Talep Oluştur", "subject": "bigel360.com — Yeni talep"},
               "info": [("Merkez", SITE["address_tr"]), ("Telefon", SITE["phone"]), ("E-posta", SITE["email"]), ("LinkedIn", "linkedin.com/company/bigel360"), ("Çalışma saatleri", "Hafta içi 08:30–18:00 · Acil saha hattı 7/24")]},
-  "pilot": {"title": "Pilot Uygulama — Küçük başlayın, ölçün, ölçekleyin", "desc": "20–30 lokasyonda 4–6 haftalık pilot: başlangıç ölçümü, fotoğraflı bulgular, lokasyon skorları ve yaygınlaştırma planı. Pilot başvurusu.",
+  "pilot": {"title": "Pilot Başvurusu", "desc": "20–30 lokasyonda 4–6 haftalık pilot: başlangıç ölçümü, fotoğraflı bulgular, lokasyon skorları ve yaygınlaştırma planı. Pilot başvurusu.",
             "eyebrow": "Pilot uygulama", "h1": "Küçük başlayın. Ölçün. Sonra ölçekleyin.",
             "lead": "Seçili lokasyonlarda kısa bir pilotla başlıyoruz. Pilot bitince elinizde başlangıç skorları, fotoğraflı bulgular ve gerçek saha verisine dayanan bir yaygınlaştırma planı oluyor.",
             "stats": [("20–30", "lokasyon ile temsil gücü yüksek örneklem"), ("4–6", "hafta uygulama dönemi"), ("2", "ziyaret turu: başlangıç ve doğrulama"), ("1", "rapor: skor, bulgu, iş yükü ve takvim")],
@@ -283,7 +283,7 @@ CONTENT = {
 },
 "en": {
   "meta_suffix": " | BİGEL",
-  "nav": {"solutions": "Solutions", "sectors": "Industries", "tiers": "Plans", "how": "How We Work", "pilot": "Pilot", "about": "About", "cta": "Get a Quote", "menu": "Menu"},
+  "nav": {"solutions": "Solutions", "sectors": "Industries", "tiers": "Plans", "how": "How We Work", "pilot": "Pilot Application", "about": "About", "cta": "Get a Quote", "menu": "Menu"},
   "products": {
     "clean":    {"name": "BİGEL CLEAN", "cat": "Cleaning Operations", "tag": "The same standard at every site.", "short": "Planned exterior cleaning for canopies, signage, totems, façades and car parks. Verified with before and after photos."},
     "care":     {"name": "BİGEL CARE", "cat": "Maintenance Operations", "tag": "Protect the site before it breaks.", "short": "Minor maintenance, repairs and on-site response. One work-order flow from detection to photo-verified closure."},
@@ -453,7 +453,7 @@ CONTENT = {
               "eyebrow": "Contact", "h1": "Let's design your field operation together.", "lead": "Fill in the form for a quote, pilot or demo meeting. We respond within the same business day.",
               "f": {"name": "Full name", "company": "Company", "email": "Email", "phone": "Phone", "count": "Number of sites", "counts": ["1–10", "11–50", "51–250", "251–1,000", "1,000+"], "solution": "Solution of interest", "solutions": ["BİGEL CLEAN", "BİGEL CARE", "BİGEL AUDIT / AUDIT 100", "EV Audit30", "BİGEL FIELD360", "Subscription plans", "More than one"], "msg": "Your needs", "msg_ph": "Your site structure, service needs and priorities…", "consent": "I agree to the processing of my personal data for the purpose of responding to my request.", "send": "Send Request", "subject": "bigel360.com — New request"},
               "info": [("Head office", SITE["address_en"]), ("Phone", SITE["phone"]), ("Email", SITE["email"]), ("LinkedIn", "linkedin.com/company/bigel360"), ("Working hours", "Weekdays 08:30–18:00 · Emergency field line 24/7")]},
-  "pilot": {"title": "Pilot — Start small, measure, then scale", "desc": "A 4–6 week pilot on 20–30 sites: baseline measurement, photo-verified findings, site scores and a roll-out plan. Apply for a pilot.",
+  "pilot": {"title": "Pilot Application", "desc": "A 4–6 week pilot on 20–30 sites: baseline measurement, photo-verified findings, site scores and a roll-out plan. Apply for a pilot.",
             "eyebrow": "Pilot programme", "h1": "Start small. Measure. Then scale.",
             "lead": "We begin with a short pilot on selected sites. When it ends you hold baseline scores, photo-verified findings and a roll-out plan built on real field data.",
             "stats": [("20–30", "sites for a representative sample"), ("4–6", "weeks of execution"), ("2", "visit rounds: baseline and verification"), ("1", "report: scores, findings, workload and calendar")],
@@ -533,7 +533,7 @@ def flow(steps):
 
 def cta_band(lang):
     L = CONTENT[lang]["cta"]
-    return sec(f'<div class="cta-band"><div><h2>{esc(L["h2"])}</h2><p>{esc(L["p"])}</p></div><div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot","basvuru" if lang=="tr" else "apply")}">{esc(L["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact")}">{esc(L["b2"])}</a></div></div>')
+    return sec(f'<div class="cta-band"><div><h2>{esc(L["h2"])}</h2><p>{esc(L["p"])}</p></div><div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot")}">{esc(L["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact")}">{esc(L["b2"])}</a></div></div>')
 
 def scorecard(lang):
     c = CONTENT[lang]["home"]["card"]
@@ -597,7 +597,7 @@ def layout(lang, pid, title, desc, body, active=None):
     sub = "".join(f'<li><a href="{href(lang,p)}" style="--accent:{ACCENT[p]}"><span class="dot"></span><span>{esc(L["products"][p]["name"])}<small>{esc(L["products"][p]["cat"])}</small></span></a></li>' for p in PRODUCTS)
     def a(p, label): return f'<li><a href="{href(lang,p)}"{" class=active" if active == p else ""}>{esc(label)}</a></li>'
     nav = (f'<li class="has-sub"><a href="{href(lang,"home","cozumler" if lang=="tr" else "solutions")}"{" class=active" if active in PRODUCTS else ""}>{esc(N["solutions"])}</a><ul class="sub">{sub}</ul></li>'
-           + a("sectors", N["sectors"]) + a("tiers", N["tiers"]) + a("how", N["how"]) + a("pilot", N["pilot"]) + a("about", N["about"])
+           + a("sectors", N["sectors"]) + a("tiers", N["tiers"]) + a("how", N["how"]) + a("about", N["about"])
            + f'<li class="menu-cta"><a class="btn btn-primary" href="{href(lang,"contact")}">{esc(N["cta"])}</a></li>')
     lang_sw = (f'<span class="lang"><a class="{"on" if lang=="tr" else ""}" href="{switch_href("en",pid) if lang=="en" else "#"}" {"aria-current=page" if lang=="tr" else ""}>TR</a>'
                f'<a class="{"on" if lang=="en" else ""}" href="{switch_href("tr",pid) if lang=="tr" else "#"}">EN</a></span>')
@@ -758,12 +758,7 @@ def page_pilot(lang):
             f'<label class="consent"><input type="checkbox" required><span>{esc(f["consent"])}</span></label>'
             f'<button class="btn btn-primary" type="submit">{esc(f["send"])}</button></form>')
     after = "".join(f'<div class="card" style="padding:18px 20px"><span class="eyebrow">{esc(n)}</span><h4 style="margin:2px 0 4px">{esc(t)}</h4><p style="font-size:14px">{esc(d)}</p></div>' for n, t, d in P["after"])
-    body = (simple_hero(P["eyebrow"], P["h1"], P["lead"]) + sec(f'<div class="grid g4">{stats}</div>')
-            + sec(head(P["why_eyebrow"], P["why_h2"]) + f'<div class="grid g3">{why}</div>', "alt")
-            + sec(head(P["steps_eyebrow"], P["steps_h2"]) + f'<div class="grid g3">{steps}</div>')
-            + sec(f'<div class="split"><div>{head(P["out_eyebrow"], P["out_h2"])}{ul(P["outputs"])}</div><div class="photo"><img src="{asset(lang,"img/tablet.jpg")}" alt="" loading="lazy"><span class="tag">{esc(P["photo_tag"])}</span></div></div>', "alt")
-            + sec(head(P["prod_eyebrow"], P["prod_h2"]) + f'<div class="grid g4">{prod}</div>')
-            + sec(head(P["form_eyebrow"], P["form_h2"], P["form_lead"]) + f'<div class="split" style="align-items:start">{form}<div class="contact-info"><h3 style="margin:0 0 4px">{esc(P["after_h3"])}</h3>{after}<p class="note">{esc(P["note"])}</p></div></div>', "alt", "basvuru" if lang == "tr" else "apply"))
+    body = simple_hero(P["form_eyebrow"], P["form_h2"], P["form_lead"]) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info"><h3 style="margin:0 0 4px">{esc(P["after_h3"])}</h3>{after}<p class="note">{esc(P["note"])}</p></div></div>', "alt", "basvuru" if lang == "tr" else "apply")
     return layout(lang, "pilot", P["title"] + L["meta_suffix"], P["desc"], body, "pilot")
 
 def page_thanks(lang):
