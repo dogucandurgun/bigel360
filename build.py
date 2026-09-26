@@ -601,7 +601,7 @@ def page_home(lang):
     sub = "".join(f"<span><b>{esc(n)}</b>{esc(t)}</span>" for n, t in H["sub"])
     hero = (f'<section class="hero"><div class="container"><div><span class="eyebrow">{esc(H["eyebrow"])}</span><h1>{esc(H["h1"])}</h1><p class="lead">{esc(H["lead"])}</p>'
             f'<div class="btn-row"><a class="btn btn-primary" href="#{"cozumler" if lang=="tr" else "solutions"}">{esc(H["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact")}">{esc(H["b2"])}</a></div>'
-            f'<div class="hero-sub">{sub}</div></div></div></section>')
+            f'</div></div></section>')
     stats = "".join(f'<div class="card stat"><div class="n">{esc(n)}</div><p>{esc(t)}</p></div>' for n, t in H["stats"])
     trust = sec(head(H["trust_eyebrow"], H["trust_h2"]) + f'<div class="grid g4">{stats}</div>')
     sol = sec(head(H["sol_eyebrow"], H["sol_h2"], H["sol_lead"]) + product_cards(lang), "alt", "cozumler" if lang == "tr" else "solutions")
