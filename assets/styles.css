@@ -279,3 +279,6 @@ p{margin:0 0 1em}
 .section.navy .lead{color:#C9D8E6}
 .menu-cta{display:none}
 @media (max-width:840px){.menu-cta{display:block;margin-top:10px}.menu-cta a{color:#fff;text-align:center}}
+/* Nav: keep items on one line */
+.menu a,.nav-actions .btn{white-space:nowrap}
+@media (max-width:1120px) and (min-width:841px){.menu a{font-size:13px;padding:10px 8px}.brand img{width:132px}.nav{gap:12px}}
