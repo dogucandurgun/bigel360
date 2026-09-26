@@ -72,14 +72,15 @@ p{margin:0 0 1em}
 .burger span{width:18px;height:2px;background:var(--navy);display:block}
 
 /* Hero */
-.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:clamp(56px,8vw,104px) 0}
-.hero::before{content:"";position:absolute;inset:auto -10% -40% auto;width:60vw;max-width:760px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(0,166,166,.28),transparent 65%);pointer-events:none}
-.hero .container{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,5vw,72px);align-items:center}
-.hero h1{color:#fff;max-width:640px}
-.hero .lead{color:#C9D8E6}
+.hero{background:var(--navy) url(img/hero.jpg) center right/cover no-repeat;color:#fff;position:relative;overflow:hidden;padding:clamp(72px,10vw,150px) 0;min-height:min(78vh,720px);display:flex;align-items:center}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,42,67,.97) 0%,rgba(16,42,67,.9) 34%,rgba(16,42,67,.45) 62%,rgba(16,42,67,.12) 100%);pointer-events:none}
+.hero .container{position:relative;display:block;width:min(1160px,100% - 2*var(--gutter))}
+.hero h1{color:#fff;max-width:680px;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+.hero .lead{color:#D6E2EE;max-width:640px}
 .hero .eyebrow{color:#5FD6D6}
-.hero-sub{margin-top:36px;display:flex;gap:28px;flex-wrap:wrap;color:#9FB4C8;font-size:13px;font-weight:600}
-.hero-sub b{color:#fff;display:block;font-size:22px;letter-spacing:-.02em}
+.hero-sub{margin-top:40px;display:flex;gap:32px;flex-wrap:wrap;color:#B5C7D8;font-size:13px;font-weight:600}
+.hero-sub b{color:#fff;display:block;font-size:24px;letter-spacing:-.02em}
+@media (max-width:840px){.hero{background-position:72% center;min-height:0}.hero::before{background:linear-gradient(180deg,rgba(16,42,67,.94) 0%,rgba(16,42,67,.86) 100%)}}
 
 /* Score card (kanıt bloğu) */
 .scorecard{background:#fff;color:var(--ink);border-radius:20px;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
