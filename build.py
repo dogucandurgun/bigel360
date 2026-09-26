@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# BiGel — bigel360.com static site generator.
+# BİGEL — bigel360.com static site generator.
 # Run:  python3 build.py   → writes TR pages to ./ and EN pages to ./en/
 # All copy lives in this file (CONTENT). Mock company facts are in SITE.
 import os, html
@@ -82,7 +82,7 @@ SECTOR_ICONS = ["fuel", "food", "retail", "bank", "auto", "logistics", "mall", "
 # ---------------------------------------------------------------- CONTENT
 CONTENT = {
 "tr": {
-  "meta_suffix": " | BiGel",
+  "meta_suffix": " | BİGEL",
   "nav": {"solutions": "Çözümler", "sectors": "Sektörler", "tiers": "Abonelikler", "how": "Nasıl Çalışıyoruz", "about": "Hakkımızda", "cta": "Teklif Al", "menu": "Menü"},
   "products": {
     "clean":    {"name": "BİGEL CLEAN", "cat": "Temizlik Operasyonları", "tag": "Standart her noktada aynı.", "short": "Kanopi, tabela, totem, cephe ve otopark için planlı dış alan temizliği. Öncesi ve sonrası fotoğrafla doğrulanır."},
@@ -118,7 +118,7 @@ CONTENT = {
      ["BUSINESS'ın tamamı", "FIELD360 tek operasyon merkezi", "Görsel alan ve mobilya yönetimi", "Acil saha müdahalesi 7/24", "Atanmış operasyon yöneticisi"]),
   ],
   "home": {
-    "title": "BiGel | Sahadaki Gücünüz",
+    "title": "BİGEL | Sahadaki Gücünüz",
     "desc": "Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi. Fotoğraflı kanıt, skor ve aksiyon takibi.",
     "eyebrow": "Kurumsal Saha Operasyonları",
     "h1": "Sahadaki Gücünüz.",
@@ -128,9 +128,9 @@ CONTENT = {
     "card": {"loc": "Örnek Lokasyon · Kadıköy / İstanbul", "meta": "Denetim 12.09.2026 · Ekip MAR-04", "status": "Aksiyon gerekli",
              "bars": [("Temizlik", 94, "var(--green)"), ("Marka standardı", 89, "var(--amber)"), ("Müşteri deneyimi", 91, "var(--green)"), ("Teknik durum", 72, "var(--red)"), ("İş güvenliği", 100, "var(--green)")],
              "foot_l": "3 açık bulgu · <b>1 kritik</b>", "foot_r": "İş emri oluşturuldu"},
-    "trust_eyebrow": "Neden BiGel", "trust_h2": "Yerel saha gücü. Merkezi operasyon. Ölçülebilir sonuç.",
+    "trust_eyebrow": "Neden BİGEL", "trust_h2": "Yerel saha gücü. Merkezi operasyon. Ölçülebilir sonuç.",
     "stats": [(SITE["provinces"], "ilde erişilebilir yerel ekip ağı"), (SITE["regions"], "bölgesel operasyon ekibi"), (SITE["visits"], "aylık planlı saha ziyareti"), (SITE["photo_rate"], "zorunlu fotoğraf doğrulama oranı")],
-    "sol_eyebrow": "Çözümler", "sol_h2": "Dört ürün. Tek BiGel standardı.", "sol_lead": "Her ürün bağımsız kullanılabilir ya da aynı ziyaret planında birleşir. Hepsi aynı kontrol listesi, fotoğraf açısı ve kapanış kuralıyla çalışır.",
+    "sol_eyebrow": "Çözümler", "sol_h2": "Dört ürün. Tek BİGEL standardı.", "sol_lead": "Her ürün bağımsız kullanılabilir ya da aynı ziyaret planında birleşir. Hepsi aynı kontrol listesi, fotoğraf açısı ve kapanış kuralıyla çalışır.",
     "proof_eyebrow": "Kanıt", "proof_h2": "Sadece yapmıyoruz. Ölçüyoruz.",
     "proof_p": "Her ziyaret fotoğraf, kontrol listesi ve skor üretir. Bulgular iş emrine dönüşür, kapanışı sorumlu ve hedef tarihle takip edilir.",
     "proof_list": ["Öncesi ve sonrası fotoğraf, GPS ve zaman damgası", "Soru bazlı skor ve kırmızı-sarı-yeşil durum özeti", "Sorumlu, hedef tarih ve kapanış kanıtıyla aksiyon takibi", "Lokasyon, bölge ve dönem karşılaştırmaları"],
@@ -162,11 +162,11 @@ CONTENT = {
     "care": {
       "title": "BİGEL CARE — Fiziksel alan bakımı ve saha müdahalesi",
       "desc": "Küçük bakım, onarım ve saha müdahale ihtiyaçlarını Türkiye genelinde tek merkezden yönetiyoruz. Tespit, iş emri, uygulama ve fotoğraflı kapanış.",
-      "lead": "Markaların fiziksel noktalarındaki küçük bakım, onarım ve saha müdahale ihtiyaçlarını tek merkezden yönetiyoruz. Tespit, planlama, saha uygulaması, fotoğraflama ve kapanış takibi BiGel'de.",
+      "lead": "Markaların fiziksel noktalarındaki küçük bakım, onarım ve saha müdahale ihtiyaçlarını tek merkezden yönetiyoruz. Tespit, planlama, saha uygulaması, fotoğraflama ve kapanış takibi BİGEL'de.",
       "sections": [
         {"type": "split", "eyebrow": "Kapsam", "h2": "Küçük işler birikmeden çözülür.", "p": "Lokasyonlarda biriken küçük fiziksel problemler müşteri deneyimini ve marka görünümünü etkiler. BİGEL CARE bu işleri tek iş emri sistemiyle yönetir.",
          "list": ["Periyodik ve önleyici bakım", "Arıza ve fiziksel hasar müdahalesi", "Görsel alan ve marka unsurları bakımı", "Dış alan ve çevre bakımı", "Mobilya, ekipman ve küçük montaj işleri", "Acil saha müdahalesi"], "img": "retail.jpg", "tag": "Mobilya ve teşhir kontrolü · Mağaza",
-         "note": "Yüksek uzmanlık ve yasal yetki gerektiren işler (elektrik, mekanik tesisat vb.) uygun uzmanlarla koordine edilir; BiGel tespit, planlama ve kapanış takibini yönetir."},
+         "note": "Yüksek uzmanlık ve yasal yetki gerektiren işler (elektrik, mekanik tesisat vb.) uygun uzmanlarla koordine edilir; BİGEL tespit, planlama ve kapanış takibini yönetir."},
         {"type": "modules", "eyebrow": "Hizmet modülleri", "h2": "On modül, sektöre göre birleştirilir.", "lead": "",
          "items": [("01", "Minor Works", "Vida sıkıştırma, sabitleme, kapı kolu ve aksesuar değişimi, silikon, noktasal boya."), ("02", "Sign Care", "Tabela, totem ve yönlendirme elemanlarının bakımı."), ("03", "Exterior Care", "Cephe, giriş ve dış alan bakımı."), ("04", "Visual Care", "Görsel alan ve marka unsurları."), ("05", "Furniture Care", "Mobilya ve teşhir elemanları."), ("06", "Pavement Care", "Zemin, bordür ve otopark bakımı."), ("07", "Site Care", "Lokasyon fiziksel durum yönetimi."), ("08", "Preventive Care", "Periyodik önleyici bakım."), ("09", "Emergency Care", "Acil saha müdahalesi."), ("10", "Field Audit", "Fotoğraflı kontrol ve aksiyon raporu.")]},
         {"type": "flow", "eyebrow": "İş akışı", "h2": "Talepten fotoğraflı kapanışa.", "steps": [("Talep", "Tek kanal: talep veya denetim bulgusu."), ("Fotoğraflı tespit", "Hasar türü, öncelik ve önerilen aksiyon."), ("Görev onayı", "Kapsam, sorumlu ve hedef tarih."), ("Saha müdahalesi", "Bölgesel ekiple standart uygulama."), ("Kapanış raporu", "Sonrası fotoğrafı ve kalite kontrolü.")]},
@@ -191,7 +191,7 @@ CONTENT = {
          "weights": [("Güvenlik · 5 kritik kontrol", 25), ("Cihaz bütünlüğü", 20), ("İşlev işaretleri", 20), ("Kullanıcı deneyimi", 15), ("Temizlik ve çevre", 10), ("Marka standardı", 10)],
          "thresholds": [("g", "≥ 90 · Uygun"), ("a", "75–89 · Takip"), ("r", "< 75 · Aksiyon")],
          "badges": ["Ön, sağ, sol, ekran, kablo, park alanı fotoğraf seti", "Kritik: anlık · Majör: 24 saat", "Pilot: 10 lokasyon, 2 hafta, 2 tur"]},
-        {"type": "map", "eyebrow": "BiGel Map", "h2": "Tüm lokasyonlar tek haritada.", "p": "Lokasyonlar Türkiye haritası üzerinde skor rengiyle gösterilir. Kullanıcı bölgeden şehre, şehirden lokasyona iner; skor kartını, fotoğrafları, bulguları ve aksiyon geçmişini görür.",
+        {"type": "map", "eyebrow": "BİGEL Map", "h2": "Tüm lokasyonlar tek haritada.", "p": "Lokasyonlar Türkiye haritası üzerinde skor rengiyle gösterilir. Kullanıcı bölgeden şehre, şehirden lokasyona iner; skor kartını, fotoğrafları, bulguları ve aksiyon geçmişini görür.",
          "legend": [("var(--green)", "90–100 · Standarda uygun"), ("var(--amber)", "75–89 · İyileştirme gerekli"), ("var(--red)", "0–74 · Öncelikli aksiyon")],
          "kpis": [("Bölge ve şehir bazında lokasyon sayısı"), ("Ortalama denetim skoru ve kritik bulgu sayısı"), ("Tamamlanan, bekleyen ve açık aksiyonlar")]},
         {"type": "cards3", "eyebrow": "Hizmet modelleri", "h2": "Tek denetimden sürekli platforma.", "items": [("Lokasyon bazlı audit", "Belirli lokasyonlarda tek seferlik denetim."), ("Periyodik audit", "Aylık, üç aylık, altı aylık veya yıllık tekrar eden program."), ("Proje audit", "Kampanya, açılış, tabela değişimi sonrası toplu kontrol."), ("Franchise audit", "Franchise ağında standart uyumunun merkez adına ölçülmesi."), ("Yatırım ve devir", "Satın alma, kiralama veya devir öncesi fiziksel durum belgeleme."), ("Platform ve dashboard", "Skor, fotoğraf, bulgu, iş emri ve kapanışların sürekli izlenmesi.")],
@@ -219,13 +219,13 @@ CONTENT = {
               "fr_list": ["Merkez ile tek sözleşme ve tek hizmet tanımı", "Tüm lokasyonlar için ortak kontrol listesi", "Bölgesel ekiplerle planlı saha ziyaretleri", "Lokasyon bazında skor ve uygunsuzluk takibi", "Merkez yönetim için karşılaştırmalı dashboard"],
               "fit_eyebrow": "İhtiyaca göre çözüm", "fit_h2": "Hangi durumda hangi ürün?",
               "fit": [("Çok lokasyonlu temizlik", "Periyodik CLEAN programı", "clean"), ("Küçük bakım ve onarım birikiyor", "CARE müdahale planı", "care"), ("Marka standardını ölçmek", "AUDIT ve AUDIT 100", "audit"), ("Şarj ağı saha kalitesi", "EV Audit30", "audit"), ("Dağınık tedarikçi yapısı", "FIELD360 ile tek merkez", "field360"), ("Fotoğraf ve kanıt ihtiyacı", "Dijital ziyaret raporu", "field360")]},
-  "tiers": {"title": "Abonelik Paketleri — BASIC, PRO, BUSINESS, 360", "desc": "BiGel abonelik paketleri: temel kontrolden tam entegre saha yönetimine. Fiyatlandırma lokasyon sayısı ve kapsama göre.",
-            "eyebrow": "Abonelikler", "h1": "İhtiyacınıza göre ölçeklenen dört paket.", "lead": "Alt paket adı ikinci hiyerarşidedir; ana BiGel standardı, fotoğraflı kanıt ve raporlama her pakette aynıdır. Fiyatlandırma lokasyon sayısı, bölgesel dağılım, hizmet sıklığı ve kapsama göre hazırlanır.",
+  "tiers": {"title": "Abonelik Paketleri — BASIC, PRO, BUSINESS, 360", "desc": "BİGEL abonelik paketleri: temel kontrolden tam entegre saha yönetimine. Fiyatlandırma lokasyon sayısı ve kapsama göre.",
+            "eyebrow": "Abonelikler", "h1": "İhtiyacınıza göre ölçeklenen dört paket.", "lead": "Alt paket adı ikinci hiyerarşidedir; ana BİGEL standardı, fotoğraflı kanıt ve raporlama her pakette aynıdır. Fiyatlandırma lokasyon sayısı, bölgesel dağılım, hizmet sıklığı ve kapsama göre hazırlanır.",
             "badge": "En kapsamlı", "cta": "Teklif Al", "cmp_h2": "Paket karşılaştırması",
             "cmp_head": ["Kapsam", "BASIC", "PRO", "BUSINESS", "360"],
             "cmp_rows": [["Periyodik kontrol ziyareti", 1,1,1,1], ["Fotoğraflı lokasyon raporu", 1,1,1,1], ["Bulgu ve öncelik listesi", 1,1,1,1], ["Küçük bakım müdahalesi (CARE)", 0,1,1,1], ["İş emri ve fotoğraflı kapanış", 0,1,1,1], ["Planlı temizlik programı (CLEAN)", 0,0,1,1], ["AUDIT 100 periyodik denetim", 0,0,1,1], ["Yönetim dashboardu, KPI / SLA", 0,0,1,1], ["Öncelikli destek hattı", 0,0,1,1], ["FIELD360 tek operasyon merkezi", 0,0,0,1], ["Acil saha müdahalesi 7/24", 0,0,0,1], ["Atanmış operasyon yöneticisi", 0,0,0,1]],
             "note": "Tüm paketler pilot uygulamayla başlatılabilir. Pilot sonuçlarına göre hizmet sıklığı ve kapsam netleştirilir."},
-  "how": {"title": "Nasıl Çalışıyoruz — Devreye alma, pilot ve yaygınlaştırma", "desc": "İhtiyaç analizinden düzenli raporlamaya BiGel hizmet devreye alma modeli, kalite güvence ve dijital raporlama.",
+  "how": {"title": "Nasıl Çalışıyoruz — Devreye alma, pilot ve yaygınlaştırma", "desc": "İhtiyaç analizinden düzenli raporlamaya BİGEL hizmet devreye alma modeli, kalite güvence ve dijital raporlama.",
           "eyebrow": "Nasıl çalışıyoruz", "h1": "Merkezde planlanan işin sahada doğru gerçekleşmesini sağlarız.", "lead": "İhtiyaç analiziyle başlar, seçili lokasyonlarda pilotla doğrular, bölgesel ve Türkiye geneli operasyona ölçekleriz.",
           "steps_eyebrow": "Hizmet devreye alma", "steps_h2": "Altı adımda düzenli operasyon.",
           "steps": [("İhtiyaç ve lokasyon analizi", "Saha ağı, hizmet ihtiyacı ve öncelikler."), ("Hizmet kapsamı ve SLA", "Kontrol listeleri, kanıt kuralı ve hedef süreler."), ("Pilot uygulama", "Seçilen lokasyonlarda gerçek saha testi."), ("Sonuç ve aksiyon planı", "Skor, iş yükü, ekip ve ziyaret sıklığı."), ("Yaygınlaştırma", "Bölgesel devreye alma ve düzenli takvim."), ("Düzenli raporlama", "Görev, rapor, aksiyon ve performans toplantıları.")],
@@ -237,15 +237,15 @@ CONTENT = {
           "report": ["Ziyaret tarihi, lokasyon ve ekip bilgisi", "Soru bazlı skorlar ve fotoğraflı kanıtlar", "Kırmızı, sarı ve yeşil durum özeti", "Öncelikli bulgular ve sorumlu aksiyonlar", "Lokasyon, bölge ve dönem karşılaştırmaları", "Yönetim özeti ve kapanış takibi"],
           "s_eyebrow": "Ölçeklenebilir yayılım", "s_h2": "Pilottan Türkiye geneline.",
           "scale": [("1 · Pilot", "Seçili lokasyonlarda standardı doğrulama: kapsam, başlangıç ölçümü, saha uygulaması, sonuç raporu."), ("2 · Bölgesel yayılım", "Modeli öncelikli bölgelere taşıma: ekip planlama, eğitim, SLA takibi, bölgesel performans."), ("3 · Türkiye geneli", "Tüm ağı tek modelle yönetme: merkezi koordinasyon, lokasyon skorları, iş emri, yönetim dashboardu.")]},
-  "about": {"title": "Hakkımızda — BiGel", "desc": "BiGel, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur.",
+  "about": {"title": "Hakkımızda — BİGEL", "desc": "BİGEL, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur.",
             "eyebrow": "Hakkımızda", "h1": "Usta gönderen firma değil, saha operasyonunuzu emanet edebileceğiniz partner.",
-            "lead": "BiGel, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur. Yerel saha gücünü merkezi operasyon, denetim ve raporlamayla birleştirir.",
+            "lead": "BİGEL, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur. Yerel saha gücünü merkezi operasyon, denetim ve raporlamayla birleştirir.",
             "story_h2": "Sahadan doğdu, sistemle büyüdü.",
-            "story": ["BiGel'in yolculuğu 2018'de İstanbul'da, akaryakıt istasyonu ağlarına yönelik dış alan temizlik ve küçük bakım işleriyle başladı. Lokasyon sayısı arttıkça sorun da netleşti: işi yapmak yetmiyordu, her noktada aynı standardı tutmak ve bunu merkeze kanıtlamak gerekiyordu.", "Bugün BiGel, bölgesel ekip ağını merkezi planlama, standart kontrol listeleri ve fotoğraflı dijital raporlamayla yönetiyor. CLEAN, CARE, AUDIT ve FIELD360 aynı çatı altında, aynı kayıt zinciriyle çalışıyor.", "Bigel Usta olarak tanınan hizmet geçmişimiz, saha bilgimizin kaynağı olmaya devam ediyor; markamız ise artık kurumsal saha operasyonları ve teknoloji eksenine odaklanıyor."],
+            "story": ["BİGEL'in yolculuğu 2018'de İstanbul'da, akaryakıt istasyonu ağlarına yönelik dış alan temizlik ve küçük bakım işleriyle başladı. Lokasyon sayısı arttıkça sorun da netleşti: işi yapmak yetmiyordu, her noktada aynı standardı tutmak ve bunu merkeze kanıtlamak gerekiyordu.", "Bugün BİGEL, bölgesel ekip ağını merkezi planlama, standart kontrol listeleri ve fotoğraflı dijital raporlamayla yönetiyor. CLEAN, CARE, AUDIT ve FIELD360 aynı çatı altında, aynı kayıt zinciriyle çalışıyor.", "Bigel Usta olarak tanınan hizmet geçmişimiz, saha bilgimizin kaynağı olmaya devam ediyor; markamız ise artık kurumsal saha operasyonları ve teknoloji eksenine odaklanıyor."],
             "facts": [(SITE["founded"], "kuruluş, İstanbul"), (SITE["regions"], "bölgesel operasyon ekibi"), (SITE["provinces"], "ile erişilebilir saha ağı"), ("4", "ürün, tek kayıt zinciri")],
             "v_eyebrow": "Marka tanımı", "v_h2": "Ne için varız?",
             "values": [("Purpose", "Markaların sahadaki işlerini daha düzenli, ölçülebilir ve güvenilir hale getirmek.", "flag"), ("Promise", "İşi sahada gerçekleştirmek, kontrol etmek ve görünür kılmak.", "shield"), ("Differentiator", "Yerel saha gücü + merkezi operasyon + denetim + raporlama.", "hub")],
-            "c_eyebrow": "Karakter", "c_h2": "BiGel nasıl konuşur, nasıl çalışır?",
+            "c_eyebrow": "Karakter", "c_h2": "BİGEL nasıl konuşur, nasıl çalışır?",
             "character": [("Güvenilir", "Standart, kanıt ve rapor. Abartılı vaat yok."), ("Çevik", "Bölgesel ekiplerle daha kısa müdahale süresi."), ("Sistemli", "Planlama + uygulama + kontrol + raporlama."), ("Çözüm odaklı", "Bulgu iş emrine, iş emri kapanışa dönüşür."), ("Teknolojik", "Dijital kontrol listesi, skor ve dashboard."), ("Ölçülebilir", "100 kriter, fotoğraflı kanıt, tek skor.")],
             "reg_eyebrow": "Saha ağı", "reg_h2": "Yedi bölge, tek operasyon merkezi.",
             "regions": ["Marmara", "Ege", "Akdeniz", "İç Anadolu", "Karadeniz", "Doğu Anadolu", "Güneydoğu Anadolu"],
@@ -257,7 +257,7 @@ CONTENT = {
   "thanks": {"title": "Teşekkürler", "h1": "Talebiniz alındı.", "p": "Ekibimiz aynı iş günü içinde sizinle iletişime geçecek. Bu arada çözümlerimizi inceleyebilirsiniz.", "b": "Ana sayfaya dön"},
 },
 "en": {
-  "meta_suffix": " | BiGel",
+  "meta_suffix": " | BİGEL",
   "nav": {"solutions": "Solutions", "sectors": "Industries", "tiers": "Plans", "how": "How We Work", "about": "About", "cta": "Get a Quote", "menu": "Menu"},
   "products": {
     "clean":    {"name": "BİGEL CLEAN", "cat": "Cleaning Operations", "tag": "The same standard at every site.", "short": "Planned exterior cleaning for canopies, signage, totems, façades and car parks. Verified with before and after photos."},
@@ -293,7 +293,7 @@ CONTENT = {
      ["Everything in BUSINESS", "FIELD360 single operations centre", "Visual area and furniture management", "24/7 emergency field response", "Dedicated operations manager"]),
   ],
   "home": {
-    "title": "BiGel | Your Strength in the Field",
+    "title": "BİGEL | Your Strength in the Field",
     "desc": "Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands. Photo evidence, scores and action tracking.",
     "eyebrow": "Corporate Field Operations",
     "h1": "Your Strength in the Field.",
@@ -303,9 +303,9 @@ CONTENT = {
     "card": {"loc": "Sample Site · Kadıköy / Istanbul", "meta": "Audit 12 Sep 2026 · Team MAR-04", "status": "Action required",
              "bars": [("Cleanliness", 94, "var(--green)"), ("Brand standard", 89, "var(--amber)"), ("Customer experience", 91, "var(--green)"), ("Technical condition", 72, "var(--red)"), ("Safety", 100, "var(--green)")],
              "foot_l": "3 open findings · <b>1 critical</b>", "foot_r": "Work order created"},
-    "trust_eyebrow": "Why BiGel", "trust_h2": "Local field power. Central operations. Measurable results.",
+    "trust_eyebrow": "Why BİGEL", "trust_h2": "Local field power. Central operations. Measurable results.",
     "stats": [(SITE["provinces"], "provinces with local team access"), (SITE["regions"], "regional operations teams"), (SITE["visits"], "planned site visits per month"), (SITE["photo_rate_en"], "mandatory photo verification rate")],
-    "sol_eyebrow": "Solutions", "sol_h2": "Four products. One BiGel standard.", "sol_lead": "Each product works on its own or combines in the same visit plan. All run on the same checklists, photo angles and closure rules.",
+    "sol_eyebrow": "Solutions", "sol_h2": "Four products. One BİGEL standard.", "sol_lead": "Each product works on its own or combines in the same visit plan. All run on the same checklists, photo angles and closure rules.",
     "proof_eyebrow": "Proof", "proof_h2": "We don't just do the work. We measure it.",
     "proof_p": "Every visit produces photos, a checklist and a score. Findings become work orders, and closure is tracked with an owner and a due date.",
     "proof_list": ["Before and after photos with GPS and timestamp", "Question-level scores and red-amber-green status", "Action tracking with owner, due date and closure evidence", "Site, region and period comparisons"],
@@ -337,11 +337,11 @@ CONTENT = {
     "care": {
       "title": "BİGEL CARE — Physical site maintenance and field response",
       "desc": "Minor maintenance, repairs and field response managed from one centre across Türkiye. Detection, work order, execution and photo-verified closure.",
-      "lead": "We manage the minor maintenance, repair and field response needs of brand sites from one centre. Detection, planning, on-site execution, photography and closure tracking are all handled by BiGel.",
+      "lead": "We manage the minor maintenance, repair and field response needs of brand sites from one centre. Detection, planning, on-site execution, photography and closure tracking are all handled by BİGEL.",
       "sections": [
         {"type": "split", "eyebrow": "Scope", "h2": "Small jobs get fixed before they pile up.", "p": "Small physical problems accumulating at sites hurt customer experience and brand appearance. BİGEL CARE manages them through a single work-order system.",
          "list": ["Periodic and preventive maintenance", "Fault and physical damage response", "Visual area and brand element care", "Exterior and surroundings care", "Furniture, equipment and minor assembly", "Emergency field response"], "img": "retail.jpg", "tag": "Furniture and display check · Retail",
-         "note": "Work requiring specialist skills or legal certification (electrical, mechanical installations, etc.) is coordinated with qualified specialists; BiGel manages detection, planning and closure tracking."},
+         "note": "Work requiring specialist skills or legal certification (electrical, mechanical installations, etc.) is coordinated with qualified specialists; BİGEL manages detection, planning and closure tracking."},
         {"type": "modules", "eyebrow": "Service modules", "h2": "Ten modules, combined by industry.", "lead": "",
          "items": [("01", "Minor Works", "Tightening, fixing, handle and accessory replacement, sealant, spot painting."), ("02", "Sign Care", "Signage, totem and wayfinding maintenance."), ("03", "Exterior Care", "Façade, entrance and outdoor area maintenance."), ("04", "Visual Care", "Visual areas and brand elements."), ("05", "Furniture Care", "Furniture and display elements."), ("06", "Pavement Care", "Floors, kerbs and car park maintenance."), ("07", "Site Care", "Site physical condition management."), ("08", "Preventive Care", "Periodic preventive maintenance."), ("09", "Emergency Care", "Emergency field response."), ("10", "Field Audit", "Photo-verified inspection and action report.")]},
         {"type": "flow", "eyebrow": "Workflow", "h2": "From request to photo-verified closure.", "steps": [("Request", "One channel: request or audit finding."), ("Photo assessment", "Damage type, priority and proposed action."), ("Task approval", "Scope, owner and due date."), ("Field intervention", "Standard execution by the regional team."), ("Closure report", "After photo and quality check.")]},
@@ -366,7 +366,7 @@ CONTENT = {
          "weights": [("Safety · 5 critical checks", 25), ("Device integrity", 20), ("Function indicators", 20), ("User experience", 15), ("Cleanliness & surroundings", 10), ("Brand standard", 10)],
          "thresholds": [("g", "≥ 90 · Compliant"), ("a", "75–89 · Follow-up"), ("r", "< 75 · Action")],
          "badges": ["Photo set: front, right, left, screen, cable, bay", "Critical: instant · Major: 24 hours", "Pilot: 10 sites, 2 weeks, 2 rounds"]},
-        {"type": "map", "eyebrow": "BiGel Map", "h2": "All sites on one map.", "p": "Sites are shown on a map of Türkiye in their score colour. Users drill from region to city to site and see the scorecard, photos, findings and action history.",
+        {"type": "map", "eyebrow": "BİGEL Map", "h2": "All sites on one map.", "p": "Sites are shown on a map of Türkiye in their score colour. Users drill from region to city to site and see the scorecard, photos, findings and action history.",
          "legend": [("var(--green)", "90–100 · Meets standard"), ("var(--amber)", "75–89 · Improvement needed"), ("var(--red)", "0–74 · Priority action")],
          "kpis": [("Site count by region and city"), ("Average audit score and critical finding count"), ("Completed, pending and open actions")]},
         {"type": "cards3", "eyebrow": "Service models", "h2": "From a single audit to a continuous platform.", "items": [("Site-based audit", "One-off audit at selected sites."), ("Periodic audit", "Monthly, quarterly, semi-annual or annual recurring programme."), ("Project audit", "Bulk check after campaigns, openings or signage changes."), ("Franchise audit", "Measuring standard compliance across a franchise network on behalf of head office."), ("Investment & handover", "Documenting physical condition before purchase, lease or handover."), ("Platform & dashboard", "Continuous tracking of scores, photos, findings, work orders and closures.")],
@@ -394,13 +394,13 @@ CONTENT = {
               "fr_list": ["One contract and one service definition with head office", "A common checklist for all sites", "Planned site visits by regional teams", "Site-level scores and non-conformity tracking", "Comparative dashboard for head office"],
               "fit_eyebrow": "Solution by need", "fit_h2": "Which product for which situation?",
               "fit": [("Multi-site cleaning", "Periodic CLEAN programme", "clean"), ("Minor maintenance piling up", "CARE response plan", "care"), ("Measuring brand standard", "AUDIT and AUDIT 100", "audit"), ("Charging network site quality", "EV Audit30", "audit"), ("Scattered supplier base", "One centre with FIELD360", "field360"), ("Need for photo evidence", "Digital visit report", "field360")]},
-  "tiers": {"title": "Plans — BASIC, PRO, BUSINESS, 360", "desc": "BiGel subscription plans: from essential control to fully integrated field management. Pricing based on site count and scope.",
-            "eyebrow": "Plans", "h1": "Four plans that scale with your needs.", "lead": "The plan name is the second tier; the BiGel standard, photo evidence and reporting are the same in every plan. Pricing is based on site count, regional spread, service frequency and scope.",
+  "tiers": {"title": "Plans — BASIC, PRO, BUSINESS, 360", "desc": "BİGEL subscription plans: from essential control to fully integrated field management. Pricing based on site count and scope.",
+            "eyebrow": "Plans", "h1": "Four plans that scale with your needs.", "lead": "The plan name is the second tier; the BİGEL standard, photo evidence and reporting are the same in every plan. Pricing is based on site count, regional spread, service frequency and scope.",
             "badge": "Most complete", "cta": "Get a Quote", "cmp_h2": "Plan comparison",
             "cmp_head": ["Scope", "BASIC", "PRO", "BUSINESS", "360"],
             "cmp_rows": [["Periodic inspection visit", 1,1,1,1], ["Photo-verified site report", 1,1,1,1], ["Findings and priority list", 1,1,1,1], ["Minor maintenance response (CARE)", 0,1,1,1], ["Work orders and photo-verified closure", 0,1,1,1], ["Planned cleaning programme (CLEAN)", 0,0,1,1], ["Periodic AUDIT 100 audits", 0,0,1,1], ["Management dashboard, KPI / SLA", 0,0,1,1], ["Priority support line", 0,0,1,1], ["FIELD360 single operations centre", 0,0,0,1], ["24/7 emergency field response", 0,0,0,1], ["Dedicated operations manager", 0,0,0,1]],
             "note": "Every plan can start with a pilot. Service frequency and scope are finalised based on pilot results."},
-  "how": {"title": "How We Work — Onboarding, pilot and roll-out", "desc": "BiGel's service onboarding model from needs analysis to regular reporting, quality assurance and digital reporting.",
+  "how": {"title": "How We Work — Onboarding, pilot and roll-out", "desc": "BİGEL's service onboarding model from needs analysis to regular reporting, quality assurance and digital reporting.",
           "eyebrow": "How we work", "h1": "We make sure the work planned at the centre happens correctly in the field.", "lead": "We start with a needs analysis, validate with a pilot on selected sites, and scale to regional and nationwide operations.",
           "steps_eyebrow": "Service onboarding", "steps_h2": "Regular operations in six steps.",
           "steps": [("Needs and site analysis", "Site network, service needs and priorities."), ("Service scope and SLA", "Checklists, evidence rules and target times."), ("Pilot", "A real field test at selected sites."), ("Results and action plan", "Score, workload, team and visit frequency."), ("Roll-out", "Regional go-live and a regular calendar."), ("Regular reporting", "Task, report, action and performance reviews.")],
@@ -412,15 +412,15 @@ CONTENT = {
           "report": ["Visit date, site and team information", "Question-level scores and photo evidence", "Red, amber and green status summary", "Priority findings and assigned actions", "Site, region and period comparisons", "Management summary and closure tracking"],
           "s_eyebrow": "Scalable roll-out", "s_h2": "From pilot to nationwide.",
           "scale": [("1 · Pilot", "Validating the standard at selected sites: scope, baseline measurement, field execution, results report."), ("2 · Regional roll-out", "Taking the model to priority regions: team planning, training, SLA tracking, regional performance."), ("3 · Nationwide", "Managing the whole network with one model: central coordination, site scores, work orders, management dashboard.")]},
-  "about": {"title": "About — BiGel", "desc": "BiGel is a new-generation field services platform that runs, audits and reports the field operations of corporate brands.",
+  "about": {"title": "About — BİGEL", "desc": "BİGEL is a new-generation field services platform that runs, audits and reports the field operations of corporate brands.",
             "eyebrow": "About", "h1": "Not a company that sends a handyman. A partner you can trust with your field operation.",
-            "lead": "BiGel is a new-generation field services platform that runs, audits and reports the field operations of corporate brands. It combines local field power with central operations, audit and reporting.",
+            "lead": "BİGEL is a new-generation field services platform that runs, audits and reports the field operations of corporate brands. It combines local field power with central operations, audit and reporting.",
             "story_h2": "Born in the field, grown with a system.",
-            "story": ["BiGel's journey began in Istanbul in 2018 with exterior cleaning and minor maintenance for fuel station networks. As the number of sites grew, so did the problem: doing the work was not enough; every site had to hold the same standard, and head office needed proof.", "Today BiGel manages its regional team network with central planning, standard checklists and photo-verified digital reporting. CLEAN, CARE, AUDIT and FIELD360 run under one roof, on one chain of record.", "Our service heritage, known as Bigel Usta, remains the source of our field knowledge; the brand now focuses on corporate field operations and technology."],
+            "story": ["BİGEL's journey began in Istanbul in 2018 with exterior cleaning and minor maintenance for fuel station networks. As the number of sites grew, so did the problem: doing the work was not enough; every site had to hold the same standard, and head office needed proof.", "Today BİGEL manages its regional team network with central planning, standard checklists and photo-verified digital reporting. CLEAN, CARE, AUDIT and FIELD360 run under one roof, on one chain of record.", "Our service heritage, known as Bigel Usta, remains the source of our field knowledge; the brand now focuses on corporate field operations and technology."],
             "facts": [(SITE["founded"], "founded, Istanbul"), (SITE["regions"], "regional operations teams"), (SITE["provinces"], "provinces with field access"), ("4", "products, one chain of record")],
             "v_eyebrow": "Brand definition", "v_h2": "Why we exist",
             "values": [("Purpose", "To make brands' field work more orderly, measurable and reliable.", "flag"), ("Promise", "To do the work in the field, control it and make it visible.", "shield"), ("Differentiator", "Local field power + central operations + audit + reporting.", "hub")],
-            "c_eyebrow": "Character", "c_h2": "How BiGel speaks and works",
+            "c_eyebrow": "Character", "c_h2": "How BİGEL speaks and works",
             "character": [("Reliable", "Standard, evidence and reports. No exaggerated promises."), ("Agile", "Shorter response times through regional teams."), ("Systematic", "Plan + execute + control + report."), ("Solution-driven", "Findings become work orders; work orders get closed."), ("Technological", "Digital checklists, scores and dashboards."), ("Measurable", "100 criteria, photo evidence, one score.")],
             "reg_eyebrow": "Field network", "reg_h2": "Seven regions, one operations centre.",
             "regions": ["Marmara", "Aegean", "Mediterranean", "Central Anatolia", "Black Sea", "Eastern Anatolia", "Southeastern Anatolia"],
@@ -495,7 +495,7 @@ def turkey_map():
     col = {"g": "#1F9D67", "a": "#D99A00", "r": "#D64545"}
     d = "".join(f'<circle cx="{x}" cy="{y}" r="7" fill="{col[c]}" stroke="#fff" stroke-width="2"/>' for x, y, c in dots)
     path = "M40 130 C60 85 120 70 180 78 C230 62 262 44 300 58 C342 46 400 42 452 62 C504 56 562 72 582 112 C592 152 562 192 520 202 C472 232 420 222 380 242 C332 252 282 232 240 237 C190 247 130 232 92 212 C52 192 30 152 40 130 Z"
-    return f'<svg viewBox="0 0 620 280" role="img" aria-label="BiGel Map"><path d="{path}" fill="#E8F1F5" stroke="#C9D6E0" stroke-width="2"/>{d}</svg>'
+    return f'<svg viewBox="0 0 620 280" role="img" aria-label="BİGEL Map"><path d="{path}" fill="#E8F1F5" stroke="#C9D6E0" stroke-width="2"/>{d}</svg>'
 
 def sub_product(lang, s, accent):
     logo = f'<img src="{asset(lang,"logo/"+s["logo"])}" alt="AUDIT 100" loading="lazy">' if s["logo"] else f'<div class="score" style="color:{accent}">30<small>/100</small></div>'
@@ -555,11 +555,11 @@ def layout(lang, pid, title, desc, body, active=None):
     en_url = f'https://{SITE["domain"]}/en/{PAGES[pid][1]}'.replace("/index.html", "/")
     canonical = tr_url if lang == "tr" else en_url
     year = "2026"
-    footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div><img src="{asset(lang,"logo/bigel-white.png")}" alt="BiGel" loading="lazy"><p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
+    footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div><img src="{asset(lang,"logo/bigel-white.png")}" alt="BİGEL" loading="lazy"><p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
               f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"audit","ev")}">{esc(F["ev"])}</a></div>'
               f'<div><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a></div>'
               f'<div><strong>{esc(F["contact"])}</strong><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact")}">{esc(N["cta"])}</a></div></div>'
-              f'<div class="bottom"><span>© {year} BiGel · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="#">{esc(F["privacy"])}</a></span></div></div></footer>')
+              f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="#">{esc(F["privacy"])}</a></span></div></div></footer>')
     return f'''<!doctype html>
 <html lang="{lang}">
 <head>
@@ -581,7 +581,7 @@ def layout(lang, pid, title, desc, body, active=None):
 </head>
 <body>
 <header class="header"><div class="container nav">
-<a class="brand" href="{href(lang,"home")}"><img src="{asset(lang,"logo/bigel.png")}" alt="BiGel — {esc(F["tagline"])}"></a>
+<a class="brand" href="{href(lang,"home")}"><img src="{asset(lang,"logo/bigel.png")}" alt="BİGEL — {esc(F["tagline"])}"></a>
 <ul class="menu" id="menu">{nav}</ul>
 <div class="nav-actions">{lang_sw}<a class="btn btn-primary btn-sm" href="{href(lang,"contact")}">{esc(N["cta"])}</a></div>
 <button class="burger" aria-label="{esc(N["menu"])}" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
@@ -686,7 +686,7 @@ def page_contact(lang):
 
 def page_thanks(lang):
     L = CONTENT[lang]; T = L["thanks"]
-    body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BiGel</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"home")}">{esc(T["b"])}</a></div></div>')
+    body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"home")}">{esc(T["b"])}</a></div></div>')
     return layout(lang, "thanks", T["title"] + L["meta_suffix"], T["p"], body)
 
 # ---------------------------------------------------------------- BUILD
