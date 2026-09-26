@@ -444,6 +444,10 @@ def ul(items, accent=None):
     style = f' style="--accent:{accent}"' if accent else ""
     return f'<ul class="list"{style}>' + "".join(f"<li>{esc(i)}</li>" for i in items) + "</ul>"
 
+def tr_upper(s, lang):
+    if lang == "tr": s = s.replace("i", "İ").replace("ı", "I")
+    return s.upper()
+
 def product_cards(lang):
     L = CONTENT[lang]
     out = ""
@@ -451,7 +455,7 @@ def product_cards(lang):
         d = L["products"][p]
         out += (f'<a class="card accent product-card" style="--accent:{ACCENT[p]}" href="{href(lang,p)}">'
                 f'<img src="{asset(lang,"logo/"+p+".png")}" alt="{esc(d["name"])}" loading="lazy">'
-                f'<span class="kicker">{esc(d["cat"]).upper()}</span><h3>{esc(d["tag"])}</h3><p>{esc(d["short"])}</p>'
+                f'<span class="kicker">{esc(tr_upper(d["cat"], lang))}</span><h3>{esc(d["tag"])}</h3><p>{esc(d["short"])}</p>'
                 f'<span class="more">{esc(L["more"])} →</span></a>')
     return f'<div class="grid g4">{out}</div>'
 
