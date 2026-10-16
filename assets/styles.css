@@ -285,3 +285,7 @@ p{margin:0 0 1em}
 
 /* Anchor landing below sticky header */
 section[id]{scroll-margin-top:84px}
+
+/* Portal girişi: BİGEL yazılımına (Operasyon Merkezi + müşteri portalı) giden buton */
+.btn-portal svg{width:15px;height:15px;flex:none}
+@media (max-width:840px){.menu-cta .btn-outline{color:var(--navy);justify-content:center}}
