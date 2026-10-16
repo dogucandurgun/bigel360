@@ -23,7 +23,8 @@ SITE = {
     "photo_rate_en": "98%",
     # BİGEL yazılımının giriş sayfası (Operasyon Merkezi + müşteri portalı). Şimdilik yerel geliştirme
     # adresi: canlıya geçince panelin gerçek adresiyle değiştirilmeli (ör. https://panel.<alan-adı>/giris).
-    "portal_url": "http://localhost:3000/giris",
+    # Boşken buton sitedeki "Portal yakında" sayfasına gider.
+    "portal_url": "",
 }
 SHOW_PORTAL = True
 
@@ -40,6 +41,7 @@ PAGES = {  # id: (tr file, en file)
     "contact": ("iletisim.html", "contact.html"),
     "pilot": ("pilot.html", "pilot.html"),
     "thanks": ("tesekkurler.html", "thank-you.html"),
+    "portal": ("portal.html", "portal.html"),
 }
 PRODUCTS = ["clean", "care", "audit", "field360"]
 ACCENT = {"clean": "var(--clean)", "care": "var(--care)", "audit": "var(--audit)", "field360": "var(--field)"}
@@ -283,6 +285,7 @@ CONTENT = {
                   "consent": "Kişisel verilerimin talebimle ilgili iletişim amacıyla işlenmesini kabul ediyorum.", "send": "Pilot Başvurusu Gönder", "subject": "bigel360.com — Pilot başvurusu"},
             "after_h3": "Başvurudan sonra", "after": [("1", "Kapsam toplantısı", "90 dakika. Lokasyon yapısı, hizmet modülleri ve pilot başarı kriterleri."), ("2", "Pilot planı", "Lokasyon seti, soru seti, fotoğraf kuralı, SLA ve takvim tek dokümanda."), ("3", "Saha", "Ziyaretler başlar; kritik bulgular aynı gün bildirilir."), ("4", "Sonuç toplantısı", "Skorlar, bulgular ve yaygınlaştırma teklifi.")],
             "note": "Pilot kapsamı ve ücreti lokasyon sayısı, hizmet modülü ve coğrafi dağılıma göre teklif olarak sunulur. Pilot sonuçları nihai birim fiyatı netleştirir."},
+  "portal": {"title": "Portal", "h1": "Müşteri portalı çok yakında hizmetinizde.", "p": "BİGEL portalı üzerinden taleplerinizi açabilecek, saha işlerinizi ve fotoğraflı raporlarınızı anlık takip edebileceksiniz. Erken erişim için bizimle iletişime geçin.", "b1": "İletişime geçin", "b2": "Ana sayfaya dön"},
   "thanks": {"title": "Teşekkürler", "h1": "Talebiniz alındı.", "p": "Ekibimiz aynı iş günü içinde sizinle iletişime geçecek. Bu arada çözümlerimizi inceleyebilirsiniz.", "b": "Ana sayfaya dön"},
 },
 "en": {
@@ -482,6 +485,7 @@ CONTENT = {
                   "consent": "I agree to the processing of my personal data for the purpose of responding to my request.", "send": "Send Pilot Application", "subject": "bigel360.com — Pilot application"},
             "after_h3": "After you apply", "after": [("1", "Scoping meeting", "90 minutes. Site structure, service modules and pilot success criteria."), ("2", "Pilot plan", "Site set, question set, photo rules, SLA and calendar in one document."), ("3", "Field", "Visits begin; critical findings are reported the same day."), ("4", "Review meeting", "Scores, findings and the roll-out proposal.")],
             "note": "Pilot scope and fee are quoted based on site count, service module and geographic spread. Pilot results settle the final unit price."},
+  "portal": {"title": "Portal", "h1": "The customer portal is coming soon.", "p": "Through the BİGEL portal you will be able to open requests and follow your field work and photo-verified reports in real time. Contact us for early access.", "b1": "Contact us", "b2": "Back to home"},
   "thanks": {"title": "Thank you", "h1": "Your request has been received.", "p": "Our team will contact you within the same business day. In the meantime, feel free to explore our solutions.", "b": "Back to home"},
 },
 }
@@ -601,12 +605,12 @@ LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=
 
 def layout(lang, pid, title, desc, body, active=None):
     L = CONTENT[lang]; N = L["nav"]; F = L["footer"]
-    portal_btn = f'<a class="btn btn-outline btn-sm btn-portal" href="{SITE["portal_url"]}">{LOCK}{esc(N["portal"])}</a>' if SHOW_PORTAL else ""
+    portal_btn = f'<a class="btn btn-outline btn-sm btn-portal" href="{SITE["portal_url"] or href(lang,"portal")}">{LOCK}{esc(N["portal"])}</a>' if SHOW_PORTAL else ""
     sub = "".join(f'<li><a href="{href(lang,p)}" style="--accent:{ACCENT[p]}"><span class="dot"></span><span>{esc(L["products"][p]["name"])}<small>{esc(L["products"][p]["cat"])}</small></span></a></li>' for p in PRODUCTS)
     def a(p, label): return f'<li><a href="{href(lang,p)}"{" class=active" if active == p else ""}>{esc(label)}</a></li>'
     nav = (f'<li class="has-sub"><a href="{href(lang,"home","cozumler" if lang=="tr" else "solutions")}"{" class=active" if active in PRODUCTS else ""}>{esc(N["solutions"])}</a><ul class="sub">{sub}</ul></li>'
            + a("sectors", N["sectors"]) + a("tiers", N["tiers"]) + a("how", N["how"]) + a("about", N["about"])
-           + (f'<li class="menu-cta"><a class="btn btn-outline btn-portal" href="{SITE["portal_url"]}">{LOCK}{esc(N["portal"])}</a></li>' if SHOW_PORTAL else "")
+           + (f'<li class="menu-cta"><a class="btn btn-outline btn-portal" href="{SITE["portal_url"] or href(lang,"portal")}">{LOCK}{esc(N["portal"])}</a></li>' if SHOW_PORTAL else "")
            + f'<li class="menu-cta"><a class="btn btn-primary" href="{href(lang,"contact")}">{esc(N["cta"])}</a></li>')
     lang_sw = (f'<span class="lang"><a class="{"on" if lang=="tr" else ""}" href="{switch_href("en",pid) if lang=="en" else "#"}" {"aria-current=page" if lang=="tr" else ""}>TR</a>'
                f'<a class="{"on" if lang=="en" else ""}" href="{switch_href("tr",pid) if lang=="tr" else "#"}">EN</a></span>')
@@ -770,6 +774,11 @@ def page_pilot(lang):
     body = simple_hero(P["form_eyebrow"], P["form_h2"], P["form_lead"]) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info"><h3 style="margin:0 0 4px">{esc(P["after_h3"])}</h3>{after}<p class="note">{esc(P["note"])}</p></div></div>', "alt", "basvuru" if lang == "tr" else "apply")
     return layout(lang, "pilot", P["title"] + L["meta_suffix"], P["desc"], body, "pilot")
 
+def page_portal(lang):
+    L = CONTENT[lang]; T = L["portal"]
+    body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL PORTAL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"contact")}">{esc(T["b1"])}</a><a class="btn btn-outline" href="{href(lang,"home")}">{esc(T["b2"])}</a></div></div>')
+    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["p"], body)
+
 def page_thanks(lang):
     L = CONTENT[lang]; T = L["thanks"]
     body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"home")}">{esc(T["b"])}</a></div></div>')
@@ -784,13 +793,13 @@ document.querySelectorAll('.has-sub>a').forEach(function(a){a.addEventListener('
     for lang in ("tr", "en"):
         outdir = ROOT if lang == "tr" else os.path.join(ROOT, "en")
         os.makedirs(outdir, exist_ok=True)
-        pages = {"home": page_home(lang), "sectors": page_sectors(lang), "tiers": page_tiers(lang), "how": page_how(lang), "about": page_about(lang), "contact": page_contact(lang), "pilot": page_pilot(lang), "thanks": page_thanks(lang)}
+        pages = {"home": page_home(lang), "sectors": page_sectors(lang), "tiers": page_tiers(lang), "how": page_how(lang), "about": page_about(lang), "contact": page_contact(lang), "pilot": page_pilot(lang), "thanks": page_thanks(lang), "portal": page_portal(lang)}
         for p in PRODUCTS: pages[p] = page_product(lang, p)
         for pid, html_ in pages.items():
             with open(os.path.join(outdir, PAGES[pid][0 if lang == "tr" else 1]), "w", encoding="utf-8") as fh: fh.write(html_)
             n += 1
     # robots + sitemap
-    urls = [f'https://{SITE["domain"]}/{PAGES[p][0]}' for p in PAGES if p != "thanks"] + [f'https://{SITE["domain"]}/en/{PAGES[p][1]}' for p in PAGES if p != "thanks"]
+    urls = [f'https://{SITE["domain"]}/{PAGES[p][0]}' for p in PAGES if p not in ("thanks", "portal")] + [f'https://{SITE["domain"]}/en/{PAGES[p][1]}' for p in PAGES if p not in ("thanks", "portal")]
     urls = [u.replace("/index.html", "/") for u in urls]
     with open(os.path.join(ROOT, "sitemap.xml"), "w") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
