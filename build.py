@@ -25,9 +25,7 @@ SITE = {
     # adresi: canlıya geçince panelin gerçek adresiyle değiştirilmeli (ör. https://panel.<alan-adı>/giris).
     "portal_url": "http://localhost:3000/giris",
 }
-# Portal butonu yalnızca gerçek bir adres girilince yayında görünür; yerelde görmek için: BIGEL_PORTAL=1 python3 build.py
-import os
-SHOW_PORTAL = "localhost" not in SITE["portal_url"] or os.environ.get("BIGEL_PORTAL") == "1"
+SHOW_PORTAL = True
 
 PAGES = {  # id: (tr file, en file)
     "home": ("index.html", "index.html"),
