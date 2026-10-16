@@ -25,7 +25,7 @@ SITE = {
     # adresi: canlıya geçince panelin gerçek adresiyle değiştirilmeli (ör. https://panel.<alan-adı>/giris).
     # BİGEL yazılımının giriş sayfası (Operasyon Merkezi + müşteri portalı). Alan adı bağlanınca
     # (ör. https://panel.bigel360.com/giris) burası güncellenecek. Boşken buton "Portal yakında" sayfasına gider.
-    "portal_url": "https://bigel-field360.vercel.app/giris",
+    "portal_url": "https://panel.bigel360.com/giris",
 }
 SHOW_PORTAL = True
 
