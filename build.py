@@ -6,7 +6,8 @@ import os, html
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# ---------------------------------------------------------------- MOCK DATA (düzeltilecek)
+# ---------------------------------------------------------------- SITE DATA
+# E-posta, telefon ve adres doğrulandı (2026-10-19). Kuruluş yılı ve rakamlar (bölge, ziyaret, oran) henüz doğrulanmadı.
 SITE = {
     "domain": "bigel360.com",
     "email": "info@bigel360.com",
@@ -631,6 +632,21 @@ def layout(lang, pid, title, desc, body, active=None):
     en_url = f'https://{SITE["domain"]}/en/{PAGES[pid][1]}'.replace("/index.html", "/")
     canonical = tr_url if lang == "tr" else en_url
     year = "2026"
+    base = f'https://{SITE["domain"]}'
+    # Search appearance: the site name Google shows ("BİGEL", not the bare domain) and the company card,
+    # on the home pages, where Google reads them.
+    ld = ""
+    if pid == "home":
+        import json
+        ld_data = {"@context": "https://schema.org", "@graph": [
+            {"@type": "WebSite", "@id": base + "/#website", "name": "BİGEL", "alternateName": ["BİGEL 360", "bigel360.com"], "url": base + "/", "inLanguage": ["tr", "en"], "publisher": {"@id": base + "/#organization"}},
+            {"@type": "Organization", "@id": base + "/#organization", "name": "BİGEL", "url": base + "/", "logo": {"@type": "ImageObject", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512},
+             "image": base + "/assets/icons/og-image.jpg", "description": L["home"]["desc"] if "desc" in L.get("home", {}) else desc, "email": SITE["email"], "telephone": SITE["phone_href"],
+             "foundingDate": SITE["founded"], "sameAs": [SITE["linkedin"]],
+             "address": {"@type": "PostalAddress", "streetAddress": "Bağlarbaşı Mah. İncilik Sok. No:1 B Blok D:2", "addressLocality": "Maltepe", "addressRegion": "İstanbul", "addressCountry": "TR"},
+             "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "email": SITE["email"], "telephone": SITE["phone_href"], "areaServed": "TR", "availableLanguage": ["Turkish", "English"]}},
+        ]}
+        ld = '\n<script type="application/ld+json">' + json.dumps(ld_data, ensure_ascii=False) + "</script>"
     footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div><img src="{asset(lang,"logo/bigel-white.png")}" alt="BİGEL" loading="lazy"><p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
               f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"audit","ev")}">{esc(F["ev"])}</a></div>'
               f'<div><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></div>'
@@ -651,8 +667,17 @@ def layout(lang, pid, title, desc, body, active=None):
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{canonical}">
+<meta property="og:site_name" content="BİGEL">
+<meta property="og:locale" content="{"tr_TR" if lang == "tr" else "en_US"}">
+<meta property="og:image" content="{base}/assets/icons/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#102A43">
-<link rel="icon" type="image/png" href="{asset(lang,"logo/mark.png")}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/icon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">{ld}
 <link rel="stylesheet" href="{versioned(lang,"styles.css")}">
 </head>
 <body>
@@ -858,7 +883,7 @@ document.querySelectorAll('.has-sub>a').forEach(function(a){a.addEventListener('
     urls = [f'https://{SITE["domain"]}/{PAGES[p][0]}' for p in PAGES if p not in ("thanks", "portal")] + [f'https://{SITE["domain"]}/en/{PAGES[p][1]}' for p in PAGES if p not in ("thanks", "portal")]
     urls = [u.replace("/index.html", "/") for u in urls]
     with open(os.path.join(ROOT, "sitemap.xml"), "w") as fh:
-        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
+        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n")
     with open(os.path.join(ROOT, "robots.txt"), "w") as fh:
         fh.write(f"User-agent: *\nAllow: /\nSitemap: https://{SITE['domain']}/sitemap.xml\n")
     print(f"built {n} pages")
