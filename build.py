@@ -531,7 +531,7 @@ def tier_cards(lang, compact=False):
     out = ""
     for i, (name, sub, one, who, feats) in enumerate(L["tiers_list"]):
         feat = "" if compact else "<ul>" + "".join(f"<li>{esc(f)}</li>" for f in feats) + "</ul>"
-        cta = "" if compact else f'<a class="btn btn-outline btn-sm" href="{href(lang,"contact")}">{esc(L["tiers"]["cta"])}</a>'
+        cta = "" if compact else f'<a class="btn btn-outline btn-sm" href="{href(lang,"contact","form")}">{esc(L["tiers"]["cta"])}</a>'
         featured = ' featured' if (i == 3 and not compact) else ""
         out += (f'<div class="card tier{featured}" data-badge="{esc(L["tiers"]["badge"])}"><img src="{asset(lang,"logo/"+imgs[i])}" alt="{esc(name)}" loading="lazy">'
                 f'<span class="name">{esc(name)}</span><h3>{esc(sub)}</h3><p class="who">{esc(one if compact else who)}</p>{feat}{cta}</div>')
@@ -542,7 +542,7 @@ def flow(steps):
 
 def cta_band(lang):
     L = CONTENT[lang]["cta"]
-    return sec(f'<div class="cta-band"><div><h2>{esc(L["h2"])}</h2><p>{esc(L["p"])}</p></div><div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot")}">{esc(L["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact")}">{esc(L["b2"])}</a></div></div>')
+    return sec(f'<div class="cta-band"><div><h2>{esc(L["h2"])}</h2><p>{esc(L["p"])}</p></div><div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot","basvuru" if lang == "tr" else "apply")}">{esc(L["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact","form")}">{esc(L["b2"])}</a></div></div>')
 
 def scorecard(lang):
     c = CONTENT[lang]["home"]["card"]
@@ -612,7 +612,7 @@ def layout(lang, pid, title, desc, body, active=None):
     nav = (f'<li class="has-sub"><a href="{href(lang,"home","cozumler" if lang=="tr" else "solutions")}"{" class=active" if active in PRODUCTS else ""}>{esc(N["solutions"])}</a><ul class="sub">{sub}</ul></li>'
            + a("sectors", N["sectors"]) + a("tiers", N["tiers"]) + a("how", N["how"]) + a("about", N["about"])
            + (f'<li class="menu-cta"><a class="btn btn-outline btn-portal" href="{SITE["portal_url"] or href(lang,"portal")}">{LOCK}{esc(N["portal"])}</a></li>' if SHOW_PORTAL else "")
-           + f'<li class="menu-cta"><a class="btn btn-primary" href="{href(lang,"contact")}">{esc(N["cta"])}</a></li>')
+           + f'<li class="menu-cta"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></li>')
     lang_sw = (f'<span class="lang"><a class="{"on" if lang=="tr" else ""}" href="{switch_href("en",pid) if lang=="en" else "#"}" {"aria-current=page" if lang=="tr" else ""}>TR</a>'
                f'<a class="{"on" if lang=="en" else ""}" href="{switch_href("tr",pid) if lang=="tr" else "#"}">EN</a></span>')
     # fix: TR page → EN link; EN page → TR link
@@ -627,7 +627,7 @@ def layout(lang, pid, title, desc, body, active=None):
     footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div><img src="{asset(lang,"logo/bigel-white.png")}" alt="BİGEL" loading="lazy"><p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
               f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"audit","ev")}">{esc(F["ev"])}</a></div>'
               f'<div><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></div>'
-              f'<div><strong>{esc(F["contact"])}</strong><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact")}">{esc(N["cta"])}</a></div></div>'
+              f'<div><strong>{esc(F["contact"])}</strong><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div></div>'
               f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="#">{esc(F["privacy"])}</a></span></div></div></footer>')
     return f'''<!doctype html>
 <html lang="{lang}">
@@ -652,7 +652,7 @@ def layout(lang, pid, title, desc, body, active=None):
 <header class="header"><div class="container nav">
 <a class="brand" href="{href(lang,"home")}"><img src="{asset(lang,"logo/bigel.png")}" alt="BİGEL — {esc(F["tagline"])}"></a>
 <ul class="menu" id="menu">{nav}</ul>
-<div class="nav-actions">{lang_sw}{portal_btn}<a class="btn btn-primary btn-sm" href="{href(lang,"contact")}">{esc(N["cta"])}</a></div>
+<div class="nav-actions">{lang_sw}{portal_btn}<a class="btn btn-primary btn-sm" href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div>
 <button class="burger" aria-label="{esc(N["menu"])}" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div></header>
 <main>
@@ -669,7 +669,7 @@ def page_home(lang):
     L = CONTENT[lang]; H = L["home"]
     sub = "".join(f"<span><b>{esc(n)}</b>{esc(t)}</span>" for n, t in H["sub"])
     hero = (f'<section class="hero"><div class="container"><div><span class="eyebrow">{esc(H["eyebrow"])}</span><h1>{esc(H["h1"])}</h1><p class="lead">{esc(H["lead"])}</p>'
-            f'<div class="btn-row"><a class="btn btn-primary" href="#{"cozumler" if lang=="tr" else "solutions"}">{esc(H["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact")}">{esc(H["b2"])}</a></div>'
+            f'<div class="btn-row"><a class="btn btn-primary" href="#{"cozumler" if lang=="tr" else "solutions"}">{esc(H["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact","form")}">{esc(H["b2"])}</a></div>'
             f'</div></div></section>')
     stats = "".join(f'<div class="card stat"><div class="n">{esc(n)}</div><p>{esc(t)}</p></div>' for n, t in H["stats"])
     trust = sec(head(H["trust_eyebrow"], H["trust_h2"]) + f'<div class="grid g4">{stats}</div>')
@@ -684,7 +684,7 @@ def page_home(lang):
 def page_product(lang, pid):
     L = CONTENT[lang]; P = L["product_pages"][pid]; d = L["products"][pid]; accent = ACCENT[pid]
     hero = (f'<section class="p-hero" style="--accent:{accent}"><div class="container"><div><span class="eyebrow">{esc(d["name"])} · {esc(d["cat"])}</span><h1>{esc(d["tag"])}</h1><p class="lead">{esc(P["lead"])}</p>'
-            f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"contact")}">{esc(L["nav"]["cta"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(L["nav"]["how"])}</a></div></div>'
+            f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(L["nav"]["cta"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(L["nav"]["how"])}</a></div></div>'
             f'<img class="logo" src="{asset(lang,"logo/"+pid+".png")}" alt="{esc(d["name"])}"></div></section>')
     body = hero + "".join(render_product_section(lang, s, accent) for s in P["sections"]) + cta_band(lang)
     return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, pid)
@@ -750,7 +750,8 @@ def page_contact(lang):
             f'<label class="consent"><input type="checkbox" required><span>{esc(f["consent"])}</span></label>'
             f'<button class="btn btn-primary" type="submit">{esc(f["send"])}</button></form>')
     info = "".join(f'<div class="card"><b>{esc(t)}</b><p>{esc(v)}</p></div>' for t, v in C["info"])
-    body = simple_hero(C["eyebrow"], C["h1"], C["lead"]) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info">{info}</div></div>', "alt")
+    # id "form": every "Teklif Al" button opens the page right at the form (#form), past the title.
+    body = simple_hero(C["eyebrow"], C["h1"], C["lead"]) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info">{info}</div></div>', "alt", "form")
     return layout(lang, "contact", C["title"] + L["meta_suffix"], C["desc"], body, "contact")
 
 def page_pilot(lang):
@@ -777,7 +778,7 @@ def page_pilot(lang):
 
 def page_portal(lang):
     L = CONTENT[lang]; T = L["portal"]
-    body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL PORTAL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"contact")}">{esc(T["b1"])}</a><a class="btn btn-outline" href="{href(lang,"home")}">{esc(T["b2"])}</a></div></div>')
+    body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL PORTAL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(T["b1"])}</a><a class="btn btn-outline" href="{href(lang,"home")}">{esc(T["b2"])}</a></div></div>')
     return layout(lang, "portal", T["title"] + L["meta_suffix"], T["p"], body)
 
 def page_thanks(lang):
