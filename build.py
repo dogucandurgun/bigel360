@@ -54,6 +54,13 @@ def href(lang, pid, anchor=""):
 def asset(lang, path):
     return ("assets/" if lang == "tr" else "../assets/") + path
 
+def versioned(lang, path):
+    """The asset's link with a fingerprint of its content, so browsers fetch a changed file at once
+    instead of keeping an old copy from their cache."""
+    import hashlib
+    with open(os.path.join(ROOT, "assets", path), "rb") as fh:
+        return asset(lang, path) + "?v=" + hashlib.md5(fh.read()).hexdigest()[:8]
+
 def switch_href(lang, pid):
     return ("en/" + PAGES[pid][1]) if lang == "tr" else ("../" + PAGES[pid][0])
 
@@ -646,7 +653,7 @@ def layout(lang, pid, title, desc, body, active=None):
 <meta property="og:url" content="{canonical}">
 <meta name="theme-color" content="#102A43">
 <link rel="icon" type="image/png" href="{asset(lang,"logo/mark.png")}">
-<link rel="stylesheet" href="{asset(lang,"styles.css")}">
+<link rel="stylesheet" href="{versioned(lang,"styles.css")}">
 </head>
 <body>
 <header class="header"><div class="container nav">
@@ -659,7 +666,7 @@ def layout(lang, pid, title, desc, body, active=None):
 {body}
 </main>
 {footer}
-<script src="{asset(lang,"site.js")}"></script>
+<script src="{versioned(lang,"site.js")}"></script>
 </body>
 </html>
 '''
