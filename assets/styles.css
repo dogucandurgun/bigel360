@@ -199,6 +199,8 @@ p{margin:0 0 1em}
 .form{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3vw,32px)}
 .form label{font-size:13px;font-weight:700;color:var(--navy);display:block;margin-bottom:6px}
 .form input,.form select,.form textarea{width:100%;padding:12px 14px;border:1px solid #C9D6E0;border-radius:10px;font:inherit;background:#fff;margin-bottom:16px}
+/* Own drop-down arrow, set in from the edge (the browser's sits right against it). */
+.form select{-webkit-appearance:none;appearance:none;padding-right:44px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23102A43' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 18px center/12px 8px;cursor:pointer}
 .form input:focus,.form select:focus,.form textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
 .form textarea{min-height:120px;resize:vertical}
 .form .row{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
