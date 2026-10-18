@@ -804,9 +804,27 @@ document.querySelectorAll('.has-sub>a').forEach(function(a){a.addEventListener('
     var room = window.innerHeight - top;
     var box = form.getBoundingClientRect();
     var gap = box.height < room ? (room - box.height) / 2 : 16;
-    window.scrollTo({ top: window.scrollY + box.top - top - gap, behavior: smooth ? "smooth" : "auto" });
+    var y = window.scrollY + box.top - top - gap;
+    if (smooth) return window.scrollTo({ top: y, behavior: "smooth" });
+    // The site scrolls smoothly (CSS); on arrival that animation fights the browser's own jump to the
+    // anchor, so the first placement is instant.
+    var root = document.documentElement;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, y);
+    requestAnimationFrame(function () { root.style.scrollBehavior = ""; });
   }
-  window.addEventListener("load", function () { centreForm(false); });
+  // The browser jumps to the anchor itself and fonts/images can still shift the page after that, so
+  // centre once the page has loaded and again shortly after, unless the visitor has scrolled since.
+  var touched = false;
+  ["wheel", "touchstart", "keydown"].forEach(function (ev) { window.addEventListener(ev, function () { touched = true; }, { passive: true }); });
+  function settle() { if (!touched) centreForm(false); }
+  window.addEventListener("load", function () {
+    settle();
+    requestAnimationFrame(settle);
+    setTimeout(settle, 150);
+    setTimeout(settle, 500);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle);
+  });
   window.addEventListener("hashchange", function () { centreForm(true); });
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[href]");
