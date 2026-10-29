@@ -297,7 +297,9 @@ CONTENT = {
             "after_h3": "Başvurudan sonra", "after": [("1", "Kapsam toplantısı", "90 dakika. Lokasyon yapısı, hizmet modülleri ve pilot başarı kriterleri."), ("2", "Pilot planı", "Lokasyon seti, soru seti, fotoğraf kuralı, SLA ve takvim tek dokümanda."), ("3", "Saha", "Ziyaretler başlar; kritik bulgular aynı gün bildirilir."), ("4", "Sonuç toplantısı", "Skorlar, bulgular ve yaygınlaştırma teklifi.")],
             "note": "Pilot kapsamı ve ücreti lokasyon sayısı, hizmet modülü ve coğrafi dağılıma göre teklif olarak sunulur. Pilot sonuçları nihai birim fiyatı netleştirir."},
   "portal": {"title": "Portal", "h1": "Müşteri portalı çok yakında hizmetinizde.", "p": "BİGEL portalı üzerinden taleplerinizi açabilecek, saha işlerinizi ve fotoğraflı raporlarınızı anlık takip edebileceksiniz. Erken erişim için bizimle iletişime geçin.", "b1": "İletişime geçin", "b2": "Ana sayfaya dön"},
-  "thanks": {"title": "Teşekkürler", "h1": "Talebiniz alındı.", "p": "Ekibimiz aynı iş günü içinde sizinle iletişime geçecek. Bu arada çözümlerimizi inceleyebilirsiniz.", "b": "Ana sayfaya dön"},
+  "thanks": {"title": "Teşekkürler", "badge": "Talebiniz alındı", "h1": "Teşekkürler, sizi arayacağız.", "p": "Bilgileriniz operasyon ekibimize ulaştı. Aynı iş günü içinde sizinle iletişime geçiyoruz.",
+             "steps_h": "Bundan sonra", "steps": [("Talebiniz bize ulaştı", "Formdaki bilgiler ekibimizin önünde."), ("Sizi arıyoruz", "Aynı iş günü içinde, hafta içi 09:00–18:00."), ("Kapsamı netleştiriyoruz", "Lokasyon yapınıza göre teklif ya da pilot planı hazırlıyoruz.")],
+             "b": "Ana sayfaya dön", "b2": "Nasıl çalıştığımızı görün", "urgent": "Acil mi? Hemen ulaşın:"},
 },
 "en": {
   "meta_suffix": " | BİGEL",
@@ -497,7 +499,9 @@ CONTENT = {
             "after_h3": "After you apply", "after": [("1", "Scoping meeting", "90 minutes. Site structure, service modules and pilot success criteria."), ("2", "Pilot plan", "Site set, question set, photo rules, SLA and calendar in one document."), ("3", "Field", "Visits begin; critical findings are reported the same day."), ("4", "Review meeting", "Scores, findings and the roll-out proposal.")],
             "note": "Pilot scope and fee are quoted based on site count, service module and geographic spread. Pilot results settle the final unit price."},
   "portal": {"title": "Portal", "h1": "The customer portal is coming soon.", "p": "Through the BİGEL portal you will be able to open requests and follow your field work and photo-verified reports in real time. Contact us for early access.", "b1": "Contact us", "b2": "Back to home"},
-  "thanks": {"title": "Thank you", "h1": "Your request has been received.", "p": "Our team will contact you within the same business day. In the meantime, feel free to explore our solutions.", "b": "Back to home"},
+  "thanks": {"title": "Thank you", "badge": "Request received", "h1": "Thank you, we'll be in touch.", "p": "Your details have reached our operations team. We will contact you within the same business day.",
+             "steps_h": "What happens next", "steps": [("We have your request", "Your details are in front of our team."), ("We call you", "Within the same business day, weekdays 09:00–18:00."), ("We define the scope", "A quote or pilot plan shaped around your sites.")],
+             "b": "Back to home", "b2": "See how we work", "urgent": "Urgent? Reach us now:"},
 },
 }
 
@@ -817,7 +821,15 @@ def page_portal(lang):
 
 def page_thanks(lang):
     L = CONTENT[lang]; T = L["thanks"]
-    body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"home")}">{esc(T["b"])}</a></div></div>')
+    check = '<svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>'
+    steps = "".join(f'<li class="{"done" if i == 0 else ""}"><span class="dot">{"✓" if i == 0 else i + 1}</span><div><b>{esc(t)}</b><p>{esc(d)}</p></div></li>' for i, (t, d) in enumerate(T["steps"]))
+    body = (f'<section class="thanks"><div class="container"><div class="thanks-card">'
+            f'<div class="thanks-check">{check}</div><span class="thanks-badge">{esc(T["badge"])}</span>'
+            f'<h1>{esc(T["h1"])}</h1><p class="lead">{esc(T["p"])}</p>'
+            f'<div class="thanks-steps"><span class="eyebrow">{esc(T["steps_h"])}</span><ol>{steps}</ol></div>'
+            f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"home")}">{esc(T["b"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(T["b2"])}</a></div>'
+            f'<p class="thanks-urgent">{esc(T["urgent"])} <a href="tel:{SITE["phone_href"]}">{esc(SITE["phone"])}</a> · <a href="mailto:{SITE["email"]}">{esc(SITE["email"])}</a></p>'
+            f'</div></div></section>')
     return layout(lang, "thanks", T["title"] + L["meta_suffix"], T["p"], body)
 
 # ---------------------------------------------------------------- BUILD
