@@ -27,6 +27,8 @@ SITE = {
     # BİGEL yazılımının giriş sayfası (Operasyon Merkezi + müşteri portalı). Alan adı bağlanınca
     # (ör. https://panel.bigel360.com/giris) burası güncellenecek. Boşken buton "Portal yakında" sayfasına gider.
     "portal_url": "https://panel.bigel360.com/giris",
+    # Teklif ve pilot formları buraya gider; talepler panelde Merkez > Site Talepleri'nde görünür.
+    "form_url": "https://panel.bigel360.com/api/site-talep",
 }
 SHOW_PORTAL = True
 
@@ -773,12 +775,12 @@ def page_contact(lang):
     next_url = f'https://{SITE["domain"]}/' + ("" if lang == "tr" else "en/") + PAGES["thanks"][0 if lang == "tr" else 1]
     counts = "".join(f"<option>{esc(c)}</option>" for c in f["counts"])
     sols = "".join(f"<option>{esc(c)}</option>" for c in f["solutions"])
-    form = (f'<form class="form" action="https://formsubmit.co/{SITE["email"]}" method="POST">'
-            f'<input type="hidden" name="_subject" value="{esc(f["subject"])}"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="{next_url}"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">'
-            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="{f["name"]}" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="{f["company"]}" required></div></div>'
-            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="{f["email"]}" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="{f["phone"]}"></div></div>'
+    form = (f'<form class="form" action="{SITE["form_url"]}" method="POST">'
+            f'<input type="hidden" name="_kind" value="teklif"><input type="hidden" name="_lang" value="{lang}"><input type="hidden" name="_next" value="{next_url}"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">'
+            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="name" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="company" required></div></div>'
+            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="email" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="phone"></div></div>'
             f'<div class="row"><div><label for="count">{esc(f["count"])}</label><select id="count" name="{f["count"]}">{counts}</select></div><div><label for="sol">{esc(f["solution"])}</label><select id="sol" name="{f["solution"]}">{sols}</select></div></div>'
-            f'<label for="msg">{esc(f["msg"])}</label><textarea id="msg" name="{f["msg"]}" placeholder="{esc(f["msg_ph"])}"></textarea>'
+            f'<label for="msg">{esc(f["msg"])}</label><textarea id="msg" name="message" placeholder="{esc(f["msg_ph"])}"></textarea>'
             f'<label class="consent"><input type="checkbox" required><span>{esc(f["consent"])}</span></label>'
             f'<button class="btn btn-primary" type="submit">{esc(f["send"])}</button></form>')
     info = "".join(f'<div class="card"><b>{esc(t)}</b><p>{esc(v)}</p></div>' for t, v in C["info"])
@@ -794,14 +796,14 @@ def page_pilot(lang):
     prod = "".join(f'<a class="card accent" style="--accent:{ACCENT[pid]};text-decoration:none;display:block" href="{href(lang,pid)}"><span class="kicker" style="font-size:12px;font-weight:800;letter-spacing:.1em;color:{ACCENT[pid]}">{esc(L["products"][pid]["name"])}</span><h3 style="margin-top:8px">{esc(t)}</h3><p>{esc(d)}</p></a>' for pid, t, d in P["prod"])
     next_url = f'https://{SITE["domain"]}/' + ("" if lang == "tr" else "en/") + PAGES["thanks"][0 if lang == "tr" else 1]
     opt = lambda xs: "".join(f"<option>{esc(x)}</option>" for x in xs)
-    form = (f'<form class="form" action="https://formsubmit.co/{SITE["email"]}" method="POST">'
-            f'<input type="hidden" name="_subject" value="{esc(f["subject"])}"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="{next_url}"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">'
-            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="{f["name"]}" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="{f["company"]}" required></div></div>'
-            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="{f["email"]}" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="{f["phone"]}"></div></div>'
+    form = (f'<form class="form" action="{SITE["form_url"]}" method="POST">'
+            f'<input type="hidden" name="_kind" value="pilot"><input type="hidden" name="_lang" value="{lang}"><input type="hidden" name="_next" value="{next_url}"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">'
+            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="name" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="company" required></div></div>'
+            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="email" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="phone"></div></div>'
             f'<div class="row"><div><label for="sector">{esc(f["sector"])}</label><select id="sector" name="{f["sector"]}">{opt(f["sectors"])}</select></div><div><label for="count">{esc(f["count"])}</label><select id="count" name="{f["count"]}">{opt(f["counts"])}</select></div></div>'
             f'<label for="geo">{esc(f["geo"])}</label><input id="geo" name="{f["geo"]}" placeholder="{esc(f["geo_ph"])}">'
             f'<div class="row"><div><label for="product">{esc(f["product"])}</label><select id="product" name="{f["product"]}">{opt(f["products"])}</select></div><div><label for="start">{esc(f["start"])}</label><select id="start" name="{f["start"]}">{opt(f["starts"])}</select></div></div>'
-            f'<label for="msg">{esc(f["msg"])}</label><textarea id="msg" name="{f["msg"]}" placeholder="{esc(f["msg_ph"])}"></textarea>'
+            f'<label for="msg">{esc(f["msg"])}</label><textarea id="msg" name="message" placeholder="{esc(f["msg_ph"])}"></textarea>'
             f'<label class="consent"><input type="checkbox" required><span>{esc(f["consent"])}</span></label>'
             f'<button class="btn btn-primary" type="submit">{esc(f["send"])}</button></form>')
     after = "".join(f'<div class="card" style="padding:18px 20px"><span class="eyebrow">{esc(n)}</span><h4 style="margin:2px 0 4px">{esc(t)}</h4><p style="font-size:14px">{esc(d)}</p></div>' for n, t, d in P["after"])
