@@ -883,15 +883,12 @@ document.querySelectorAll('.has-sub>a').forEach(function(a){a.addEventListener('
     }
   });
 })();
-// Phone fields shaped as a Turkish number while typing: "0532 123 45 67". A number from another
-// country (+44 …) is left as typed.
+// Phone fields shaped as a Turkish number while typing: "0532 123 45 67" (+90 is dropped).
 document.querySelectorAll('input[type="tel"]').forEach(function (el) {
   el.setAttribute("inputmode", "tel");
   if (!el.placeholder) el.placeholder = "0532 000 00 00";
   el.addEventListener("input", function () {
-    var v = el.value;
-    if (/^\s*(\+|00)(?!90)/.test(v) && v.replace(/\D/g, "").length > 2) return;
-    var d = v.replace(/\D/g, "");
+    var d = el.value.replace(/\D/g, "");
     if (d.indexOf("090") === 0) d = d.slice(1);
     if (d.indexOf("90") === 0) d = d.slice(2);
     if (d && d[0] !== "0") d = "0" + d;
