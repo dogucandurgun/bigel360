@@ -47,3 +47,19 @@ document.querySelectorAll('.has-sub>a').forEach(function(a){a.addEventListener('
     }
   });
 })();
+// Phone fields shaped as a Turkish number while typing: "0532 123 45 67". A number from another
+// country (+44 …) is left as typed.
+document.querySelectorAll('input[type="tel"]').forEach(function (el) {
+  el.setAttribute("inputmode", "tel");
+  if (!el.placeholder) el.placeholder = "0532 000 00 00";
+  el.addEventListener("input", function () {
+    var v = el.value;
+    if (/^\s*(\+|00)(?!90)/.test(v) && v.replace(/\D/g, "").length > 2) return;
+    var d = v.replace(/\D/g, "");
+    if (d.indexOf("090") === 0) d = d.slice(1);
+    if (d.indexOf("90") === 0) d = d.slice(2);
+    if (d && d[0] !== "0") d = "0" + d;
+    d = d.slice(0, 11);
+    el.value = [d.slice(0, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)].filter(Boolean).join(" ");
+  });
+});
