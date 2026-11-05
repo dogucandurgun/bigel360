@@ -1,5 +1,5 @@
 /* BİGEL — bigel360.com  |  Kimlik: Inter, Navy #102A43, Teal #00A6A6 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* Inter is loaded from Google Fonts with preconnect + <link> in each page's <head> (display=swap), not @import. */
 
 :root{
   --navy:#102A43; --teal:#00A6A6; --ink:#17212B; --light:#F4F7F9; --white:#FFFFFF;
@@ -348,3 +348,14 @@ section[id]{scroll-margin-top:84px}
 .thanks-urgent{margin:22px 0 0;font-size:14px;color:var(--muted)}
 .thanks-urgent a{color:var(--teal);font-weight:600;text-decoration:none;white-space:nowrap}
 .thanks-urgent a:hover{text-decoration:underline}
+
+/* Guide articles and the KVKK notice: one readable column */
+.article{max-width:780px}
+.article h2{font-size:clamp(24px,2.6vw,30px);margin:44px 0 14px}
+.article h2:first-child{margin-top:0}
+.article p{font-size:17px;line-height:1.7;color:var(--ink)}
+.article .list{margin:6px 0 18px}
+.article .link-row{margin:8px 0 8px}
+.article-how{margin-top:44px;padding:28px 30px;border-left:3px solid var(--teal);background:var(--light);border-radius:var(--radius)}
+.article-how h2{margin-top:0}
+.article-meta{font-size:14px;color:var(--muted);margin-top:14px}
