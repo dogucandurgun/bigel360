@@ -153,7 +153,7 @@ CONTENT = {
   ],
   "home": {
     "title": "Akaryakıt ve Şarj İstasyonu Saha Operasyonu | BİGEL",
-    "desc": "Akaryakıt ve elektrikli araç şarj istasyonu ağları ile çok lokasyonlu markalar için 81 ilde temizlik, bakım ve denetim. Fotoğraflı kanıt ve skor.",
+    "desc": "Akaryakıt ve elektrikli araç şarj istasyonu ağları ile çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım ve denetim. Fotoğraflı kanıt ve skor.",
     "eyebrow": "Kurumsal Saha Operasyonları",
     "h1": "Sahadaki Gücünüz.",
     "lead": "Çok lokasyonlu markaların temizlik, bakım ve denetim operasyonlarını Türkiye genelinde tek standartla planlıyor, uyguluyor ve fotoğraflı kanıtla raporluyoruz.",
@@ -318,7 +318,7 @@ CONTENT = {
              "b": "Ana sayfaya dön", "b2": "Nasıl çalıştığımızı görün", "urgent": "Acil mi? Hemen ulaşın:"},
   "landings": {
     "fuel_clean": {'title': 'Akaryakıt İstasyonu Temizliği ve Bakımı',
-       'desc': 'Kanopi, totem, pompa adası, pist ve otopark temizliği; bordür, bariyer ve küçük onarımlar. 81 ilde tek standart, fotoğraflı kanıt ve iş emri takibi.',
+       'desc': 'Kanopi, totem, pompa adası, pist ve otopark temizliği; bordür, bariyer ve küçük onarımlar. Türkiye genelinde tek standart ve fotoğraflı kanıt.',
        'crumb': 'Akaryakıt İstasyonu Temizliği ve Bakımı',
        'service': 'Akaryakıt istasyonu temizliği ve bakımı',
        'eyebrow': 'Akaryakıt İstasyonları · CLEAN + CARE',
@@ -354,7 +354,7 @@ CONTENT = {
                               'Preventive Care: arızayı beklemeden periyodik önleyici bakım',
                               'Emergency Care: acil saha müdahalesi'],
                      'note': 'Yüksek uzmanlık ve yasal yetki gerektiren işler (elektrik, mekanik tesisat vb.) uygun uzmanlarla koordine edilir; BİGEL tespit, planlama ve kapanış takibini '
-                             'yönetir. Tank temizliği, topraklama ölçümü ve dispenser kalibrasyonu bu hizmetin kapsamında değildir.'},
+                             'yönetir.'},
                     {'eyebrow': 'Saha güvenliği',
                      'h2': 'Akışı durmayan bir sahada düzenli ve güvenli çalışma.',
                      'lead': 'Akaryakıt istasyonunda temizlik ve bakım, müşteri trafiği sürerken yapılır. Bu yüzden ziyaret planı istasyonun çalışma düzenine göre kurulur ve güvenlik maddeleri '
@@ -366,7 +366,7 @@ CONTENT = {
                               'Kış aylarında kaygan yüzey riskine karşı Seasonal Clean programı',
                               "AUDIT 100'de İş Güvenliği & Risk kategorisi %15 ağırlıkla puanlanır; kritik bulguda anlık bildirim üretilir"]},
                     {'eyebrow': 'Çok lokasyonlu ağlar',
-                     'h2': 'Yüzlerce istasyonda tek temizlik standardı.',
+                     'h2': 'İstasyon sayısı artsa da temizlik standardı aynı kalır.',
                      'lead': "BİGEL'in yolculuğu akaryakıt istasyonu ağlarına yönelik dış alan temizlik ve küçük bakım işleriyle başladı. Öğrendiğimiz şey netti: işi yapmak yetmez; her noktada "
                              'aynı standardı tutmak ve bunu merkeze kanıtlamak gerekir.',
                      'list': ['Tüm istasyonlar için ortak hizmet tanımı, kontrol listesi ve uygulama standardı',
@@ -432,7 +432,7 @@ CONTENT = {
                ('Temizlik ve bakım işinin yapıldığı nasıl doğrulanır?',
                 "Her ziyaret öncesi ve sonrası fotoğraf, GPS ve zaman damgası ile kayda geçer; kontrol listesi ve zorunlu fotoğrafla doğrulanır. Tüm kayıtlar FIELD360'ta istasyon bazında "
                 'izlenir.'),
-               ('Yüzlerce istasyonda aynı temizlik standardı nasıl sağlanır?',
+               ('Çok sayıda istasyonda aynı temizlik standardı nasıl sağlanır?',
                 'Tüm istasyonlar ortak hizmet tanımı, kontrol listesi ve fotoğraf açısıyla çalışır; ziyaretler merkezden planlanır, 81 ile erişen bölgesel ekiplerle uygulanır. Sonuçlar lokasyon '
                 've bölge bazında karşılaştırılır.'),
                ('Denetimde çıkan bulgular nasıl kapanır?',
@@ -477,7 +477,7 @@ CONTENT = {
                      'lead': "Akaryakıt istasyonu, risk toleransı düşük bir sahadır. Bu yüzden AUDIT 100'de en yüksek ağırlık İş Güvenliği & Risk kategorisine verilir ve kritik bulgular raporu "
                              'beklemez.',
                      'list': ["İş Güvenliği & Risk kategorisi skorun %15'ini oluşturur",
-                              'Kritik bulguda anlık bildirim; kritik bulgular aynı gün iletilir',
+                              'Kritik bulguda rapor beklenmeden anlık bildirim',
                               'Bulgular kritik, yüksek, orta ve düşük olarak önceliklendirilir',
                               'Saha ekipleri kıyafet, kimlik, İSG ve dijital kayıt standardına göre değerlendirilir',
                               'Elektrik ve mekanik tesisat gibi yasal yetki gerektiren işler uygun uzmanlarla koordine edilir; BİGEL tespit, planlama ve kapanış takibini yönetir']},
@@ -692,7 +692,7 @@ CONTENT = {
                                ('Kapanış', 'Müdahale sonrası fotoğraf ve kalite kontrolüyle kapanır.')],
                      'links': [('Şarj istasyonu bakımı', 'ev_care', ''), ('BİGEL CARE', 'care', '')]},
                     {'eyebrow': 'Ağ yönetimi',
-                     'h2': 'Yüzlerce şarj noktası, tek ekranda.',
+                     'h2': 'Tüm şarj noktaları tek ekranda.',
                      'lead': 'Lokasyonlar Türkiye haritası üzerinde skor rengiyle gösterilir. Bölgeden şehre, şehirden tek bir şarj noktasına inilir; skor kartı, fotoğraflar, bulgular ve aksiyon '
                              'geçmişi aynı yerde görülür. Ziyaretler FIELD360 ile planlanır, SLA hedefleri merkezden izlenir.',
                      'list': ['81 ile erişim, bölgesel saha ekipleri',
@@ -712,7 +712,7 @@ CONTENT = {
        'faq': [('Şarj istasyonu denetiminde neler kontrol edilir?',
                 'EV Audit30, 30 standart kontrolü altı alanda toplar: güvenlik, cihaz bütünlüğü, işlev işaretleri, kullanıcı deneyimi, temizlik ve çevre, marka standardı. Sahada ünitenin dış '
                 'gövdesi, ekran, kablo düzeni, park cebi, zemin ve yönlendirme incelenir.'),
-               ('EV Audit30 resmi (EPDK) denetimin yerini tutar mı?',
+               ('EV Audit30 resmi denetimin yerini tutar mı?',
                 'Hayır. EV Audit30 resmi bir denetim ya da elektriksel muayene değildir. Şarj noktalarınızın saha durumunu fotoğraflı, GPS ve zaman damgalı kayıtla belgeler; bu kayıt iç '
                 'hazırlığınızı destekler.'),
                ('Çalışmayan veya sorunlu şarj noktaları sahada nasıl tespit edilir?',
@@ -774,7 +774,7 @@ CONTENT = {
   ],
   "home": {
     "title": "Fuel and EV Charging Station Field Operations | BİGEL",
-    "desc": "Cleaning, maintenance and audits in 81 provinces for fuel and EV charging station networks and multi-site brands. Photo evidence and scores.",
+    "desc": "Cleaning, maintenance and audits across Türkiye for fuel and EV charging station networks and multi-site brands. Photo evidence and scores.",
     "eyebrow": "Corporate Field Operations",
     "h1": "Your Strength in the Field.",
     "lead": "We plan, execute and report the cleaning, maintenance and audit operations of multi-site brands across Türkiye, to one standard and with photo evidence.",
@@ -815,7 +815,7 @@ CONTENT = {
          "list": ["A common checklist for all sites", "Standard photo angles and quality criteria", "Site-level scores and non-conformity tracking", "Comparative dashboard for head office"], "img": "exterior.jpg", "tag": "Façade and entrance · Retail", "reverse": True},
       ]},
     "care": {
-      "title": "BİGEL CARE — Physical site maintenance and field response",
+      "title": "BİGEL CARE — Site maintenance and field response",
       "desc": "Minor maintenance, repairs and field response managed from one centre across Türkiye. Detection, work order, execution and photo-verified closure.",
       "lead": "We manage the minor maintenance, repair and field response needs of brand sites from one centre. Detection, planning, on-site execution, photography and closure tracking are all handled by BİGEL.",
       "sections": [
@@ -852,7 +852,7 @@ CONTENT = {
          "note": "Quotes are based on number of sites, question count, photo requirements, travel, audit frequency, report format and dashboard scope."},
       ]},
     "field360": {
-      "title": "BİGEL FIELD360 — End-to-end field operations management",
+      "title": "BİGEL FIELD360 — End-to-end field operations",
       "desc": "Cleaning, maintenance, audit and field actions managed under one contract, one operating standard and one reporting flow.",
       "lead": "We bring cleaning, maintenance, audit and field actions together under one contract, one operating standard and one reporting flow. One partner instead of a scattered supplier base.",
       "sections": [
@@ -939,7 +939,7 @@ CONTENT = {
              "b": "Back to home", "b2": "See how we work", "urgent": "Urgent? Reach us now:"},
   "landings": {
     "fuel_clean": {'title': 'Fuel Station Cleaning and Maintenance',
-       'desc': 'Canopy, totem, pump island, forecourt and car park cleaning plus kerb, barrier and minor repairs. One standard in 81 provinces, photo-verified.',
+       'desc': 'Canopy, totem, pump island, forecourt and car park cleaning plus kerb, barrier and minor repairs. One standard across Türkiye, photo-verified.',
        'crumb': 'Fuel Station Cleaning and Maintenance',
        'service': 'Fuel station cleaning and maintenance',
        'eyebrow': 'Fuel Stations · CLEAN + CARE',
@@ -975,7 +975,7 @@ CONTENT = {
                               'Preventive Care: periodic maintenance before things break',
                               'Emergency Care: emergency field response'],
                      'note': 'Work requiring specialist skills or legal certification (electrical, mechanical installations, etc.) is coordinated with qualified specialists; BİGEL manages '
-                             'detection, planning and closure tracking. Tank cleaning, earthing measurement and dispenser calibration are outside the scope of this service.'},
+                             'detection, planning and closure tracking.'},
                     {'eyebrow': 'Site safety',
                      'h2': 'Orderly, safe work on a site that never stops.',
                      'lead': "At a fuel station, cleaning and maintenance happen while customers keep coming. Visit plans are built around the station's operating pattern, and safety items are "
@@ -987,7 +987,7 @@ CONTENT = {
                               'Seasonal Clean programme against slip risk in winter',
                               'In AUDIT 100, Safety & Risk carries a 15% weight; critical findings trigger an instant alert']},
                     {'eyebrow': 'Multi-site networks',
-                     'h2': 'One cleaning standard across hundreds of stations.',
+                     'h2': 'More stations, the same cleaning standard.',
                      'lead': "BİGEL's journey began with exterior cleaning and minor maintenance for fuel station networks. The lesson was clear: doing the work is not enough; every site has to "
                              'hold the same standard, and head office needs proof.',
                      'list': ['One service definition, checklist and execution standard for every station',
@@ -1051,7 +1051,7 @@ CONTENT = {
                ('How is completed cleaning and maintenance verified?',
                 'Every visit is recorded with before and after photos, GPS and a timestamp and verified against the checklist and mandatory photos. All records are tracked per station in '
                 'FIELD360.'),
-               ('How do you keep one cleaning standard across hundreds of stations?',
+               ('How do you keep one cleaning standard across many stations?',
                 'Every station works to the same service definition, checklist and photo angles; visits are planned centrally and delivered by regional teams reaching all 81 provinces. Results '
                 'are compared by site and region.'),
                ('How are audit findings closed?',
@@ -1095,7 +1095,7 @@ CONTENT = {
                      'h2': 'At a fuel station, safety comes first.',
                      'lead': 'A fuel station leaves little room for risk. That is why Safety & Risk carries the highest weight in AUDIT 100, and critical findings do not wait for the report.',
                      'list': ['Safety & Risk makes up 15% of the score',
-                              'Instant alert on critical findings; critical findings are reported the same day',
+                              'Instant alert on critical findings, without waiting for the report',
                               'Findings are prioritised as critical, high, medium or low',
                               'Field teams are assessed against uniform, ID, occupational health and safety and digital record standards',
                               'Work requiring legal authorisation, such as electrical or mechanical installations, is coordinated with qualified specialists; BİGEL manages detection, planning '
@@ -1175,8 +1175,8 @@ CONTENT = {
        'h1': 'EV charging station site maintenance and cleaning.',
        'lead': "Remote monitoring shows you the device's technical state. Only a team on site can keep up the conditions drivers actually see. BİGEL maintains charger housings, cable management, "
                'bays, floors and wayfinding to one standard across your entire network, with planning, execution and photo-verified reporting run from a single centre.',
-       'b1': 'Apply for a pilot',
-       'b2': 'Get a quote',
+       'b1': 'Apply for a Pilot',
+       'b2': 'Get a Quote',
        'sections': [{'eyebrow': 'Scope',
                      'h2': 'Site and visual upkeep: everything the driver sees.',
                      'lead': 'A charge point experience depends on more than whether the device works. A clean, intact unit, a cable that is not left on the ground, a bay that is clear and easy '
@@ -1259,7 +1259,7 @@ CONTENT = {
                 'Yes. The Audit30 pilot for EV networks covers 10 sites over 2 weeks in 2 rounds. At the end you have baseline scores, photo-verified findings and action proposals.')],
        'cta': {'h2': 'Start with a pilot on your charging network.',
                'p': 'The Audit30 pilot covers 10 sites over 2 weeks in 2 rounds. Baseline scores, photo-verified findings and action proposals come together in one report.',
-               'b1': 'Apply for a pilot',
+               'b1': 'Apply for a Pilot',
                'b2': 'Get a Quote'}},
     "ev_audit": {'title': 'EV Charging Station Audit — EV Audit30',
        'desc': 'Measure the site conditions EV drivers actually meet: 30 checks, 6 weighted areas, a score out of 100. Instant alerts on critical findings.',
@@ -1318,14 +1318,14 @@ CONTENT = {
                                ('Closure', 'Closed with an after photo and quality check.')],
                      'links': [('EV charging station maintenance', 'ev_care', ''), ('BİGEL CARE', 'care', '')]},
                     {'eyebrow': 'Network management',
-                     'h2': 'Hundreds of charging points, one screen.',
+                     'h2': 'Every charging point on one screen.',
                      'lead': 'Sites are shown on a map of Türkiye in their score colour. Drill down from region to city to a single charging point and see the scorecard, photos, findings and '
                              'action history in one place. Visits are planned in FIELD360 and SLA targets are tracked centrally.',
                      'list': ['Reach across 81 provinces with regional field teams',
                               'Shared checklist, photo angles and closure rules',
                               'Average score, critical finding count and open actions',
                               'Tracking of planned, completed and delayed visits',
-                              'Field teams are assessed against dress, ID, health and safety, and digital record standards']},
+                              'Field teams are assessed against uniform, ID, occupational health and safety and digital record standards']},
                     {'eyebrow': 'Pilot',
                      'h2': 'Audit30 pilot: 10 sites, 2 weeks, 2 rounds.',
                      'lead': 'Before rolling out across the network, we measure a baseline score at selected sites, close the findings and verify progress in a second round.',
@@ -1338,7 +1338,7 @@ CONTENT = {
        'faq': [('What is checked in an EV charging station audit?',
                 'EV Audit30 groups 30 standard checks into six areas: safety, device integrity, function indicators, user experience, cleanliness and surroundings, and brand standard. On site, '
                 'the team inspects the charger housing, screen, cable management, parking bay, floor and wayfinding.'),
-               ('Does EV Audit30 replace an official (EPDK) inspection?',
+               ('Does EV Audit30 replace an official inspection?',
                 "No. EV Audit30 is neither an official inspection nor an electrical test. It documents your charging points' site condition with photo, GPS and time-stamped records that support "
                 'your internal preparation.'),
                ('How are faulty or problematic charging points identified on site?',
