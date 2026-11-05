@@ -56,6 +56,7 @@ p{margin:0 0 1em}
 /* Header */
 .header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:20px;min-height:74px}
+.brand{flex-shrink:0}
 .brand img{width:148px}
 .menu{margin-left:auto;display:flex;align-items:center;gap:6px}
 .menu>li{list-style:none;position:relative}
@@ -388,3 +389,6 @@ section[id]{scroll-margin-top:84px}
   .footer a{min-height:40px;display:flex;align-items:center;padding:0}
   .crumbs a{padding:8px 0}
 }
+/* Mid widths (small laptops, landscape tablets): the logo must not shrink away, so the portal button shows only its lock icon. */
+@media (max-width:1120px) and (min-width:841px){.btn-portal{font-size:0;gap:0;padding:9px 10px}}
+@media (max-width:980px) and (min-width:841px){.brand img{width:112px}.menu a{font-size:12.5px;padding:10px 5px}.nav{gap:8px}.nav-actions{gap:6px;margin-left:4px}}

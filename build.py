@@ -9,7 +9,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # ---------------------------------------------------------------- SITE DATA
 # E-posta ve telefon doğrulandı (2026-10-19); adres, unvan, MERSİS ve sicil no ticaret sicil belgesinden alındı.
 # Şirket 13.10.2025'te tescil edildi; "founded" kuruluş yılı değil, ekibin saha deneyiminin başladığı yıldır.
-# Rakamlar (bölge, ziyaret, oran) henüz doğrulanmadı.
+# Rakamlar (bölge, ekip, ziyaret, oran) sahibi tarafından doğrulandı (2026-11-05).
 SITE = {
     "domain": "bigel360.com",
     "email": "info@bigel360.com",
