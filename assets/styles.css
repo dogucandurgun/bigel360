@@ -359,3 +359,5 @@ section[id]{scroll-margin-top:84px}
 .article-how{margin-top:44px;padding:28px 30px;border-left:3px solid var(--teal);background:var(--light);border-radius:var(--radius)}
 .article-how h2{margin-top:0}
 .article-meta{font-size:14px;color:var(--muted);margin-top:14px}
+.article{overflow-wrap:break-word}
+@media (max-width:560px){.article p{font-size:16px}.article-how{padding:20px 18px}.article h2{margin-top:34px}}

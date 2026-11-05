@@ -1460,11 +1460,11 @@ CONTENT["tr"]["landings"].update({
                 ("Franchise mağazalarda aynı görsel standart nasıl sağlanır?", "BİGEL merkez marka ile tek sözleşme ve tek hizmet tanımıyla çalışır. Tüm şubelerde ortak kontrol listesi, standart fotoğraf açıları ve kalite kriterleri kullanılır; şube bazında skor ve uygunsuzluklar merkez için karşılaştırmalı dashboard'da izlenir."),
                 ("Temizliğin yapıldığı nasıl doğrulanır?", "Her ziyarette standart açılardan öncesi ve sonrası fotoğraf çekilir; kayıt GPS ve zaman damgası taşır. Kontrol listesi, sonrası fotoğrafı ve bulgu bildirimiyle tamamlanma kaydı oluşur."),
                 ("Mağazadaki küçük hasarlar da giderilebilir mi?", "Evet. BİGEL CARE'in Retail & AVM Care paketi raf, teşhir ünitesi ve vitrin çerçevesi gibi elemanları kapsar. Tespit, iş emri, uygulama ve fotoğraflı kapanış tek akışta yürür; elektrik gibi yetki gerektiren işler uygun uzmanlarla koordine edilir."),
-                ("Hangi illerde hizmet veriyorsunuz?", "BİGEL 81 ile erişimi olan bölgesel saha ekip ağıyla çalışır. Merkezi planlama ve kalite kontrolü İstanbul'dan yürütülür, uygulama bölgesel ekiplerle yapılır.")],
+                ("Hangi illerde hizmet veriyorsunuz?", "BİGEL Türkiye genelinde bölgesel saha ekip ağıyla çalışır. Merkezi planlama ve kalite kontrolü İstanbul'dan yürütülür, uygulama bölgesel ekiplerle yapılır.")],
         "cta": {"h2": "Şubelerinizin mağaza önünü tek standarda taşıyalım.", "p": "Seçili mağazalarda pilotla başlayın. Başlangıç skorları, fotoğraflı bulgular ve yaygınlaştırma planı pilotun sonunda elinizde.",
                 "b1": "Pilot Başvurusu", "b2": "Teklif Al"}},
     "bank": {
-        "title": "Banka Şubesi ve ATM Kabini Temizliği, Bakımı",
+        "title": "Banka Şubesi ve ATM Kabini Temizliği ve Bakımı",
         "desc": "Banka şubesi temizliği ve ATM kabini bakımı: giriş, cam, cephe, tabela ve banko tek standartla, mesai dışında planlanır ve fotoğrafla doğrulanır.",
         "crumb": "Banka Şubesi ve ATM Kabini Temizliği",
         "service": "Banka şubesi ve ATM kabini temizliği ve bakımı",
@@ -1629,7 +1629,7 @@ CONTENT["en"]["landings"].update({
                 ("How do you keep the same visual standard across franchise stores?", "BİGEL works with head office under one contract and one service definition. Every store uses a shared checklist, standard photo angles and quality criteria; store scores and non-conformities are tracked on a comparative dashboard for head office."),
                 ("How do you verify that the cleaning was done?", "Each visit includes before and after photos from standard angles, with GPS and a time stamp. The checklist, after photo and any reported findings form the completion record."),
                 ("Can minor damage in the store be fixed too?", "Yes. BİGEL CARE's Retail & Mall Care package covers shelving, display units and shopfront frames, from detection to photo-verified closure. Work requiring authorisation, such as electrical, is coordinated with qualified specialists."),
-                ("Where in Türkiye do you operate?", "BİGEL works with a regional field team network with access to all 81 provinces. Central planning and quality control are run from Istanbul; execution is carried out by regional teams.")],
+                ("Where in Türkiye do you operate?", "BİGEL works across Türkiye with a regional field team network. Central planning and quality control are run from Istanbul; execution is carried out by regional teams.")],
         "cta": {"h2": "Let's bring every store front to one standard.", "p": "Start with a pilot in selected stores. At the end you hold baseline scores, photo-verified findings and a roll-out plan.",
                 "b1": "Apply for a Pilot", "b2": "Get a Quote"}},
     "bank": {
@@ -1742,8 +1742,8 @@ CONTENT["en"]["landings"].update({
         "cta": {"h2": "Let's define a pilot scope for your branch network.", "p": "Start with selected branches and see baseline scores, photo-backed findings and a roll-out plan based on real field data at the end of the pilot.",
                 "b1": "Start a Pilot", "b2": "Get a Quote"}},
 })
-CONTENT["tr"]["ui"]["short"].update({"retail": "Dış alan temizliği ve bakımı", "bank": "Şube ve ATM temizliği", "restaurant": "Dış alan temizliği ve bakımı"})
-CONTENT["en"]["ui"]["short"].update({"retail": "Exterior cleaning and maintenance", "bank": "Branch and ATM cleaning", "restaurant": "Exterior cleaning and maintenance"})
+CONTENT["tr"]["ui"]["short"].update({"retail": "Mağaza temizliği ve bakımı", "bank": "Şube ve ATM temizliği", "restaurant": "Dış cephe ve tabela temizliği"})
+CONTENT["en"]["ui"]["short"].update({"retail": "Store cleaning and maintenance", "bank": "Branch and ATM cleaning", "restaurant": "Exterior and sign cleaning"})
 CONTENT["tr"]["ui"]["footer"].update({"retail": "Zincir mağaza temizliği", "bank": "Banka şubesi ve ATM temizliği", "restaurant": "Restoran dış alan temizliği"})
 CONTENT["en"]["ui"]["footer"].update({"retail": "Retail store cleaning", "bank": "Bank branch and ATM cleaning", "restaurant": "Restaurant exterior cleaning"})
 
@@ -1775,7 +1775,7 @@ CONTENT["tr"]["guides"] = {
         "h1": "Akaryakıt istasyonu kanopisi ne sıklıkla temizlenmeli?",
         "lead": "Kısa cevap: Akaryakıt istasyonu kanopisi için herkese uyan tek bir temizlik aralığı yoktur. Doğru sıklık; istasyonun trafiğine, konumuna (otoyol, şehir içi, sanayi bölgesi), mevsime ve "
                 "marka standardına göre değişir. En sağlıklı aralık, periyodik saha kontrollerinde kaydedilen bulgulara bakılarak belirlenir ve gerektikçe güncellenir.",
-        "intro": "Bu rehberde kanopi derken çadır ya da davlumbaz değil, akaryakıt istasyonunda pompa adalarının üzerini örten, marka kimliğini taşıyan büyük tavan yapısını kastediyoruz. Akaryakıt "
+        "intro": "Bu rehberde kanopi derken mağaza tentesi ya da sundurma değil, akaryakıt istasyonunda pompa adalarının üzerini örten, marka kimliğini taşıyan büyük tavan yapısını kastediyoruz. Akaryakıt "
                  "istasyonu kanopisi istasyonun uzaktan görünen yüzüdür; alın bandındaki renkler soluk görünüyorsa, tavanda kurum lekeleri birikmişse sürücü bunu daha istasyona girmeden fark eder. "
                  "Aşağıda kanopide hangi kirlerin biriktiğini, temizlik sıklığını hangi etkenlerin belirlediğini, istasyon çalışırken işin nasıl planlanacağını ve yapılan temizliğin nasıl kanıtlanacağını "
                  "adım adım ele alıyoruz.",
@@ -1793,7 +1793,7 @@ CONTENT["tr"]["guides"] = {
                       "Mevsim: Kış kiri, çamur, yaprak ve yosun mevsime bağlı olarak artar. Mevsimsel bir program bu dönemleri önceden takvime koyar.",
                       "Kampanya ve marka değişimi: Yeni bir kampanya giydirmesi, logo yenilemesi ya da marka değişimi öncesinde kanopinin temiz olması gerekir; aksi halde yeni görseller eski kirin yanında sönük kalır.",
                       "Denetim bulgusu: Periyodik saha denetimlerinde kanopi ile ilgili tekrar eden bulgular, mevcut aralığın yetersiz kaldığını gösterir. Bulgu çıkmıyorsa aralık korunabilir; sürekli çıkıyorsa sıklık artırılmalıdır.",
-                      "Marka standardı: Bazı ağlar görünüm için kendi iç standartlarını belirler. Plan, ilgili mevzuat ve marka standartlarıyla uyumlu olmalıdır."],
+                      "Marka standardı: Bazı ağlar görünüm için kendi iç standartlarını belirler. Temizlik planı bu standartla uyumlu olmalıdır."],
              "after": "Pratik bir yöntem: Ağdaki istasyonları trafik ve konuma göre birkaç gruba ayırın, her gruba bir başlangıç aralığı verin ve ilk birkaç ziyaretin öncesi fotoğraflarını karşılaştırarak aralığı daraltın ya da genişletin."},
             {"h2": "İstasyon çalışırken temizlik nasıl planlanır?",
              "paragraphs": ["Akaryakıt istasyonları çoğu zaman kesintisiz çalışır. Kanopi temizliği pompa adalarının hemen üzerinde yapıldığı için müşteri trafiğiyle çakışmaması gerekir. En uygun zaman, kapanış sonrası ya da trafiğin en düşük olduğu saatlerdir. Gece planlanan temizlik, işletmenin çalışma düzenini etkilemeden yapılır.",
@@ -1818,7 +1818,7 @@ CONTENT["tr"]["guides"] = {
         ],
         "how": {"h2": "BİGEL nasıl yapar?",
                 "paragraphs": ["BİGEL CLEAN, kanopi, tabela, totem, cephe ve otopark temizliğini Türkiye genelinde tek standartla yönetir. Kanopi Clean; atmosferik kir, toz, egzoz izi, kurum ve biyolojik kirlerin periyodik temizliğini kapsar. Night Clean kapanış sonrası, Emergency Clean ani kirlenme ya da denetim öncesi, Seasonal Clean ise kış kiri, yosun, yaprak ve çamura göre planlanır. Her ziyaret öncesi ve sonrası fotoğrafla doğrulanır.",
-                               "Periyodik paket aylık, iki aylık, üç aylık veya mevsimsel olarak kurulabilir; doğru seçeneği istasyonunuzun koşullarına göre birlikte belirleriz. Kanopinin durumunu bağımsız ölçmek isterseniz AUDIT 100 ile fotoğraflı saha denetimi yapılır. Merkezi planlama ve bölgesel ekiplerle 81 ile erişim sağlanır."],
+                               "Periyodik paket aylık, iki aylık, üç aylık veya mevsimsel olarak kurulabilir; doğru seçeneği istasyonunuzun koşullarına göre birlikte belirleriz. Kanopinin durumunu bağımsız ölçmek isterseniz AUDIT 100 ile fotoğraflı saha denetimi yapılır. Planlama merkezden yapılır, uygulama Türkiye genelinde bölgesel ekiplerle yürütülür."],
                 "links": [("Akaryakıt istasyonu temizliği", "fuel_clean", ""), ("Akaryakıt istasyonu denetimi", "fuel_audit", ""), ("BİGEL CLEAN", "clean", ""), ("Pilot başlatın", "pilot", "basvuru")]},
         "faq": [("Akaryakıt istasyonu kanopisi ne sıklıkla temizlenmeli?", "Herkese uyan tek bir aralık yoktur. Sıklık; trafik, konum, mevsim ve marka standardına göre belirlenir. En doğru yöntem, bir başlangıç aralığıyla başlayıp periyodik saha kontrollerindeki bulgulara göre aralığı güncellemektir."),
                 ("Kanopi temizliği istasyon açıkken yapılabilir mi?", "Yapılabilir, ancak müşteri trafiğiyle çakışmaması için kapanış sonrası ya da trafiğin en düşük olduğu saatler tercih edilir. Çalışma alanı işaretlenir ve hangi pompa adalarının ne zaman kapatılacağı istasyon sorumlusuyla önceden netleştirilir."),
@@ -1873,7 +1873,7 @@ CONTENT["tr"]["guides"] = {
                 ("Uzaktan izleme varken saha kontrolüne neden ihtiyaç var?", "Uzaktan izleme cihazın teknik durumunu gösterir. Park cebinin işgal edilmesi, kablonun yerde kalması, kirli bir ekran ya da görünmeyen bir yönlendirme tabelası gibi kullanıcı deneyimini etkileyen koşullar ancak sahada görülür."),
                 ("Kontrolde hangi fotoğraflar çekilmeli?", "Her ziyarette aynı altı kare çekilmelidir: ön, sağ, sol, ekran, kablo ve park alanı. Bulgu varsa yakın plan bir fotoğraf ve kısa açıklama eklenir.")]},
     "g_fuel_audit": {
-        "title": "Akaryakıt İstasyonu Denetim Kriterleri",
+        "title": "Akaryakıt Bayi Denetim Kriterleri ve Kontrol Listesi",
         "desc": "Bayi standart denetiminde kanopi, totem, pompa adası ve market girişinde neye bakılır? Denetim alanları, skorlama, kanıt kuralı ve sıklık.",
         "crumb": "Denetim kriterleri",
         "h1": "Akaryakıt istasyonu denetim kriterleri: bayi standart denetiminde neye bakılır?",
@@ -1990,7 +1990,7 @@ CONTENT["en"]["guides"] = {
         "h1": "How often should a fuel station canopy be cleaned?",
         "lead": "Short answer: there is no single cleaning interval that suits every fuel station canopy. The right frequency depends on the station's traffic, its location (motorway, city or industrial "
                 "area), the season and the brand standard. The most reliable interval is set from the findings of periodic site checks and adjusted as they change.",
-        "intro": "In this guide, canopy means the large roof structure over the pump islands of a fuel station that carries the brand identity, not a tent or a kitchen hood. The fuel station canopy is the "
+        "intro": "In this guide, canopy means the large roof structure over the pump islands of a fuel station that carries the brand identity, not a shop awning or porch roof. The fuel station canopy is the "
                  "face of the station seen from the road: if the fascia colours look faded or soot has built up on the ceiling, drivers notice before they even pull in. Below we cover what kinds of dirt "
                  "build up on a canopy, which factors set the cleaning frequency, how to plan the work while the station is open and how to prove the cleaning was done.",
         "sections": [
@@ -2006,7 +2006,7 @@ CONTENT["en"]["guides"] = {
                       "Season: winter grime, mud, leaves and moss rise with the seasons. A seasonal programme puts these periods in the calendar in advance.",
                       "Campaigns and rebranding: before new campaign graphics, a logo refresh or a brand change, the canopy needs to be clean, otherwise new visuals look dull next to old grime.",
                       "Audit findings: recurring canopy findings in periodic site audits show the current interval is not enough. If no findings appear, the interval can stay; if they keep appearing, frequency should go up.",
-                      "Brand standard: some networks set their own internal appearance standards. The plan should align with the applicable regulations and brand standards."],
+                      "Brand standard: some networks set their own internal appearance standards. The cleaning plan should align with them."],
              "after": "A practical method: group the network's stations by traffic and location, give each group a starting interval, then compare the before photos of the first few visits to tighten or relax it."},
             {"h2": "Cleaning while the station is open",
              "paragraphs": ["Fuel stations often run without a break. Because canopy cleaning happens right above the pump islands, it must not clash with customer traffic. The best time is after closing or during the quietest hours. Night cleaning is done without disrupting the station's operations.",
@@ -2031,7 +2031,7 @@ CONTENT["en"]["guides"] = {
         ],
         "how": {"h2": "How BİGEL does it",
                 "paragraphs": ["BİGEL CLEAN manages canopy, signage, totem, façade and car park cleaning across Türkiye to one standard. Canopy Clean covers the periodic removal of atmospheric dirt, dust, exhaust marks, soot and biological soiling. Night Clean is scheduled after closing hours, Emergency Clean responds to sudden soiling or pre-audit needs, and Seasonal Clean is built around winter grime, moss, leaves and mud. Every visit is verified with before and after photos.",
-                               "A periodic package can be monthly, bi-monthly, quarterly or seasonal; we set the right option together based on your stations' conditions. To measure canopy condition independently, AUDIT 100 provides photo-verified site audits. Central planning and regional teams give access to 81 provinces."],
+                               "A periodic package can be monthly, bi-monthly, quarterly or seasonal; we set the right option together based on your stations' conditions. To measure canopy condition independently, AUDIT 100 provides photo-verified site audits. Planning is central and delivery runs through regional teams across Türkiye."],
                 "links": [("Fuel station cleaning", "fuel_clean", ""), ("Fuel station audit", "fuel_audit", ""), ("BİGEL CLEAN", "clean", ""), ("Start a pilot", "pilot", "apply")]},
         "faq": [("How often should a fuel station canopy be cleaned?", "There is no one-size-fits-all interval. Frequency depends on traffic, location, season and brand standard. The most reliable approach is to start with an initial interval and adjust it based on findings from periodic site checks."),
                 ("Can the canopy be cleaned while the station is open?", "Yes, but after closing or the quietest hours are preferred so the work does not clash with customer traffic. The work area is marked and the station manager agrees in advance which pump islands close and when."),
@@ -2085,7 +2085,7 @@ CONTENT["en"]["guides"] = {
                 ("Why do I need site checks if I have remote monitoring?", "Remote monitoring shows the device's technical state. Conditions that affect the driver, such as an occupied bay, a cable on the ground, a dirty screen or a sign that cannot be seen, are only visible on site."),
                 ("Which photos should be taken during a check?", "The same six shots at every visit: front, right, left, screen, cable and bay. If there is a finding, add a close-up and a short note.")]},
     "g_fuel_audit": {
-        "title": "Fuel Station Audit Criteria: What to Check",
+        "title": "Fuel Station Audit Checklist: Brand Standard Criteria",
         "desc": "What does a fuel station brand standard audit check? Canopy, pylon, pump island and shop entrance criteria, scoring, evidence rules and frequency.",
         "crumb": "Audit criteria",
         "h1": "Fuel station audit criteria: what does a brand standard audit check?",
