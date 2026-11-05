@@ -13,8 +13,13 @@ SITE = {
     "email": "info@bigel360.com",
     "phone": "+90 532 293 22 33",
     "phone_href": "+905322932233",
-    "address_tr": "Bağlarbaşı Mah. İncilik Sok. No:1 B Blok D:2, Maltepe / İstanbul",
-    "address_en": "Bağlarbaşı Mah. İncilik Sok. No:1 Block B Apt. 2, Maltepe / Istanbul, Türkiye",
+    # Address parts: the same text is used in the JSON-LD, the footer and the contact page (NAP consistency
+    # with the Google Business Profile "BİGEL360"). address_tr is built from these parts below.
+    "street": "Bağlarbaşı Mah. İncilik Sok. No:1 B Blok D:2",
+    "postal_code": "34844",
+    "locality": "Maltepe",
+    "region": "İstanbul",
+    "country": "TR",
     "linkedin": "https://www.linkedin.com/company/bigel360",
     "founded": "2018",
     "regions": "60",
@@ -30,7 +35,26 @@ SITE = {
     # Teklif ve pilot formları buraya gider; talepler panelde Merkez > Site Talepleri'nde görünür.
     "form_url": "https://panel.bigel360.com/api/site-talep",
 }
+SITE["address_tr"] = f'{SITE["street"]}, {SITE["postal_code"]} {SITE["locality"]} / {SITE["region"]}'
+SITE["address_en"] = SITE["address_tr"]  # one address text on every page, identical to the JSON-LD
 SHOW_PORTAL = True
+
+def org_ld(lang):
+    """The company entity, the same on every page: Organization + LocalBusiness (ProfessionalService) under
+    one @id that WebSite, Service and Article nodes point to. Name, address and phone match the footer
+    and the contact page character for character."""
+    base = f'https://{SITE["domain"]}'
+    return {"@type": ["Organization", "ProfessionalService"], "@id": base + "/#organization", "name": "BİGEL",
+            "alternateName": ["BİGEL360", "BİGEL 360", "bigel360.com"], "url": base + "/",
+            "logo": {"@type": "ImageObject", "@id": base + "/#logo", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512, "caption": "BİGEL"},
+            "image": base + "/assets/icons/og-image.jpg", "description": CONTENT[lang]["home"]["desc"],
+            "email": SITE["email"], "telephone": SITE["phone"],
+            "address": {"@type": "PostalAddress", "streetAddress": SITE["street"], "postalCode": SITE["postal_code"],
+                        "addressLocality": SITE["locality"], "addressRegion": SITE["region"], "addressCountry": SITE["country"]},
+            "areaServed": {"@type": "Country", "name": "Türkiye"},
+            "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00"}],
+            "sameAs": [SITE["linkedin"]],
+            "contactPoint": [{"@type": "ContactPoint", "contactType": "sales", "email": SITE["email"], "telephone": SITE["phone"], "areaServed": "TR", "availableLanguage": ["Turkish", "English"]}]}
 
 PAGES = {  # id: (tr file, en file)
     "home": ("index.html", "index.html"),
@@ -62,6 +86,9 @@ PAGES = {  # id: (tr file, en file)
     "kvkk": ("kvkk.html", "privacy.html"),
     "thanks": ("tesekkurler.html", "thank-you.html"),
     "portal": ("portal.html", "portal.html"),
+    # Not-found page: GitHub Pages serves /404.html for any missing URL. Built in Turkish only (with an
+    # English line); its EN counterpart is the EN home page. noindex, out of the sitemap.
+    "notfound": ("404.html", "index.html"),
 }
 PRODUCTS = ["clean", "care", "audit", "field360"]
 ACCENT = {"clean": "var(--clean)", "care": "var(--care)", "audit": "var(--audit)", "field360": "var(--field)",
@@ -104,10 +131,18 @@ IMG_SIZE = {"logo/audit.png": (520, 388), "logo/audit100.png": (520, 355), "logo
             "logo/tier-basic.jpg": (600, 386), "logo/tier-pro.jpg": (600, 386), "logo/tier-business.jpg": (600, 386), "logo/tier-360.jpg": (600, 386),
             "img/exterior.jpg": (1400, 933), "img/hero.jpg": (1600, 900), "img/retail.jpg": (1400, 933), "img/station.jpg": (1400, 788), "img/tablet.jpg": (1400, 788)}
 
-def img(lang, path, alt, cls="", lazy=True):
+def img(lang, path, alt, cls="", lazy=True, priority=False):
+    """<img> with its intrinsic size. lazy: below the fold (loading=lazy, decoding=async); priority: the
+    above-the-fold logo/hero image (fetchpriority=high). When scripts/make_webp.py has written a smaller
+    .webp copy, it is offered through <picture> and the PNG/JPG stays as the fallback (picture is
+    display:contents in the CSS, so the layout is the same as a bare <img>)."""
     w, h = IMG_SIZE[path]
-    return (f'<img{f" class={chr(34)}{cls}{chr(34)}" if cls else ""} src="{asset(lang, path)}" alt="{html.escape(alt)}" width="{w}" height="{h}"'
-            f'{" loading=" + chr(34) + "lazy" + chr(34) if lazy else ""}>')
+    tag = (f'<img{f" class={chr(34)}{cls}{chr(34)}" if cls else ""} src="{asset(lang, path)}" alt="{html.escape(alt)}" width="{w}" height="{h}"'
+           + (' loading="lazy" decoding="async"' if lazy else "") + (' fetchpriority="high"' if priority else "") + ">")
+    webp = os.path.splitext(path)[0] + ".webp"
+    if os.path.exists(os.path.join(ROOT, "assets", webp)):
+        return f'<picture><source type="image/webp" srcset="{asset(lang, webp)}">{tag}</picture>'
+    return tag
 
 def logo_alt(lang, name):
     return f"{name} logosu" if lang == "tr" else f"{name} logo"
@@ -2471,28 +2506,22 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
     # on the home pages, where Google reads them.
     import json
     ld = ""
-    graph = []
-    if pid not in ("home", "thanks", "portal"):
+    graph = [org_ld(lang)]
+    if pid == "home":
+        graph.append({"@type": "WebSite", "@id": base + "/#website", "name": "BİGEL", "alternateName": ["BİGEL360", "BİGEL 360", "bigel360.com"], "url": base + "/", "inLanguage": ["tr", "en"], "publisher": {"@id": base + "/#organization"}})
+    if pid not in ("home", "thanks", "portal", "notfound"):
         trail = [("home", L["ui"]["home"])] + [(c, page_name(lang, c)) for c in (crumbs or [pid])]
         graph.append({"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": page_url(lang, c)} for i, (c, n) in enumerate(trail)]})
     graph += ld_nodes or []
     if graph:
         ld = '\n<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>"
-    if pid == "home":
-        ld_data = {"@context": "https://schema.org", "@graph": [
-            {"@type": "WebSite", "@id": base + "/#website", "name": "BİGEL", "alternateName": ["BİGEL 360", "bigel360.com"], "url": base + "/", "inLanguage": ["tr", "en"], "publisher": {"@id": base + "/#organization"}},
-            {"@type": "Organization", "@id": base + "/#organization", "name": "BİGEL", "url": base + "/", "logo": {"@type": "ImageObject", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512},
-             "image": base + "/assets/icons/og-image.jpg", "description": L["home"]["desc"] if "desc" in L.get("home", {}) else desc, "email": SITE["email"], "telephone": SITE["phone_href"],
-             "sameAs": [SITE["linkedin"]],
-             "address": {"@type": "PostalAddress", "streetAddress": "Bağlarbaşı Mah. İncilik Sok. No:1 B Blok D:2", "addressLocality": "Maltepe", "addressRegion": "İstanbul", "addressCountry": "TR"},
-             "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "email": SITE["email"], "telephone": SITE["phone_href"], "areaServed": "TR", "availableLanguage": ["Turkish", "English"]}},
-        ]}
-        ld = '\n<script type="application/ld+json">' + json.dumps(ld_data, ensure_ascii=False) + "</script>"
+    hero_preload = (f'\n<link rel="preload" as="image" href="{asset(lang, "img/hero.webp")}" type="image/webp" fetchpriority="high">'
+                    if pid == "home" and os.path.exists(os.path.join(ROOT, "assets", "img", "hero.webp")) else "")
     footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div>{img(lang, "logo/bigel-white.png", logo_alt(lang, "BİGEL"))}<p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
               f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"ev_audit")}">{esc(F["ev"])}</a></div>'
               f'<div><strong>{esc(N["sectors"])}</strong>' + "".join(f'<a href="{href(lang,x)}">{esc(L["ui"]["footer"][x])}</a>' for x in LANDINGS) + f'<a href="{href(lang,"sectors")}">{esc(L["home"]["sec_more"])}</a></div>'
               f'<div><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"guides")}">{esc(L["ui"]["guides"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></div>'
-              f'<div><strong>{esc(F["contact"])}</strong><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div></div>'
+              f'<div><strong>{esc(F["contact"])}</strong><address>{esc(SITE["address_tr"])}</address><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div></div>'
               f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="{href(lang,"kvkk")}">{esc(F["privacy"])}</a></span></div></div></footer>')
     return f'''<!doctype html>
 <html lang="{lang}">
@@ -2524,7 +2553,7 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/icon-96.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
-<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">{ld}
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">{ld}{hero_preload}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
@@ -2532,7 +2561,7 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
 </head>
 <body>
 <header class="header"><div class="container nav">
-<a class="brand" href="{href(lang,"home")}">{img(lang, "logo/bigel.png", "BİGEL — " + F["tagline"], lazy=False)}</a>
+<a class="brand" href="{href(lang,"home")}">{img(lang, "logo/bigel.png", "BİGEL — " + F["tagline"], lazy=False, priority=True)}</a>
 <ul class="menu" id="menu">{nav}</ul>
 <div class="nav-actions">{lang_sw}{portal_btn}<a class="btn btn-primary btn-sm" href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div>
 <button class="burger" aria-label="{esc(N["menu"])}" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
@@ -2567,14 +2596,14 @@ def page_product(lang, pid):
     L = CONTENT[lang]; P = L["product_pages"][pid]; d = L["products"][pid]; accent = ACCENT[pid]
     hero = (f'<section class="p-hero" style="--accent:{accent}"><div class="container"><div><span class="eyebrow">{esc(d["name"])} · {esc(d["cat"])}</span><h1>{esc(P["title"])}</h1><p class="slogan">{esc(d["tag"])}</p><p class="lead">{esc(P["lead"])}</p>'
             f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(L["nav"]["cta"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(L["nav"]["how"])}</a></div></div>'
-            f'{img(lang, "logo/"+pid+".png", logo_alt(lang, d["name"]), "logo", lazy=False)}</div></section>')
+            f'{img(lang, "logo/"+pid+".png", logo_alt(lang, d["name"]), "logo", lazy=False, priority=True)}</div></section>')
     body = hero + "".join(render_product_section(lang, s, accent) for s in P["sections"]) + cta_band(lang)
     return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, pid, ld_nodes=[service_ld(lang, pid, d["name"], d["cat"], P["desc"])])
 
 def service_ld(lang, pid, name, service_type, desc):
     base = f'https://{SITE["domain"]}'
     return {"@type": "Service", "name": name, "serviceType": service_type, "description": desc, "url": page_url(lang, pid),
-            "provider": {"@type": "Organization", "@id": base + "/#organization", "name": "BİGEL", "url": base + "/"},
+            "provider": {"@id": base + "/#organization"},
             "areaServed": {"@type": "Country", "name": "Türkiye"}, "inLanguage": lang}
 
 def faq_block(lang, items, accent):
@@ -2655,9 +2684,9 @@ def page_guide(lang, gid):
     article = (f'<article class="article"><p>{esc(P["intro"])}</p>' + "".join(block(s) for s in P["sections"])
                + f'<div class="article-how">{block(P["how"])}</div></article>')
     body = hero + sec(article) + faq_block(lang, P["faq"], "var(--teal)") + related_cards(lang, GUIDE_RELATED[gid]) + cta_band(lang)
-    org = {"@type": "Organization", "@id": base + "/#organization", "name": "BİGEL", "url": base + "/"}
+    org = {"@id": base + "/#organization"}
     article_ld = {"@type": "Article", "headline": P["h1"], "description": P["desc"], "inLanguage": lang, "datePublished": GUIDE_DATE, "dateModified": GUIDE_DATE,
-                  "author": org, "publisher": dict(org, logo={"@type": "ImageObject", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512}),
+                  "author": org, "publisher": org,
                   "image": base + "/assets/icons/og-image.jpg", "mainEntityOfPage": {"@type": "WebPage", "@id": page_url(lang, gid)}}
     faq_ld = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in P["faq"]]}
     title = P["title"] + L["meta_suffix"] if len(P["title"] + L["meta_suffix"]) <= 60 else P["title"]
@@ -2794,6 +2823,36 @@ def page_thanks(lang):
             f'</div></div></section>')
     return layout(lang, "thanks", T["title"] + L["meta_suffix"], T["p"], body, robots="noindex,follow")
 
+def page_notfound():
+    """/404.html: friendly message, a filterable list of the main pages, noindex. GitHub Pages serves it
+    at the missing URL itself (e.g. /en/old/page), so every link and asset path is made root-absolute."""
+    import re
+    lang = "tr"; L = CONTENT[lang]; N = L["nav"]
+    groups = [("Çözümler", [(p, page_name(lang, p)) for p in PRODUCTS]),
+              ("Sektör sayfaları", [(p, page_name(lang, p)) for p in LANDINGS] + [("sectors", N["sectors"])]),
+              ("Rehber", [("guides", L["ui"]["guides"])] + [(g, L["guides"][g]["h1"]) for g in GUIDES]),
+              ("Şirket ve iletişim", [("about", N["about"]), ("how", N["how"]), ("tiers", N["tiers"]), ("contact", page_name(lang, "contact")),
+                                       ("contact#form", N["cta"]), ("pilot", N["pilot"])])]
+    def link(p, name):
+        pid, _, anchor = p.partition("#")
+        return f'<li data-k="{html.escape(name.lower())}"><a class="link" href="{href(lang, pid, anchor)}">{esc(name)} →</a></li>'
+    cards = "".join(f'<div class="card nf-group"><h3>{esc(t)}</h3><ul class="nf-list">' + "".join(link(p, n) for p, n in items) + "</ul></div>" for t, items in groups)
+    body = (simple_hero("404", "Aradığınız sayfa bulunamadı.", "Bağlantı eski olabilir ya da adres yanlış yazılmış olabilir. Aşağıdaki sayfalardan devam edebilir veya bize doğrudan ulaşabilirsiniz.")
+            .replace('</p></div></div></section>', '</p><p lang="en" class="nf-en">Page not found. The link may be out of date or mistyped. <a class="link" href="/en/">Continue on the English site →</a></p>'
+                     f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang, "home")}">Ana sayfaya dön</a><a class="btn btn-outline" href="{href(lang, "contact", "form")}">{esc(N["cta"])}</a></div></div></div></section>')
+            + sec('<label class="nf-search"><span>Sayfa ara</span><input type="search" id="nf-q" placeholder="Örn. şarj, kanopi, denetim, teklif" autocomplete="off"></label>'
+                  f'<div class="grid g4 nf-grid">{cards}</div><p class="note nf-none" hidden>Eşleşen sayfa yok. <a class="link" href="{href(lang, "contact", "form")}">Bize yazın →</a></p>'
+                  '<script>(function(){var q=document.getElementById("nf-q"),none=document.querySelector(".nf-none");q.addEventListener("input",function(){'
+                  'var v=q.value.toLocaleLowerCase("tr").trim(),any=false;document.querySelectorAll(".nf-group").forEach(function(g){var n=0;'
+                  'g.querySelectorAll("li").forEach(function(li){var m=!v||li.dataset.k.indexOf(v)>-1||li.textContent.toLocaleLowerCase("tr").indexOf(v)>-1;li.hidden=!m;if(m)n++;});'
+                  'g.hidden=!n;if(n)any=true;});none.hidden=any;});})();</script>', "alt"))
+    out = layout(lang, "notfound", "Sayfa bulunamadı (404) | BİGEL", "Aradığınız sayfa bulunamadı. BİGEL ana sayfaları, sektör sayfaları ve rehber yazıları.", body, robots="noindex,follow")
+    # no canonical / hreflang / og:url for an error page
+    out = re.sub(r'\n<link rel="(?:canonical|alternate)"[^>]*>|\n<meta property="og:url"[^>]*>', "", out)
+    # root-absolute links and assets, since the page can be served at any depth
+    out = re.sub(r'(href|src|srcset)="(?!https?:|/|#|mailto:|tel:)([^"]+)"', r'\1="/\2"', out)
+    return out.replace('href="/en/index.html"', 'href="/en/"').replace('href="/index.html"', 'href="/"')
+
 # ---------------------------------------------------------------- BUILD
 def build():
     js = """document.querySelector('.burger').addEventListener('click',function(){var m=document.getElementById('menu');var o=m.classList.toggle('open');this.setAttribute('aria-expanded',o);});
@@ -2872,8 +2931,10 @@ document.querySelectorAll('input[type="tel"]').forEach(function (el) {
         for pid, html_ in pages.items():
             with open(os.path.join(outdir, PAGES[pid][0 if lang == "tr" else 1]), "w", encoding="utf-8") as fh: fh.write(html_)
             n += 1
+    with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as fh: fh.write(page_notfound())
+    n += 1
     # robots + sitemap
-    indexed = [p for p in PAGES if p not in ("thanks", "kvkk")]  # kvkk: noindex until legal sign-off
+    indexed = [p for p in PAGES if p not in ("thanks", "kvkk", "notfound")]  # kvkk: noindex until legal sign-off
     today = __import__('datetime').date.today().isoformat()
     def entry(p, lang):
         alt = "".join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{page_url(l, p)}"/>' for h, l in (("tr", "tr"), ("en", "en"), ("x-default", "tr")))
