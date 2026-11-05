@@ -152,7 +152,7 @@ CONTENT = {
      ["BUSINESS'ın tamamı", "FIELD360 tek operasyon merkezi", "Görsel alan ve mobilya yönetimi", "Atanmış operasyon yöneticisi"]),
   ],
   "home": {
-    "title": "Akaryakıt ve Şarj İstasyonu Saha Operasyonu | BİGEL",
+    "title": "Akaryakıt, Şarj ve Zincir Markalar İçin Saha Operasyonu | BİGEL",
     "desc": "Akaryakıt ve elektrikli araç şarj istasyonu ağları ile çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım ve denetim. Fotoğraflı kanıt ve skor.",
     "eyebrow": "Kurumsal Saha Operasyonları",
     "h1": "Sahadaki Gücünüz.",
@@ -773,7 +773,7 @@ CONTENT = {
      ["Everything in BUSINESS", "FIELD360 single operations centre", "Visual area and furniture management", "Dedicated operations manager"]),
   ],
   "home": {
-    "title": "Fuel and EV Charging Station Field Operations | BİGEL",
+    "title": "Field Operations for Fuel, EV Charging and Retail Chains | BİGEL",
     "desc": "Cleaning, maintenance and audits across Türkiye for fuel and EV charging station networks and multi-site brands. Photo evidence and scores.",
     "eyebrow": "Corporate Field Operations",
     "h1": "Your Strength in the Field.",
