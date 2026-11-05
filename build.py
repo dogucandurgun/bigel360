@@ -7,7 +7,9 @@ import os, html
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # ---------------------------------------------------------------- SITE DATA
-# E-posta, telefon ve adres doğrulandı (2026-10-19). Kuruluş yılı ve rakamlar (bölge, ziyaret, oran) henüz doğrulanmadı.
+# E-posta ve telefon doğrulandı (2026-10-19); adres, unvan, MERSİS ve sicil no ticaret sicil belgesinden alındı.
+# Şirket 13.10.2025'te tescil edildi; "founded" kuruluş yılı değil, ekibin saha deneyiminin başladığı yıldır.
+# Rakamlar (bölge, ziyaret, oran) henüz doğrulanmadı.
 SITE = {
     "domain": "bigel360.com",
     "email": "info@bigel360.com",
@@ -15,12 +17,20 @@ SITE = {
     "phone_href": "+905322932233",
     # Address parts: the same text is used in the JSON-LD, the footer and the contact page (NAP consistency
     # with the Google Business Profile "BİGEL360"). address_tr is built from these parts below.
-    "street": "Bağlarbaşı Mah. İncilik Sok. No:1 B Blok D:2",
+    "street": "Bağlarbaşı Mah. İncilik Sk. Polat İş Merkezi B Blok No: 1/1 İç Kapı No: 2",
     "postal_code": "34844",
     "locality": "Maltepe",
     "region": "İstanbul",
     "country": "TR",
     "linkedin": "https://www.linkedin.com/company/bigel360",
+    # Legal entity (trade registry certificate). Shown in the footer bottom line, the Organization JSON-LD
+    # and the KVKK notice. Never publish personal ID numbers or the manager's name here.
+    "legal_name": "BİGEL USTA MOBİLYA VE REKLAM ÜRÜNLERİ TİCARET LİMİTED ŞİRKETİ",
+    "mersis": "0170077516000001",
+    "trade_registry": "İstanbul Ticaret Sicili Müdürlüğü, Sicil No: 1105013",
+    "trade_registry_no": "1105013",
+    # Year the team's field experience began (NOT a founding year; the company was registered 13.10.2025).
+    # Never render it as a founding year and keep it out of JSON-LD foundingDate.
     "founded": "2018",
     "regions": "60",
     "provinces": "81",
@@ -39,12 +49,34 @@ SITE["address_tr"] = f'{SITE["street"]}, {SITE["postal_code"]} {SITE["locality"]
 SITE["address_en"] = SITE["address_tr"]  # one address text on every page, identical to the JSON-LD
 SHOW_PORTAL = True
 
+# KVKK notice values still to be supplied. Empty string = the line/bullet is omitted from the page;
+# fill a value in and it appears automatically (no placeholders are ever rendered).
+KVKK_PENDING = {
+    "tax_office": "",          # Vergi Dairesi
+    "tax_no": "",              # Vergi No
+    "kep": "",                 # KEP adresi
+    "retention_tr": "",        # e.g. "6 ay" (non-contract requests, after the request is closed)
+    "retention_en": "",        # e.g. "6 months"
+    "panel_hosting": "",       # panel hosting/DB providers and server locations, e.g. "X (Almanya), Y (ABD)"
+    "site_hosting": "",        # bigel360.com host, e.g. "GitHub Pages (GitHub Inc., ABD)"
+    "transfer_basis_tr": "",   # KVKK md. 9 transfer basis (TR sentence)
+    "transfer_basis_en": "",   # same, EN sentence
+    "updated_tr": "",          # Son güncelleme tarihi, e.g. "1 Aralık 2026"
+    "updated_en": "",          # e.g. "1 December 2026"
+}
+
+def opt(text, value):
+    """text with {} filled by value, or None (dropped from the page) while value is empty."""
+    return text.format(value) if value else None
+
 def org_ld(lang):
     """The company entity, the same on every page: Organization + LocalBusiness (ProfessionalService) under
     one @id that WebSite, Service and Article nodes point to. Name, address and phone match the footer
     and the contact page character for character."""
     base = f'https://{SITE["domain"]}'
     return {"@type": ["Organization", "ProfessionalService"], "@id": base + "/#organization", "name": "BİGEL",
+            "legalName": SITE["legal_name"],
+            "identifier": {"@type": "PropertyValue", "propertyID": "MERSİS", "value": SITE["mersis"]},
             "alternateName": ["BİGEL360", "BİGEL 360", "bigel360.com"], "url": base + "/",
             "logo": {"@type": "ImageObject", "@id": base + "/#logo", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512, "caption": "BİGEL"},
             "image": base + "/assets/icons/og-image.jpg", "description": CONTENT[lang]["home"]["desc"],
@@ -204,7 +236,7 @@ CONTENT = {
          "guides": "Rehber", "guides_eyebrow": "Rehber", "guides_h2": "İlgili rehberler", "published": "Yayın tarihi", "by": "Hazırlayan: BİGEL",
          "short": {"fuel_clean": "Temizlik ve bakım", "fuel_audit": "Denetim · AUDIT 100", "ev_care": "Bakım ve temizlik", "ev_audit": "Denetim · EV Audit30"},
          "footer": {"fuel_clean": "Akaryakıt istasyonu temizliği", "fuel_audit": "Akaryakıt istasyonu denetimi", "ev_care": "Şarj istasyonu bakımı", "ev_audit": "Şarj istasyonu denetimi"}},
-  "footer": {"tagline": "Sahadaki Gücünüz.", "desc": "Kurumsal Saha Operasyonları ve Hizmet Platformu. Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi.", "solutions": "Çözümler", "company": "Şirket", "contact": "İletişim", "ev": "EV Audit30", "rights": "Tüm hakları saklıdır.", "privacy": "KVKK ve Gizlilik"},
+  "footer": {"tagline": "Sahadaki Gücünüz.", "desc": "Kurumsal Saha Operasyonları ve Hizmet Platformu. Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi.", "solutions": "Çözümler", "company": "Şirket", "contact": "İletişim", "ev": "EV Audit30", "rights": "Tüm hakları saklıdır.", "registry": "İstanbul Ticaret Sicil No", "privacy": "KVKK ve Gizlilik"},
   "cta": {"h2": "Saha operasyonunuzu birlikte tasarlayalım.", "p": "Pilot kapsamını seçili lokasyonlarla başlatır, sonuçlara göre bölgesel ve Türkiye geneli operasyona ölçekleriz.", "b1": "Pilot Başlat", "b2": "İletişim"},
   "sectors_list": [
     ("Akaryakıt İstasyonları", "Kanopi, totem, pompa adası, otopark ve saha çevresi."),
@@ -353,7 +385,7 @@ CONTENT = {
             "eyebrow": "Hakkımızda", "h1": "Usta gönderen firma değil, saha operasyonunuzu emanet edebileceğiniz partner.",
             "lead": "BİGEL, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur. Yerel saha gücünü merkezi operasyon, denetim ve raporlamayla birleştirir.",
             "story_h2": "Sahadan doğdu, sistemle büyüdü.",
-            "story": ["BİGEL'in yolculuğu 2018'de İstanbul'da, akaryakıt istasyonu ağlarına yönelik dış alan temizlik ve küçük bakım işleriyle başladı. Lokasyon sayısı arttıkça sorun da netleşti: işi yapmak yetmiyordu, her noktada aynı standardı tutmak ve bunu merkeze kanıtlamak gerekiyordu.", "Bugün BİGEL, bölgesel ekip ağını merkezi planlama, standart kontrol listeleri ve fotoğraflı dijital raporlamayla yönetiyor. CLEAN, CARE, AUDIT ve FIELD360 aynı çatı altında, aynı kayıt zinciriyle çalışıyor.", "Yıllara dayanan saha deneyimimiz bilgimizin kaynağı olmaya devam ediyor; BİGEL markası ise kurumsal saha operasyonları ve teknoloji eksenine odaklanıyor."],
+            "story": ["BİGEL ekibinin saha deneyimi 2018'de İstanbul'da, akaryakıt istasyonu ağlarına yönelik dış alan temizlik ve küçük bakım işleriyle başladı. Lokasyon sayısı arttıkça sorun da netleşti: işi yapmak yetmiyordu, her noktada aynı standardı tutmak ve bunu merkeze kanıtlamak gerekiyordu.", "Bugün BİGEL, bölgesel ekip ağını merkezi planlama, standart kontrol listeleri ve fotoğraflı dijital raporlamayla yönetiyor. CLEAN, CARE, AUDIT ve FIELD360 aynı çatı altında, aynı kayıt zinciriyle çalışıyor.", "Yıllara dayanan saha deneyimimiz bilgimizin kaynağı olmaya devam ediyor; BİGEL markası ise kurumsal saha operasyonları ve teknoloji eksenine odaklanıyor."],
             "facts": [("45", "il"), ("60", "ekip"), (SITE["provinces"], "ile erişim"), ("4", "ürün, tek kayıt zinciri")],
             "v_eyebrow": "Marka tanımı", "v_h2": "Ne için varız?",
             "values": [("Amacımız", "Markaların sahadaki işlerini daha düzenli, ölçülebilir ve güvenilir hale getirmek.", "flag"), ("Sözümüz", "İşi sahada gerçekleştirmek, kontrol etmek ve görünür kılmak.", "shield"), ("Farkımız", "Yerel saha gücü + merkezi operasyon + denetim + raporlama.", "hub")],
@@ -826,7 +858,7 @@ CONTENT = {
          "guides": "Guides", "guides_eyebrow": "Guides", "guides_h2": "Related guides", "published": "Published", "by": "By BİGEL",
          "short": {"fuel_clean": "Cleaning and maintenance", "fuel_audit": "Audit · AUDIT 100", "ev_care": "Maintenance and cleaning", "ev_audit": "Audit · EV Audit30"},
          "footer": {"fuel_clean": "Fuel station cleaning", "fuel_audit": "Fuel station audit", "ev_care": "EV charging station maintenance", "ev_audit": "EV charging station audit"}},
-  "footer": {"tagline": "Your Strength in the Field.", "desc": "Corporate Field Operations and Service Platform. Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands.", "solutions": "Solutions", "company": "Company", "contact": "Contact", "ev": "EV Audit30", "rights": "All rights reserved.", "privacy": "Privacy & Data Protection"},
+  "footer": {"tagline": "Your Strength in the Field.", "desc": "Corporate Field Operations and Service Platform. Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands.", "solutions": "Solutions", "company": "Company", "contact": "Contact", "ev": "EV Audit30", "rights": "All rights reserved.", "registry": "Istanbul Trade Registry No", "privacy": "Privacy & Data Protection"},
   "cta": {"h2": "Let's design your field operation together.", "p": "We start with a pilot on selected sites and scale to regional or nationwide operations based on the results.", "b1": "Start a Pilot", "b2": "Contact"},
   "sectors_list": [
     ("Fuel Stations", "Canopy, totem, pump islands, car park and site surroundings."),
@@ -975,7 +1007,7 @@ CONTENT = {
             "eyebrow": "About", "h1": "Not a company that sends a handyman. A partner you can trust with your field operation.",
             "lead": "BİGEL is a new-generation field services platform that runs, audits and reports the field operations of corporate brands. It combines local field power with central operations, audit and reporting.",
             "story_h2": "Born in the field, grown with a system.",
-            "story": ["BİGEL's journey began in Istanbul in 2018 with exterior cleaning and minor maintenance for fuel station networks. As the number of sites grew, so did the problem: doing the work was not enough; every site had to hold the same standard, and head office needed proof.", "Today BİGEL manages its regional team network with central planning, standard checklists and photo-verified digital reporting. CLEAN, CARE, AUDIT and FIELD360 run under one roof, on one chain of record.", "Years of field experience remain the source of our know-how; the BİGEL brand focuses on corporate field operations and technology."],
+            "story": ["The BİGEL team's field experience began in Istanbul in 2018 with exterior cleaning and minor maintenance for fuel station networks. As the number of sites grew, so did the problem: doing the work was not enough; every site had to hold the same standard, and head office needed proof.", "Today BİGEL manages its regional team network with central planning, standard checklists and photo-verified digital reporting. CLEAN, CARE, AUDIT and FIELD360 run under one roof, on one chain of record.", "Years of field experience remain the source of our know-how; the BİGEL brand focuses on corporate field operations and technology."],
             "facts": [("45", "provinces"), ("60", "teams"), (SITE["provinces"], "provinces within reach"), ("4", "products, one chain of record")],
             "v_eyebrow": "Brand definition", "v_h2": "Why we exist",
             "values": [("Purpose", "To make brands' field work more orderly, measurable and reliable.", "flag"), ("Promise", "To do the work in the field, control it and make it visible.", "shield"), ("Differentiator", "Local field power + central operations + audit + reporting.", "hub")],
@@ -2238,8 +2270,11 @@ CONTENT["en"]["guides"] = {
 }
 
 # ---------------------------------------------------------------- KVKK / PRIVACY NOTICE
-# DRAFT awaiting legal review: placeholders in [brackets] must be filled in before this page is indexed.
-# Until then the page is built with <meta name="robots" content="noindex,follow"> and kept out of the sitemap.
+# Values not yet known live in KVKK_PENDING; opt() returns None for empty ones and page_kvkk drops None
+# entries, so no placeholder is ever rendered. Still noindex,follow and out of the sitemap for now.
+# Open legal review items (kept here, never rendered): transfer mechanism under KVKK art. 9 (as amended
+# in 2024: adequacy decision, standard contract + notification to the Authority, explicit consent, ...);
+# panel/site hosting provider names and server locations; retention period; EN "Turkish prevails" clause.
 # Sections: (h2, paragraphs, bullets).
 CONTENT["tr"]["kvkk"] = {
     "title": "KVKK Aydınlatma Metni ve Gizlilik Politikası",
@@ -2251,9 +2286,11 @@ CONTENT["tr"]["kvkk"] = {
     "sections": [
         ("Bu metnin kapsamı", ["Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") uyarınca, bigel360.com internet sitesini ziyaret eden ve site üzerindeki teklif ya da pilot başvuru formlarını dolduran kişilerin kişisel verilerinin nasıl işlendiğini açıklar.",
                                "BİGEL'in müşterileriyle yaptığı sözleşmeler kapsamında sahada yürütülen hizmetlerde işlenen veriler bu metnin konusu değildir. Bu veriler ilgili sözleşme ve ayrı aydınlatma metinleriyle yönetilir."], []),
-        ("Veri sorumlusu", ["Kişisel verileriniz, veri sorumlusu sıfatıyla [ŞİRKET UNVANI] (\"BİGEL\") tarafından işlenir."],
-         ["Unvan: [ŞİRKET UNVANI]", "Adres: [ADRES — sitede yer alan merkez adresi: Bağlarbaşı Mah. İncilik Sok. No:1 B Blok D:2, Maltepe / İstanbul; resmi kayıtlı adresle teyit edilecek]",
-          "MERSİS No: [MERSİS NO]", "Vergi Dairesi / No: [VERGİ DAİRESİ / NO]", "KEP adresi: [KEP ADRESİ]", "E-posta: info@bigel360.com", "Telefon: +90 532 293 22 33"]),
+        ("Veri sorumlusu", ["Kişisel verileriniz, veri sorumlusu sıfatıyla " + SITE["legal_name"] + " (\"BİGEL\") tarafından işlenir."],
+         ["Unvan: " + SITE["legal_name"], "Adres: " + SITE["address_tr"],
+          "MERSİS No: " + SITE["mersis"], "Ticaret Sicil No: " + SITE["trade_registry_no"] + " (İstanbul)",
+          opt("Vergi Dairesi: {}", KVKK_PENDING["tax_office"]), opt("Vergi No: {}", KVKK_PENDING["tax_no"]),
+          opt("KEP adresi: {}", KVKK_PENDING["kep"]), "E-posta: " + SITE["email"], "Telefon: " + SITE["phone"]]),
         ("Hangi kişisel verileri işliyoruz?", ["Site üzerinden yalnızca formlara kendi girdiğiniz bilgiler toplanır. Formlarda zorunlu olmayan alanları boş bırakabilirsiniz."],
          ["Kimlik ve iletişim bilgileri: ad soyad, e-posta adresi, telefon numarası", "Kurumsal bilgiler: çalıştığınız şirket",
           "Talep bilgileri: lokasyon sayısı, ilgilendiğiniz çözüm veya başlangıç ürünü, sektör, şehir/bölge dağılımı, hedef başlangıç zamanı ve mesaj ya da not alanına yazdığınız açıklamalar",
@@ -2268,19 +2305,22 @@ CONTENT["tr"]["kvkk"] = {
          ["Bir sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması kaydıyla, sözleşmenin taraflarına ait kişisel verilerin işlenmesinin gerekli olması (md. 5/2-c)",
           "Veri sorumlusunun hukuki yükümlülüğünü yerine getirebilmesi için zorunlu olması (md. 5/2-ç)",
           "İlgili kişinin temel hak ve özgürlüklerine zarar vermemek kaydıyla, veri sorumlusunun meşru menfaatleri için veri işlenmesinin zorunlu olması (md. 5/2-f)",
-          "Yurt dışına aktarım bakımından: [HUKUKİ İNCELEME — KVKK md. 9 kapsamında uygulanacak aktarım mekanizması belirlenecek]"]),
+          opt("Yurt dışına aktarım bakımından: {}", KVKK_PENDING["transfer_basis_tr"])]),
         ("Kişisel verileriniz kimlere aktarılır?", ["Kişisel verileriniz satılmaz ve pazarlama amacıyla üçüncü kişilerle paylaşılmaz. Yukarıdaki amaçlarla sınırlı olarak şu alıcı gruplarına aktarılabilir:"],
-         ["Form verilerinin saklandığı BİGEL yönetim panelinin barındırma, veritabanı ve altyapı hizmetlerini sağlayan yurt içi ve/veya yurt dışı sunucu hizmet sağlayıcıları [HUKUKİ İNCELEME — sağlayıcıların adları ve sunucu konumları teyit edilecek]",
-          "bigel360.com sitesinin barındırma hizmetini sağlayan hizmet sağlayıcı [HUKUKİ İNCELEME]", "Talebinizin değerlendirilmesi için gerekli olduğu ölçüde BİGEL'in yetkili çalışanları",
+         ["Form verilerinin saklandığı BİGEL yönetim panelinin barındırma, veritabanı ve altyapı hizmetlerini sağlayan, yurt içi ve/veya yurt dışında bulunan barındırma ve altyapı hizmet sağlayıcıları"
+          + (f" ({KVKK_PENDING['panel_hosting']})" if KVKK_PENDING["panel_hosting"] else ""),
+          "bigel360.com sitesinin barındırma hizmetini sağlayan hizmet sağlayıcı" + (f" ({KVKK_PENDING['site_hosting']})" if KVKK_PENDING["site_hosting"] else ""), "Talebinizin değerlendirilmesi için gerekli olduğu ölçüde BİGEL'in yetkili çalışanları",
           "Yasal olarak yetkili kamu kurum ve kuruluşları ile adli makamlar, mevzuatın gerektirdiği hallerde"]),
         ("Yurt dışına aktarım", ["Site ve yönetim paneli, altyapısı yurt dışında bulunabilen bulut hizmet sağlayıcıları üzerinde çalışmaktadır. Bu nedenle form aracılığıyla ilettiğiniz veriler yurt dışındaki sunucularda saklanabilir veya işlenebilir.",
                                  "Ayrıca site, yazı tiplerini Google Fonts hizmetinden yükler. Bu sırada tarayıcınız Google sunucularına bağlanır ve IP adresiniz ile tarayıcı bilgileriniz Google'a iletilebilir.",
-                                 "[HUKUKİ İNCELEME — Yurt dışı aktarımın KVKK md. 9 (2024 değişikliği sonrası) kapsamındaki dayanağı (yeterlilik kararı, standart sözleşme ve Kurum'a bildirim, açık rıza vb.) belirlenene kadar bu bölüm yayımlanmamalıdır.]"], []),
+                                 KVKK_PENDING["transfer_basis_tr"] or None], []),
         ("Çerezler ve analiz araçları", ["bigel360.com, ziyaretçi davranışlarını izlemeye yönelik analiz, reklam veya yeniden pazarlama araçları kullanmaz ve kendi çerezini yerleştirmez.",
                                          "Yukarıda belirtilen Google Fonts bağlantısı ile sitenin ve form sunucusunun barındırma hizmet sağlayıcılarının teknik bağlantı kayıtları bunun dışındadır. Sitede LinkedIn sayfamıza bağlantı bulunur. Bu bağlantıya tıkladığınızda LinkedIn'in kendi gizlilik politikası geçerli olur.",
                                          "Sitede analiz veya çerez kullanan bir araç devreye alınırsa bu metin güncellenir ve gerekli durumlarda onayınız alınır."], []),
         ("Saklama süresi", ["Kişisel verileriniz, işlendikleri amacın gerektirdiği süre ve ilgili mevzuatta öngörülen süreler boyunca saklanır. Bu süreler sona erdiğinde veriler silinir, yok edilir veya anonim hale getirilir.",
-                            "Sözleşmeye dönüşmeyen teklif ve pilot talepleri, talebin kapanmasından itibaren en fazla [SAKLAMA SÜRESİ] süreyle saklanır. Sözleşmeye dönüşen taleplerde veriler, sözleşme ilişkisi ve yasal saklama yükümlülükleri süresince muhafaza edilir."], []),
+                            (f"Sözleşmeye dönüşmeyen teklif ve pilot talepleri, talebin kapanmasından itibaren en fazla {KVKK_PENDING['retention_tr']} süreyle saklanır." if KVKK_PENDING["retention_tr"]
+                             else "Sözleşmeye dönüşmeyen teklif ve pilot talepleri, mevzuatta öngörülen ve talebin değerlendirilmesi için gerekli süre boyunca saklanır.")
+                            + " Sözleşmeye dönüşen taleplerde veriler, sözleşme ilişkisi ve yasal saklama yükümlülükleri süresince muhafaza edilir."], []),
         ("Veri güvenliği", ["BİGEL, kişisel verilerin hukuka aykırı olarak işlenmesini ve bunlara erişilmesini önlemek, verilerin korunmasını sağlamak için uygun düzeyde güvenlik sağlamaya yönelik idari ve teknik tedbirleri alır. Form verilerine panel üzerinde yalnızca yetkili kullanıcılar erişebilir ve veriler şifreli bağlantı (HTTPS) üzerinden iletilir."], []),
         ("KVKK kapsamındaki haklarınız", ["KVKK'nın 11. maddesi uyarınca, BİGEL'e başvurarak:"],
          ["Kişisel verilerinizin işlenip işlenmediğini öğrenme", "İşlenmişse buna ilişkin bilgi talep etme", "İşlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme",
@@ -2289,10 +2329,10 @@ CONTENT["tr"]["kvkk"] = {
           "İşlenen verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme",
           "Kanuna aykırı işleme sebebiyle zarara uğramanız halinde zararın giderilmesini talep etme haklarına sahipsiniz."]),
         ("Başvuru yöntemi", ["Haklarınıza ilişkin taleplerinizi, kimliğinizi tespit edici bilgilerle birlikte aşağıdaki yollardan biriyle iletebilirsiniz:"],
-         ["Islak imzalı dilekçeyle şahsen veya noter aracılığıyla: [ADRES]", "Kayıtlı elektronik posta (KEP) ile: [KEP ADRESİ]",
-          "Daha önce BİGEL'e bildirdiğiniz ve sistemlerimizde kayıtlı e-posta adresinizden: info@bigel360.com"]),
+         ["Islak imzalı dilekçeyle şahsen veya noter aracılığıyla: " + SITE["address_tr"], opt("Kayıtlı elektronik posta (KEP) ile: {}", KVKK_PENDING["kep"]),
+          "Daha önce BİGEL'e bildirdiğiniz ve sistemlerimizde kayıtlı e-posta adresinizden: " + SITE["email"]]),
         ("", ["Başvurunuz, talebin niteliğine göre en kısa sürede ve en geç otuz gün içinde ücretsiz olarak sonuçlandırılır. İşlemin ayrıca bir maliyet gerektirmesi halinde Kişisel Verileri Koruma Kurulu'nca belirlenen tarifedeki ücret alınabilir."], []),
-        ("Güncellemeler", ["Bu metin, mevzuattaki ya da sitedeki veri işleme faaliyetlerindeki değişikliklere göre güncellenebilir. Güncel metin her zaman bu sayfada yayımlanır.", "Son güncelleme: [TARİH]"], []),
+        ("Güncellemeler", ["Bu metin, mevzuattaki ya da sitedeki veri işleme faaliyetlerindeki değişikliklere göre güncellenebilir. Güncel metin her zaman bu sayfada yayımlanır.", opt("Son güncelleme: {}", KVKK_PENDING["updated_tr"])], []),
     ],
 }
 CONTENT["en"]["kvkk"] = {
@@ -2305,10 +2345,12 @@ CONTENT["en"]["kvkk"] = {
     "sections": [
         ("Scope of this notice", ["This notice explains, under Turkish Personal Data Protection Law No. 6698 (\"KVKK\"), how we process the personal data of people who visit bigel360.com and submit the quote or pilot request forms on the site.",
                                   "Data processed during field services that BİGEL provides under customer contracts is outside the scope of this notice. That data is governed by the relevant contracts and separate notices.",
-                                  "The Turkish version of this notice prevails. [LEGAL REVIEW — confirm]"], []),
-        ("Data controller", ["Your personal data is processed by [COMPANY LEGAL NAME] (\"BİGEL\") as the data controller."],
-         ["Legal name: [COMPANY LEGAL NAME]", "Address: [ADDRESS — office address shown on the site: Bağlarbaşı Mah. İncilik Sok. No:1 Block B Apt. 2, Maltepe / Istanbul, Türkiye; to be confirmed against the registered address]",
-          "MERSIS No: [MERSIS NO]", "Tax office / No: [TAX OFFICE / NO]", "Registered e-mail (KEP): [KEP ADDRESS]", "Email: info@bigel360.com", "Phone: +90 532 293 22 33"]),
+                                  "The Turkish version of this notice prevails."], []),
+        ("Data controller", ["Your personal data is processed by " + SITE["legal_name"] + " (\"BİGEL\") as the data controller."],
+         ["Legal name: " + SITE["legal_name"], "Address: " + SITE["address_en"],
+          "MERSIS No: " + SITE["mersis"], "Trade Registry No: " + SITE["trade_registry_no"] + " (Istanbul)",
+          opt("Tax office: {}", KVKK_PENDING["tax_office"]), opt("Tax No: {}", KVKK_PENDING["tax_no"]),
+          opt("Registered e-mail (KEP): {}", KVKK_PENDING["kep"]), "Email: " + SITE["email"], "Phone: " + SITE["phone"]]),
         ("What personal data we process", ["The site collects only the information you enter in the forms yourself. You may leave optional fields blank."],
          ["Identity and contact details: full name, email address, phone number", "Company details: the company you work for",
           "Request details: number of sites, solution or starting product of interest, sector, city/region distribution, target start date, and anything you write in the message or notes field",
@@ -2322,18 +2364,21 @@ CONTENT["en"]["kvkk"] = {
                                                     "We process this data on the following legal grounds under Article 5(2) of the KVKK:"],
          ["Processing is necessary for entering into or performing a contract, where the data belongs to the parties to that contract (Art. 5(2)(c))",
           "Processing is necessary for BİGEL to comply with a legal obligation (Art. 5(2)(ç))", "Processing is necessary for BİGEL's legitimate interests, provided it does not harm your fundamental rights and freedoms (Art. 5(2)(f))",
-          "For transfers abroad: [LEGAL REVIEW — transfer mechanism under KVKK Art. 9 to be determined]"]),
+          opt("For transfers abroad: {}", KVKK_PENDING["transfer_basis_en"])]),
         ("Who we share your data with", ["We do not sell your personal data or share it with third parties for marketing. It may be shared with the following groups only for the purposes above:"],
-         ["Domestic and/or foreign server providers that supply hosting, database and infrastructure services for BİGEL's management panel, where form submissions are stored [LEGAL REVIEW — provider names and server locations to be confirmed]",
-          "The hosting provider of the bigel360.com website [LEGAL REVIEW]", "BİGEL's authorised employees, to the extent needed to assess your request", "Authorised public bodies and judicial authorities where the law requires"]),
+         ["Hosting and infrastructure service providers located in Türkiye and/or abroad that supply hosting, database and infrastructure services for BİGEL's management panel, where form submissions are stored"
+          + (f" ({KVKK_PENDING['panel_hosting']})" if KVKK_PENDING["panel_hosting"] else ""),
+          "The hosting provider of the bigel360.com website" + (f" ({KVKK_PENDING['site_hosting']})" if KVKK_PENDING["site_hosting"] else ""), "BİGEL's authorised employees, to the extent needed to assess your request", "Authorised public bodies and judicial authorities where the law requires"]),
         ("Transfers abroad", ["The site and the management panel run on cloud service providers whose infrastructure may be located outside Türkiye. Data you submit through the forms may therefore be stored or processed on servers abroad.",
                               "The site also loads its fonts from Google Fonts. When it does, your browser connects to Google's servers, and your IP address and browser information may be sent to Google.",
-                              "[LEGAL REVIEW — do not publish this section until the legal basis for transfers abroad under KVKK Art. 9 (as amended in 2024) is settled: adequacy decision, standard contract with notification to the Authority, explicit consent, etc.]"], []),
+                              KVKK_PENDING["transfer_basis_en"] or None], []),
         ("Cookies and analytics", ["bigel360.com does not use analytics, advertising or retargeting tools that track visitor behaviour, and it does not set cookies of its own.",
                                    "The Google Fonts connection described above and the technical connection logs of the site's and form server's hosting providers are outside this. The site links to our LinkedIn page. If you follow that link, LinkedIn's own privacy policy applies.",
                                    "If we add a tool that uses analytics or cookies, we will update this notice and ask for your consent where required."], []),
         ("How long we keep your data", ["We keep your personal data for as long as the purpose of processing requires and for the periods set by applicable law. When these periods end, the data is deleted, destroyed or anonymised.",
-                                        "Quote and pilot requests that do not lead to a contract are kept for no longer than [RETENTION PERIOD] after the request is closed. Where a request leads to a contract, the data is kept for the duration of the contractual relationship and any statutory retention period."], []),
+                                        (f"Quote and pilot requests that do not lead to a contract are kept for no longer than {KVKK_PENDING['retention_en']} after the request is closed." if KVKK_PENDING["retention_en"]
+                                         else "Quote and pilot requests that do not lead to a contract are kept for the period required by law and as long as needed to assess the request.")
+                                        + " Where a request leads to a contract, the data is kept for the duration of the contractual relationship and any statutory retention period."], []),
         ("Data security", ["BİGEL takes appropriate administrative and technical measures to prevent unlawful processing of and access to personal data and to keep it secure. Only authorised users can access form submissions in the panel, and data is sent over an encrypted (HTTPS) connection."], []),
         ("Your rights under the KVKK", ["Under Article 11 of the KVKK, you may apply to BİGEL to:"],
          ["Find out whether your personal data is being processed", "Request information about the processing if it is", "Find out the purpose of the processing and whether the data is used for that purpose",
@@ -2341,10 +2386,10 @@ CONTENT["en"]["kvkk"] = {
           "Ask for third parties who received your data to be notified of any correction, erasure or destruction", "Object to an outcome against you that results solely from automated analysis of your data",
           "Claim compensation for damage caused by unlawful processing"]),
         ("How to apply", ["You can send requests about your rights, with information that identifies you, by any of the following means:"],
-         ["In person or through a notary, with a signed written application: [ADDRESS]", "By registered electronic mail (KEP): [KEP ADDRESS]",
-          "From an email address you have previously given BİGEL and that is recorded in our systems: info@bigel360.com"]),
+         ["In person or through a notary, with a signed written application: " + SITE["address_en"], opt("By registered electronic mail (KEP): {}", KVKK_PENDING["kep"]),
+          "From an email address you have previously given BİGEL and that is recorded in our systems: " + SITE["email"]]),
         ("", ["We will respond free of charge as soon as possible and within thirty days at the latest, depending on the nature of the request. If the process involves an additional cost, a fee may be charged in line with the tariff set by the Personal Data Protection Board."], []),
-        ("Updates", ["We may update this notice to reflect changes in the law or in how the site processes data. The current version is always published on this page.", "Last updated: [DATE]"], []),
+        ("Updates", ["We may update this notice to reflect changes in the law or in how the site processes data. The current version is always published on this page.", opt("Last updated: {}", KVKK_PENDING["updated_en"])], []),
     ],
 }
 
@@ -2531,7 +2576,7 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
               f'<nav aria-label="{esc(N["sectors"])}"><strong>{esc(N["sectors"])}</strong>' + "".join(f'<a href="{href(lang,x)}">{esc(L["ui"]["footer"][x])}</a>' for x in LANDINGS) + f'<a href="{href(lang,"sectors")}">{esc(L["home"]["sec_more"])}</a></nav>'
               f'<nav aria-label="{esc(F["company"])}"><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"guides")}">{esc(L["ui"]["guides"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></nav>'
               f'<div><strong>{esc(F["contact"])}</strong><address>{esc(SITE["address_tr"])}</address><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div></div>'
-              f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="{href(lang,"kvkk")}">{esc(F["privacy"])}</a></span></div></div></footer>')
+              f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}<br>{esc(SITE["legal_name"])} · MERSİS {SITE["mersis"]} · {esc(F["registry"])} {SITE["trade_registry_no"]}</span><span><a href="{href(lang,"kvkk")}">{esc(F["privacy"])}</a></span></div></div></footer>')
     main_id = "icerik" if lang == "tr" else "content"
     out = f'''<!doctype html>
 <html lang="{lang}">
@@ -2715,12 +2760,13 @@ def page_guide(lang, gid):
     return layout(lang, gid, title, P["desc"], body, crumbs=["guides", gid], ld_nodes=[article_ld, faq_ld], og_type="article", og_extra=og_extra)
 
 def page_kvkk(lang):
-    """KVKK / privacy notice. Draft with placeholders awaiting legal review, so it is noindex and out of the sitemap."""
+    """KVKK / privacy notice. Entries that are None (empty KVKK_PENDING values) are omitted. Still noindex and out of the sitemap."""
     L = CONTENT[lang]; K = L["kvkk"]; U = L["ui"]
     hero = (f'<section class="p-hero"><div class="container" style="grid-template-columns:1fr"><div>{crumb_nav(lang, [("home", U["home"]), ("kvkk", K["crumb"])])}'
             f'<span class="eyebrow">{esc(K["eyebrow"])}</span><h1>{esc(K["h1"])}</h1></div></div></section>')
     parts = ""
     for h2, paras, bullets in K["sections"]:
+        paras = [x for x in paras if x]; bullets = [x for x in bullets if x]
         parts += (f'<h2>{esc(h2)}</h2>' if h2 else "") + "".join(f"<p>{esc(x)}</p>" for x in paras) + (ul(bullets) if bullets else "")
     body = hero + sec(f'<article class="article">{parts}</article>')
     return layout(lang, "kvkk", K["title"] + L["meta_suffix"], K["desc"], body, robots="noindex,follow")
@@ -2843,8 +2889,8 @@ def page_pilot(lang):
 def page_portal(lang):
     L = CONTENT[lang]; T = L["portal"]
     body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL PORTAL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(T["b1"])}</a><a class="btn btn-outline" href="{href(lang,"home")}">{esc(T["b2"])}</a></div></div>')
-    # "Coming soon" stub; the header button goes to the panel, so the page is noindex and out of the sitemap.
-    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["desc"], body, robots="noindex,follow")
+    # "Coming soon" page; indexable and in the sitemap (owner's choice), the header button goes to the panel.
+    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["desc"], body)
 
 def page_thanks(lang):
     L = CONTENT[lang]; T = L["thanks"]
@@ -2979,7 +3025,7 @@ document.querySelectorAll('input[type="tel"]').forEach(function (el) {
     with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as fh: fh.write(page_notfound())
     n += 1
     # robots + sitemap
-    indexed = [p for p in PAGES if p not in ("thanks", "kvkk", "notfound", "portal")]  # kvkk: noindex until legal sign-off; portal: stub
+    indexed = [p for p in PAGES if p not in ("thanks", "kvkk", "notfound")]  # kvkk: noindex until legal sign-off
     today = __import__('datetime').date.today().isoformat()
     def entry(p, lang):
         alt = "".join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{page_url(l, p)}"/>' for h, l in (("tr", "tr"), ("en", "en"), ("x-default", "tr")))
