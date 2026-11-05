@@ -105,6 +105,14 @@ LANDING_RELATED = {"fuel_clean": ["fuel_audit", "ev_care", "clean", "care"], "fu
 # "Related guides" block on each landing page, and related pages at the bottom of each guide.
 LANDING_GUIDES = {"fuel_clean": ["g_canopy", "g_sign", "g_fuel_audit"], "fuel_audit": ["g_fuel_audit", "g_canopy"], "ev_care": ["g_ev"], "ev_audit": ["g_ev"],
                   "retail": ["g_sign"], "bank": ["g_sign"], "restaurant": ["g_sign"]}
+# In-copy link from each landing page to its main guide: (guide, TR anchor, EN anchor).
+LANDING_GUIDE_LINK = {"fuel_clean": ("g_canopy", "Kanopi ne sıklıkla temizlenmeli?", "How often to clean a canopy"),
+                      "fuel_audit": ("g_fuel_audit", "Denetim kriterleri ve kontrol listesi", "Audit criteria and checklist"),
+                      "ev_care": ("g_ev", "Şarj istasyonu kontrol listesi", "EV charging station checklist"),
+                      "ev_audit": ("g_ev", "Şarj istasyonu kontrol listesi", "EV charging station checklist"),
+                      "retail": ("g_sign", "Totem ve tabela temizliği rehberi", "Pylon and sign cleaning guide"),
+                      "bank": ("g_sign", "Totem ve tabela temizliği rehberi", "Pylon and sign cleaning guide"),
+                      "restaurant": ("g_sign", "Totem ve tabela temizliği rehberi", "Pylon and sign cleaning guide")}
 GUIDE_RELATED = {"g_canopy": ["fuel_clean", "fuel_audit", "g_fuel_audit", "g_sign"], "g_fuel_audit": ["fuel_audit", "fuel_clean", "g_canopy", "audit"],
                  "g_ev": ["ev_audit", "ev_care", "audit", "care"], "g_sign": ["fuel_clean", "retail", "restaurant", "bank"]}
 # Sector cards that open a landing page: index in sectors_list -> (main page[, second link]).
@@ -1804,7 +1812,7 @@ CONTENT["en"]["guides_index"] = {
 }
 CONTENT["tr"]["guides"] = {
     "g_canopy": {
-        "title": "Akaryakıt İstasyonu Kanopisi Ne Sıklıkla Temizlenmeli?",
+        "title": "Akaryakıt Kanopisi Ne Sıklıkla Temizlenmeli?",
         "desc": "Akaryakıt istasyonu kanopisi için tek bir temizlik aralığı yoktur. Trafik, konum, mevsim ve marka standardına göre doğru sıklığı belirleme rehberi.",
         "crumb": "Kanopi temizliği",
         "h1": "Akaryakıt istasyonu kanopisi ne sıklıkla temizlenmeli?",
@@ -1860,7 +1868,7 @@ CONTENT["tr"]["guides"] = {
                 ("Kanopi temizliğine aydınlatma armatürleri dahil mi?", "Armatürlerin çevresindeki yüzeyler temizlik kapsamındadır. Armatürler üzerindeki elektrik işleri kapsam dışıdır; elektriksel bir sorun fark edilirse bulgu olarak kaydedilir ve yetkili uzmanlara yönlendirilir."),
                 ("Temizliğin yapıldığını merkezden nasıl takip edebilirim?", "Her ziyarette aynı açılardan çekilen öncesi ve sonrası fotoğrafları, tarih ve lokasyon bilgisi ile kontrol listesi kaydedilmelidir. Bu kayıtlar istasyonları birbiriyle ve zaman içinde karşılaştırmayı mümkün kılar.")]},
     "g_ev": {
-        "title": "Şarj İstasyonu Kontrol Listesi: 6 Alanda Neye Bakılır?",
+        "title": "Şarj İstasyonu Kontrol Listesi: Neye Bakılır?",
         "desc": "Şarj istasyonunda sahada neye bakılır? Güvenlikten marka standardına 6 alanlı kontrol listesi, fotoğraf seti, skor eşikleri ve bulgudan iş emrine akış.",
         "crumb": "Şarj istasyonu kontrol listesi",
         "h1": "Şarj istasyonu kontrol listesi: sahada neye bakılır?",
@@ -2073,7 +2081,7 @@ CONTENT["en"]["guides"] = {
                 ("Does canopy cleaning include the light fittings?", "The surfaces around the fittings are in scope. Electrical work on the fittings is not; if an electrical issue is noticed, it is recorded as a finding and passed to authorised specialists."),
                 ("How can I track from head office that cleaning was done?", "Each visit should record before and after photos from the same angles, the date and site details, and a completed checklist. These records let you compare stations with each other and over time.")]},
     "g_ev": {
-        "title": "EV Charging Station Checklist: What to Check in 6 Areas",
+        "title": "EV Charging Station Checklist: 6 Areas to Check",
         "desc": "What should you check on site at an EV charging station? A 6-area checklist from safety to brand standard, photo set, score thresholds and work orders.",
         "crumb": "EV charging station checklist",
         "h1": "EV charging station checklist: what to check on site",
@@ -2120,7 +2128,7 @@ CONTENT["en"]["guides"] = {
                 ("Why do I need site checks if I have remote monitoring?", "Remote monitoring shows the device's technical state. Conditions that affect the driver, such as an occupied bay, a cable on the ground, a dirty screen or a sign that cannot be seen, are only visible on site."),
                 ("Which photos should be taken during a check?", "The same six shots at every visit: front, right, left, screen, cable and bay. If there is a finding, add a close-up and a short note.")]},
     "g_fuel_audit": {
-        "title": "Fuel Station Audit Checklist: Brand Standard Criteria",
+        "title": "Fuel Station Audit Checklist: Brand Standards",
         "desc": "What does a fuel station brand standard audit check? Canopy, pylon, pump island and shop entrance criteria, scoring, evidence rules and frequency.",
         "crumb": "Audit criteria",
         "h1": "Fuel station audit criteria: what does a brand standard audit check?",
@@ -2515,15 +2523,17 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
     graph += ld_nodes or []
     if graph:
         ld = '\n<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>"
-    hero_preload = (f'\n<link rel="preload" as="image" href="{asset(lang, "img/hero.webp")}" type="image/webp" fetchpriority="high">'
-                    if pid == "home" and os.path.exists(os.path.join(ROOT, "assets", "img", "hero.webp")) else "")
+    hero_preload = (f'\n<link rel="preload" as="image" href="{asset(lang, "img/hero.webp")}" type="image/webp" media="(min-width:841px)" fetchpriority="high">'
+                    f'\n<link rel="preload" as="image" href="{asset(lang, "img/hero-800.webp")}" type="image/webp" media="(max-width:840px)" fetchpriority="high">'
+                    if pid == "home" and os.path.exists(os.path.join(ROOT, "assets", "img", "hero-800.webp")) else "")
     footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div>{img(lang, "logo/bigel-white.png", logo_alt(lang, "BİGEL"))}<p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
-              f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"ev_audit")}">{esc(F["ev"])}</a></div>'
-              f'<div><strong>{esc(N["sectors"])}</strong>' + "".join(f'<a href="{href(lang,x)}">{esc(L["ui"]["footer"][x])}</a>' for x in LANDINGS) + f'<a href="{href(lang,"sectors")}">{esc(L["home"]["sec_more"])}</a></div>'
-              f'<div><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"guides")}">{esc(L["ui"]["guides"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></div>'
+              f'<nav aria-label="{esc(F["solutions"])}"><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"ev_audit")}">{esc(F["ev"])}</a></nav>'
+              f'<nav aria-label="{esc(N["sectors"])}"><strong>{esc(N["sectors"])}</strong>' + "".join(f'<a href="{href(lang,x)}">{esc(L["ui"]["footer"][x])}</a>' for x in LANDINGS) + f'<a href="{href(lang,"sectors")}">{esc(L["home"]["sec_more"])}</a></nav>'
+              f'<nav aria-label="{esc(F["company"])}"><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"guides")}">{esc(L["ui"]["guides"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></nav>'
               f'<div><strong>{esc(F["contact"])}</strong><address>{esc(SITE["address_tr"])}</address><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div></div>'
               f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="{href(lang,"kvkk")}">{esc(F["privacy"])}</a></span></div></div></footer>')
-    return f'''<!doctype html>
+    main_id = "icerik" if lang == "tr" else "content"
+    out = f'''<!doctype html>
 <html lang="{lang}">
 <head>
 <meta charset="utf-8">
@@ -2560,13 +2570,14 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
 <link rel="stylesheet" href="{versioned(lang,"styles.css")}">
 </head>
 <body>
+<a class="skip" href="#{main_id}">{"İçeriğe atla" if lang == "tr" else "Skip to content"}</a>
 <header class="header"><div class="container nav">
 <a class="brand" href="{href(lang,"home")}">{img(lang, "logo/bigel.png", "BİGEL — " + F["tagline"], lazy=False, priority=True)}</a>
-<ul class="menu" id="menu">{nav}</ul>
+<nav class="nav-main" aria-label="{"Ana menü" if lang == "tr" else "Main menu"}"><ul class="menu" id="menu">{nav}</ul></nav>
 <div class="nav-actions">{lang_sw}{portal_btn}<a class="btn btn-primary btn-sm" href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div>
 <button class="burger" aria-label="{esc(N["menu"])}" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div></header>
-<main>
+<main id="{main_id}">
 {body}
 </main>
 {footer}
@@ -2574,6 +2585,14 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
 </body>
 </html>
 '''
+    return accent_text(out)
+
+def accent_text(out):
+    """Small coloured text uses the darker text variant of a brand colour (styles.css --*-text): every
+    --accent also sets --accent-text, and inline text colours point to the -text token. Fills keep the brand colour."""
+    import re
+    out = re.sub(r'--accent:var\(--(clean|care|audit|field|teal)\)', r'\g<0>;--accent-text:var(--\1-text)', out)
+    return re.sub(r'(?<![-\w])color:var\(--(clean|care|field|teal)\)', r'color:var(--\1-text)', out)
 
 # ---------------------------------------------------------------- PAGES
 def page_home(lang):
@@ -2594,11 +2613,11 @@ def page_home(lang):
 
 def page_product(lang, pid):
     L = CONTENT[lang]; P = L["product_pages"][pid]; d = L["products"][pid]; accent = ACCENT[pid]
-    hero = (f'<section class="p-hero" style="--accent:{accent}"><div class="container"><div><span class="eyebrow">{esc(d["name"])} · {esc(d["cat"])}</span><h1>{esc(P["title"])}</h1><p class="slogan">{esc(d["tag"])}</p><p class="lead">{esc(P["lead"])}</p>'
+    hero = (f'<section class="p-hero" style="--accent:{accent}"><div class="container"><div>{crumb_nav(lang, [("home", L["ui"]["home"]), (pid, d["name"])])}<span class="eyebrow">{esc(d["name"])} · {esc(d["cat"])}</span><h1>{esc(P["title"])}</h1><p class="slogan">{esc(d["tag"])}</p><p class="lead">{esc(P["lead"])}</p>'
             f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(L["nav"]["cta"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(L["nav"]["how"])}</a></div></div>'
             f'{img(lang, "logo/"+pid+".png", logo_alt(lang, d["name"]), "logo", lazy=False, priority=True)}</div></section>')
     body = hero + "".join(render_product_section(lang, s, accent) for s in P["sections"]) + cta_band(lang)
-    return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, pid, ld_nodes=[service_ld(lang, pid, d["name"], d["cat"], P["desc"])])
+    return layout(lang, pid, P["title"], P["desc"], body, pid, ld_nodes=[service_ld(lang, pid, d["name"], d["cat"], P["desc"])])
 
 def service_ld(lang, pid, name, service_type, desc):
     base = f'https://{SITE["domain"]}'
@@ -2650,7 +2669,7 @@ def guide_cards(lang, gids, eyebrow=None, h2=None, cls="", lead=""):
     """Cards linking to guide articles ("İlgili rehberler" on landing pages)."""
     if not gids: return ""
     L = CONTENT[lang]; U = L["ui"]
-    cards = "".join(f'<a class="card accent" style="--accent:var(--teal);text-decoration:none;display:block" href="{href(lang,g)}"><span class="kicker" style="font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--teal)">{esc(tr_upper(U["guides"], lang))}</span><h3 style="margin-top:8px">{esc(L["guides"][g]["h1"])}</h3><p>{esc(L["guides"][g]["desc"])}</p></a>' for g in gids)
+    cards = "".join(f'<a class="card accent" style="--accent:var(--teal);text-decoration:none;display:block" href="{href(lang,g)}" aria-label="{html.escape(L["guides"][g]["h1"])}"><span class="kicker" style="font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--teal)">{esc(tr_upper(U["guides"], lang))}</span><h3 style="margin-top:8px">{esc(L["guides"][g]["h1"])}</h3><p>{esc(L["guides"][g]["desc"])}</p></a>' for g in gids)
     return sec(head(eyebrow or U["guides_eyebrow"], h2 or U["guides_h2"], lead) + f'<div class="grid {"g3" if len(gids) >= 3 else "g2"}">{cards}</div>', cls)
 
 def crumb_nav(lang, trail):
@@ -2664,7 +2683,7 @@ def page_guides(lang):
     L = CONTENT[lang]; G = L["guides_index"]; U = L["ui"]
     hero = (f'<section class="p-hero"><div class="container" style="grid-template-columns:1fr"><div>{crumb_nav(lang, [("home", U["home"]), ("guides", U["guides"])])}'
             f'<span class="eyebrow">{esc(G["eyebrow"])}</span><h1>{esc(G["h1"])}</h1><p class="lead">{esc(G["lead"])}</p></div></div></section>')
-    cards = "".join(f'<a class="card accent" style="--accent:var(--teal);text-decoration:none;display:block" href="{href(lang,g)}"><h2 style="font-size:22px;margin:0 0 10px">{esc(L["guides"][g]["h1"])}</h2><p>{esc(L["guides"][g]["desc"])}</p><span class="more" style="display:inline-block;margin-top:14px;font-weight:700;color:var(--teal)">{esc(G["read"])} →</span></a>' for g in GUIDES)
+    cards = "".join(f'<a class="card accent" style="--accent:var(--teal);text-decoration:none;display:block" href="{href(lang,g)}" aria-label="{html.escape(L["guides"][g]["h1"])}"><h2 style="font-size:22px;margin:0 0 10px">{esc(L["guides"][g]["h1"])}</h2><p>{esc(L["guides"][g]["desc"])}</p><span class="more" style="display:inline-block;margin-top:14px;font-weight:700;color:var(--teal)">{esc(G["read"])} →</span></a>' for g in GUIDES)
     item_list = {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": page_url(lang, g), "name": L["guides"][g]["h1"]} for i, g in enumerate(GUIDES)]}
     body = hero + sec(f'<div class="grid g2">{cards}</div>', "alt") + cta_band(lang)
     return layout(lang, "guides", G["title"] + L["meta_suffix"], G["desc"], body, ld_nodes=[item_list])
@@ -2689,7 +2708,9 @@ def page_guide(lang, gid):
                   "author": org, "publisher": org,
                   "image": base + "/assets/icons/og-image.jpg", "mainEntityOfPage": {"@type": "WebPage", "@id": page_url(lang, gid)}}
     faq_ld = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in P["faq"]]}
-    title = P["title"] + L["meta_suffix"] if len(P["title"] + L["meta_suffix"]) <= 60 else P["title"]
+    # One rule for every guide: title + " | BİGEL" (guide titles are written to fit 60 characters with it).
+    title = P["title"] + L["meta_suffix"]
+    assert len(title) <= 60, title
     og_extra = f'\n<meta property="article:published_time" content="{GUIDE_DATE}">\n<meta property="article:author" content="BİGEL">'
     return layout(lang, gid, title, P["desc"], body, crumbs=["guides", gid], ld_nodes=[article_ld, faq_ld], og_type="article", og_extra=og_extra)
 
@@ -2711,29 +2732,43 @@ def page_landing(lang, pid):
             f'<span class="eyebrow">{esc(P["eyebrow"])}</span><h1>{esc(P["h1"])}</h1><p class="lead">{esc(P["lead"])}</p>'
             f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot","basvuru" if lang == "tr" else "apply")}">{esc(P["b1"])}</a><a class="btn btn-outline" href="{href(lang,"contact","form")}">{esc(P["b2"])}</a></div></div>'
             f'<div class="l-icon">{icon(LANDING_ICON[pid])}</div></div></section>')
-    secs = "".join(landing_section(lang, s, accent, i % 2 == 0) for i, s in enumerate(P["sections"]))
+    sections = [dict(s) for s in P["sections"]]
+    gid, anchor = LANDING_GUIDE_LINK[pid][0], LANDING_GUIDE_LINK[pid][1 if lang == "tr" else 2]
+    k = next((i for i, s in enumerate(sections) if s.get("links")), 0)
+    sections[k]["links"] = list(sections[k].get("links") or []) + [(anchor, gid, "")]
+    secs = "".join(landing_section(lang, s, accent, i % 2 == 0) for i, s in enumerate(sections))
     related = related_cards(lang, LANDING_RELATED[pid])
     body = hero + secs + faq_block(lang, P["faq"], accent) + guide_cards(lang, LANDING_GUIDES.get(pid, [])) + related + cta_band(lang, P["cta"])
     faq_ld = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in P["faq"]]}
     return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, "sectors", crumbs=["sectors", pid],
                   ld_nodes=[service_ld(lang, pid, P["crumb"], P["service"], P["desc"]), faq_ld])
 
-def simple_hero(eyebrow, h1, lead):
-    return f'<section class="p-hero"><div class="container" style="grid-template-columns:1fr"><div><span class="eyebrow">{esc(eyebrow)}</span><h1>{esc(h1)}</h1><p class="lead">{esc(lead)}</p></div></div></section>'
+def simple_hero(eyebrow, h1, lead, crumbs=""):
+    return f'<section class="p-hero"><div class="container" style="grid-template-columns:1fr"><div>{crumbs}<span class="eyebrow">{esc(eyebrow)}</span><h1>{esc(h1)}</h1><p class="lead">{esc(lead)}</p></div></div></section>'
+
+def page_crumbs(lang, pid):
+    """Visible Home / page breadcrumb, matching the page's BreadcrumbList."""
+    return crumb_nav(lang, [("home", CONTENT[lang]["ui"]["home"]), (pid, page_name(lang, pid))])
+
+def webpage_ld(lang, pid, type_, name):
+    """Page-role node (AboutPage, ContactPage, CollectionPage) tied to the WebSite and the Organization."""
+    base = f'https://{SITE["domain"]}'
+    return {"@type": type_, "@id": page_url(lang, pid) + "#webpage", "url": page_url(lang, pid), "name": name, "inLanguage": lang,
+            "isPartOf": {"@id": base + "/#website"}, "about": {"@id": base + "/#organization"}}
 
 def page_sectors(lang):
     L = CONTENT[lang]; S = L["sectors"]
     fit = "".join(f'<a class="card accent" style="--accent:{ACCENT[p]};text-decoration:none;display:block" href="{href(lang,p)}"><p style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px">{esc(q)}</p><h3 style="color:{ACCENT[p]};margin:0">{esc(a)} →</h3></a>' for q, a, p in S["fit"])
-    body = (simple_hero(S["eyebrow"], S["h1"], S["lead"]) + sec(sector_cards(lang))
+    body = (simple_hero(S["eyebrow"], S["h1"], S["lead"], page_crumbs(lang, "sectors")) + sec(sector_cards(lang))
             + sec(f'<div class="split"><div>{head(S["fr_eyebrow"], S["fr_h2"])}<p class="lead">{esc(S["fr_p"])}</p>{ul(S["fr_list"])}</div><div class="photo">{img(lang, "img/exterior.jpg", "")}</div></div>', "alt")
             + sec(head(S["fit_eyebrow"], S["fit_h2"]) + f'<div class="grid g3">{fit}</div>') + cta_band(lang))
-    return layout(lang, "sectors", S["title"] + L["meta_suffix"], S["desc"], body, "sectors")
+    return layout(lang, "sectors", S["title"] + L["meta_suffix"], S["desc"], body, "sectors", ld_nodes=[webpage_ld(lang, "sectors", "CollectionPage", S["h1"])])
 
 def page_tiers(lang):
     L = CONTENT[lang]; T = L["tiers"]
     th = "".join(f'<th{" class=center" if i else ""}>{esc(h)}</th>' for i, h in enumerate(T["cmp_head"]))
     rows = "".join("<tr>" + f"<td>{esc(r[0])}</td>" + "".join(f'<td class="center">{"<span style=color:var(--teal);font-weight:800>✓</span>" if v else "<span style=color:#B7C7D6>—</span>"}</td>' for v in r[1:]) + "</tr>" for r in T["cmp_rows"])
-    body = (simple_hero(T["eyebrow"], T["h1"], T["lead"]) + sec(tier_cards(lang))
+    body = (simple_hero(T["eyebrow"], T["h1"], T["lead"], page_crumbs(lang, "tiers")) + sec(tier_cards(lang))
             + sec(head("", T["cmp_h2"]) + f'<div class="table-wrap"><table class="table"><thead><tr>{th}</tr></thead><tbody>{rows}</tbody></table></div><p class="note" style="margin-top:22px">{esc(T["note"])}</p>', "alt")
             + cta_band(lang))
     return layout(lang, "tiers", T["title"] + L["meta_suffix"], T["desc"], body, "tiers")
@@ -2743,7 +2778,7 @@ def page_how(lang):
     steps = "".join(f'<div class="card"><span class="eyebrow">{i+1:02d}</span><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(H["steps"]))
     tl = "".join(f'<div class="card"><span class="when">{esc(w)}</span><h3>{esc(t)}</h3><ul>' + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul></div>" for w, t, items in H["timeline"])
     scale = "".join(f'<div class="card"><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for t, d in H["scale"])
-    body = (simple_hero(H["eyebrow"], H["h1"], H["lead"])
+    body = (simple_hero(H["eyebrow"], H["h1"], H["lead"], page_crumbs(lang, "how"))
             + sec(head(H["steps_eyebrow"], H["steps_h2"]) + f'<div class="grid g3">{steps}</div>')
             + sec(head(H["tl_eyebrow"], H["tl_h2"]) + f'<div class="timeline">{tl}</div>', "alt")
             + sec(f'<div class="split"><div>{head(H["q_eyebrow"], H["q_h2"])}{ul(H["quality"])}</div><div>{head(H["r_eyebrow"], H["r_h2"])}{ul(H["report"])}</div></div>')
@@ -2757,13 +2792,13 @@ def page_about(lang):
     values = "".join(f'<div class="value"><div class="ic">{icon(ic)}</div><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for t, d, ic in A["values"])
     ch = "".join(f'<div class="card"><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for t, d in A["character"])
     regs = "".join(f'<span class="badge">{esc(r)}</span>' for r in A["regions"])
-    body = (simple_hero(A["eyebrow"], A["h1"], A["lead"])
+    body = (simple_hero(A["eyebrow"], A["h1"], A["lead"], page_crumbs(lang, "about"))
             + sec(f'<div class="split"><div><h2>{esc(A["story_h2"])}</h2>{story}</div><div class="photo">{img(lang, "img/exterior.jpg", "")}</div></div><div class="grid g4" style="margin-top:48px">{facts}</div>')
             + sec(head(A["v_eyebrow"], A["v_h2"]) + f'<div class="value-grid">{values}</div>', "alt")
             + sec(head(A["c_eyebrow"], A["c_h2"]) + f'<div class="grid g3">{ch}</div>')
             + sec(f'<div class="split"><div>{head(A["reg_eyebrow"], A["reg_h2"])}<p class="lead">{esc(A["reg_p"])}</p><div class="badge-row">{regs}</div></div><div class="photo">{img(lang, "img/station.jpg", "")}</div></div>', "alt")
             + cta_band(lang))
-    return layout(lang, "about", A["title"] + L["meta_suffix"], A["desc"], body, "about")
+    return layout(lang, "about", A["title"] + L["meta_suffix"], A["desc"], body, "about", ld_nodes=[webpage_ld(lang, "about", "AboutPage", A["h1"])])
 
 def page_contact(lang):
     L = CONTENT[lang]; C = L["contact"]; f = C["f"]
@@ -2772,16 +2807,16 @@ def page_contact(lang):
     sols = "".join(f"<option>{esc(c)}</option>" for c in f["solutions"])
     form = (f'<form class="form" action="{SITE["form_url"]}" method="POST">'
             f'<input type="hidden" name="_kind" value="teklif"><input type="hidden" name="_lang" value="{lang}"><input type="hidden" name="_next" value="{next_url}"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">'
-            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="name" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="company" required></div></div>'
-            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="email" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="phone"></div></div>'
+            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="name" autocomplete="name" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="company" autocomplete="organization" required></div></div>'
+            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="email" autocomplete="email" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="phone" autocomplete="tel"></div></div>'
             f'<div class="row"><div><label for="count">{esc(f["count"])}</label><select id="count" name="{f["count"]}">{counts}</select></div><div><label for="sol">{esc(f["solution"])}</label><select id="sol" name="{f["solution"]}">{sols}</select></div></div>'
             f'<label for="msg">{esc(f["msg"])}</label><textarea id="msg" name="message" placeholder="{esc(f["msg_ph"])}"></textarea>'
             f'<label class="consent"><input type="checkbox" required><span>{esc(f["consent"])} <a href="{href(lang,"kvkk")}" target="_blank" rel="noopener">{esc(L["kvkk"]["consent_link"])}</a></span></label>'
             f'<button class="btn btn-primary" type="submit">{esc(f["send"])}</button></form>')
     info = "".join(f'<div class="card"><b>{esc(t)}</b><p>{esc(v)}</p></div>' for t, v in C["info"])
     # id "form": every "Teklif Al" button opens the page right at the form (#form), past the title.
-    body = simple_hero(C["eyebrow"], C["h1"], C["lead"]) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info">{info}</div></div>', "alt", "form")
-    return layout(lang, "contact", C["title"] + L["meta_suffix"], C["desc"], body, "contact")
+    body = simple_hero(C["eyebrow"], C["h1"], C["lead"], page_crumbs(lang, "contact")) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info">{info}</div></div>', "alt", "form")
+    return layout(lang, "contact", C["title"] + L["meta_suffix"], C["desc"], body, "contact", ld_nodes=[webpage_ld(lang, "contact", "ContactPage", C["h1"])])
 
 def page_pilot(lang):
     L = CONTENT[lang]; P = L["pilot"]; f = P["f"]
@@ -2793,8 +2828,8 @@ def page_pilot(lang):
     opt = lambda xs: "".join(f"<option>{esc(x)}</option>" for x in xs)
     form = (f'<form class="form" action="{SITE["form_url"]}" method="POST">'
             f'<input type="hidden" name="_kind" value="pilot"><input type="hidden" name="_lang" value="{lang}"><input type="hidden" name="_next" value="{next_url}"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">'
-            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="name" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="company" required></div></div>'
-            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="email" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="phone"></div></div>'
+            f'<div class="row"><div><label for="name">{esc(f["name"])}</label><input id="name" name="name" autocomplete="name" required></div><div><label for="company">{esc(f["company"])}</label><input id="company" name="company" autocomplete="organization" required></div></div>'
+            f'<div class="row"><div><label for="email">{esc(f["email"])}</label><input id="email" type="email" name="email" autocomplete="email" required></div><div><label for="phone">{esc(f["phone"])}</label><input id="phone" type="tel" name="phone" autocomplete="tel"></div></div>'
             f'<div class="row"><div><label for="sector">{esc(f["sector"])}</label><select id="sector" name="{f["sector"]}">{opt(f["sectors"])}</select></div><div><label for="count">{esc(f["count"])}</label><select id="count" name="{f["count"]}">{opt(f["counts"])}</select></div></div>'
             f'<label for="geo">{esc(f["geo"])}</label><input id="geo" name="{f["geo"]}" placeholder="{esc(f["geo_ph"])}">'
             f'<div class="row"><div><label for="product">{esc(f["product"])}</label><select id="product" name="{f["product"]}">{opt(f["products"])}</select></div><div><label for="start">{esc(f["start"])}</label><select id="start" name="{f["start"]}">{opt(f["starts"])}</select></div></div>'
@@ -2802,13 +2837,14 @@ def page_pilot(lang):
             f'<label class="consent"><input type="checkbox" required><span>{esc(f["consent"])} <a href="{href(lang,"kvkk")}" target="_blank" rel="noopener">{esc(L["kvkk"]["consent_link"])}</a></span></label>'
             f'<button class="btn btn-primary" type="submit">{esc(f["send"])}</button></form>')
     after = "".join(f'<div class="card" style="padding:18px 20px"><span class="eyebrow">{esc(n)}</span><h4 style="margin:2px 0 4px">{esc(t)}</h4><p style="font-size:14px">{esc(d)}</p></div>' for n, t, d in P["after"])
-    body = simple_hero(P["form_eyebrow"], P["form_h2"], P["form_lead"]) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info"><h3 style="margin:0 0 4px">{esc(P["after_h3"])}</h3>{after}<p class="note">{esc(P["note"])}</p></div></div>', "alt", "basvuru" if lang == "tr" else "apply")
+    body = simple_hero(P["form_eyebrow"], P["form_h2"], P["form_lead"], page_crumbs(lang, "pilot")) + sec(f'<div class="split" style="align-items:start">{form}<div class="contact-info"><h3 style="margin:0 0 4px">{esc(P["after_h3"])}</h3>{after}<p class="note">{esc(P["note"])}</p></div></div>', "alt", "basvuru" if lang == "tr" else "apply")
     return layout(lang, "pilot", P["title"] + L["meta_suffix"], P["desc"], body, "pilot")
 
 def page_portal(lang):
     L = CONTENT[lang]; T = L["portal"]
     body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL PORTAL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(T["b1"])}</a><a class="btn btn-outline" href="{href(lang,"home")}">{esc(T["b2"])}</a></div></div>')
-    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["desc"], body)
+    # "Coming soon" stub; the header button goes to the panel, so the page is noindex and out of the sitemap.
+    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["desc"], body, robots="noindex,follow")
 
 def page_thanks(lang):
     L = CONTENT[lang]; T = L["thanks"]
@@ -2919,6 +2955,12 @@ document.querySelectorAll('input[type="tel"]').forEach(function (el) {
 });"""
     with open(os.path.join(ROOT, "assets", "site.js"), "w") as fh: fh.write(js)
     n = 0
+    import re
+    changed = set()
+    # Content comparison ignores the ?v= asset fingerprints (a CSS change alone is not a page update).
+    def norm(h): return re.sub(r'\?v=[0-9a-f]{8}', '', h)
+    smap = os.path.join(ROOT, "sitemap.xml")
+    prev = dict(re.findall(r'<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>', open(smap).read())) if os.path.exists(smap) else {}
     for lang in ("tr", "en"):
         outdir = ROOT if lang == "tr" else os.path.join(ROOT, "en")
         os.makedirs(outdir, exist_ok=True)
@@ -2929,16 +2971,20 @@ document.querySelectorAll('input[type="tel"]').forEach(function (el) {
         for p in GUIDES: pages[p] = page_guide(lang, p)
         pages["kvkk"] = page_kvkk(lang)
         for pid, html_ in pages.items():
-            with open(os.path.join(outdir, PAGES[pid][0 if lang == "tr" else 1]), "w", encoding="utf-8") as fh: fh.write(html_)
+            path = os.path.join(outdir, PAGES[pid][0 if lang == "tr" else 1])
+            old = open(path, encoding="utf-8").read() if os.path.exists(path) else None
+            if old is None or norm(old) != norm(html_): changed.add((pid, lang))
+            with open(path, "w", encoding="utf-8") as fh: fh.write(html_)
             n += 1
     with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as fh: fh.write(page_notfound())
     n += 1
     # robots + sitemap
-    indexed = [p for p in PAGES if p not in ("thanks", "kvkk", "notfound")]  # kvkk: noindex until legal sign-off
+    indexed = [p for p in PAGES if p not in ("thanks", "kvkk", "notfound", "portal")]  # kvkk: noindex until legal sign-off; portal: stub
     today = __import__('datetime').date.today().isoformat()
     def entry(p, lang):
         alt = "".join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{page_url(l, p)}"/>' for h, l in (("tr", "tr"), ("en", "en"), ("x-default", "tr")))
-        return f"  <url><loc>{page_url(lang, p)}</loc><lastmod>{today}</lastmod>{alt}</url>\n"
+        mod = prev.get(page_url(lang, p), today) if (p, lang) not in changed else today
+        return f"  <url><loc>{page_url(lang, p)}</loc><lastmod>{mod}</lastmod>{alt}</url>\n"
     with open(os.path.join(ROOT, "sitemap.xml"), "w") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
                  + "".join(entry(p, "tr") for p in indexed) + "".join(entry(p, "en") for p in indexed) + "</urlset>\n")
