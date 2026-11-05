@@ -44,11 +44,24 @@ PAGES = {  # id: (tr file, en file)
     "about": ("hakkimizda.html", "about.html"),
     "contact": ("iletisim.html", "contact.html"),
     "pilot": ("pilot.html", "pilot.html"),
+    # Sector landing pages (fuel and EV charging stations); copy in CONTENT[lang]["landings"].
+    "fuel_clean": ("akaryakit-istasyonu-temizligi.html", "fuel-station-cleaning.html"),
+    "fuel_audit": ("akaryakit-istasyonu-denetimi.html", "fuel-station-audit.html"),
+    "ev_care": ("sarj-istasyonu-bakimi.html", "ev-charging-station-maintenance.html"),
+    "ev_audit": ("sarj-istasyonu-denetimi.html", "ev-charging-station-audit.html"),
     "thanks": ("tesekkurler.html", "thank-you.html"),
     "portal": ("portal.html", "portal.html"),
 }
 PRODUCTS = ["clean", "care", "audit", "field360"]
-ACCENT = {"clean": "var(--clean)", "care": "var(--care)", "audit": "var(--audit)", "field360": "var(--field)"}
+ACCENT = {"clean": "var(--clean)", "care": "var(--care)", "audit": "var(--audit)", "field360": "var(--field)",
+          "fuel_clean": "var(--clean)", "fuel_audit": "var(--audit)", "ev_care": "var(--care)", "ev_audit": "var(--audit)"}
+LANDINGS = ["fuel_clean", "fuel_audit", "ev_care", "ev_audit"]
+LANDING_ICON = {"fuel_clean": "fuel", "fuel_audit": "fuel", "ev_care": "ev", "ev_audit": "ev"}
+# Related pages shown at the bottom of each landing page (sibling sector pages first, then products).
+LANDING_RELATED = {"fuel_clean": ["fuel_audit", "ev_care", "clean", "care"], "fuel_audit": ["fuel_clean", "ev_audit", "audit", "care"],
+                   "ev_care": ["ev_audit", "fuel_clean", "care", "clean"], "ev_audit": ["ev_care", "fuel_audit", "audit", "field360"]}
+# Sector cards that open a landing page: index in sectors_list -> (main page, second link).
+SECTOR_LINKS = {0: ("fuel_clean", "fuel_audit"), 1: ("ev_care", "ev_audit")}
 
 def href(lang, pid, anchor=""):
     f = PAGES[pid][0 if lang == "tr" else 1]
@@ -109,11 +122,14 @@ CONTENT = {
     "field360": {"name": "BİGEL FIELD360", "cat": "Saha Yönetim Platformu", "tag": "Sahanın tamamı tek merkezde.", "short": "Temizlik, bakım, denetim ve aksiyonu tek sözleşme, tek standart ve tek raporlamada birleştirir."},
   },
   "more": "Çözümü Gör",
+  "ui": {"home": "Ana Sayfa", "faq_eyebrow": "SSS", "faq_h2": "Sıkça sorulan sorular", "rel_eyebrow": "İlgili sayfalar", "rel_h2": "Konuyla ilgili diğer sayfalar", "crumb_label": "Sayfa konumu",
+         "short": {"fuel_clean": "Temizlik ve bakım", "fuel_audit": "Denetim · AUDIT 100", "ev_care": "Bakım ve temizlik", "ev_audit": "Denetim · EV Audit30"},
+         "footer": {"fuel_clean": "Akaryakıt istasyonu temizliği", "fuel_audit": "Akaryakıt istasyonu denetimi", "ev_care": "Şarj istasyonu bakımı", "ev_audit": "Şarj istasyonu denetimi"}},
   "footer": {"tagline": "Sahadaki Gücünüz.", "desc": "Kurumsal Saha Operasyonları ve Hizmet Platformu. Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi.", "solutions": "Çözümler", "company": "Şirket", "contact": "İletişim", "ev": "EV Audit30", "rights": "Tüm hakları saklıdır.", "privacy": "KVKK ve Gizlilik"},
   "cta": {"h2": "Saha operasyonunuzu birlikte tasarlayalım.", "p": "Pilot kapsamını seçili lokasyonlarla başlatır, sonuçlara göre bölgesel ve Türkiye geneli operasyona ölçekleriz.", "b1": "Pilot Başlat", "b2": "İletişim"},
   "sectors_list": [
     ("Akaryakıt İstasyonları", "Kanopi, totem, pompa adası, otopark ve saha çevresi."),
-    ("Ev Şarj İstasyonları", "Cihaz çevresi, kablo düzeni, park cebi ve yönlendirme. Audit30 ile skorlanır."),
+    ("Elektrikli Araç (EV) Şarj İstasyonları", "Cihaz çevresi, kablo düzeni, park cebi ve yönlendirme. Audit30 ile skorlanır."),
     ("Restoran & Fast Food", "Cephe, cam, tabela, dış oturma ve arabaya servis alanı."),
     ("Perakende & Mağazacılık", "Vitrin, görsel alan, mobilya, giriş ve mağaza çevresi."),
     ("Bankacılık", "Şube girişi, ATM kabini, cam ve cephe, banko ve seperatörler."),
@@ -136,8 +152,8 @@ CONTENT = {
      ["BUSINESS'ın tamamı", "FIELD360 tek operasyon merkezi", "Görsel alan ve mobilya yönetimi", "Atanmış operasyon yöneticisi"]),
   ],
   "home": {
-    "title": "BİGEL | Sahadaki Gücünüz",
-    "desc": "Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi. Fotoğraflı kanıt, skor ve aksiyon takibi.",
+    "title": "Akaryakıt ve Şarj İstasyonu Saha Operasyonu | BİGEL",
+    "desc": "Akaryakıt ve elektrikli araç şarj istasyonu ağları ile çok lokasyonlu markalar için 81 ilde temizlik, bakım ve denetim. Fotoğraflı kanıt ve skor.",
     "eyebrow": "Kurumsal Saha Operasyonları",
     "h1": "Sahadaki Gücünüz.",
     "lead": "Çok lokasyonlu markaların temizlik, bakım ve denetim operasyonlarını Türkiye genelinde tek standartla planlıyor, uyguluyor ve fotoğraflı kanıtla raporluyoruz.",
@@ -156,7 +172,7 @@ CONTENT = {
     "flow_eyebrow": "Nasıl çalışıyoruz", "flow_h2": "Planlamadan kapanışa tek kayıt zinciri.",
     "flow": [("Planlama", "Lokasyon, görev, ekip ve SLA tanımı."), ("Uygulama", "Temizlik veya bakım, standart prosedürle."), ("Denetim", "Kontrol listesi, skor ve fotoğraf."), ("Raporlama", "KPI, SLA ve lokasyon skoru."), ("Aksiyon", "İş emri, sorumlu ve kapanış kanıtı.")],
     "flow_more": "Süreci detaylı görün",
-    "sec_eyebrow": "Sektörler", "sec_h2": "Çok lokasyonlu her marka için.", "sec_more": "Tüm sektörler",
+    "sec_eyebrow": "Sektörler", "sec_h2": "Akaryakıt ve şarj istasyonlarından perakendeye, çok lokasyonlu her marka için.", "sec_more": "Tüm sektörler",
     "tier_eyebrow": "Abonelikler", "tier_h2": "İhtiyacınıza göre ölçeklenen paketler.", "tier_more": "Paketleri karşılaştır",
     "photo_tag": "Gerçek saha, gerçek ekip, fotoğraflı kanıt",
   },
@@ -167,7 +183,7 @@ CONTENT = {
       "lead": "Yaygın fiziksel noktalara sahip markaların dış alan temizlik operasyonlarını Türkiye genelinde tek standartla yönetiyoruz. Her lokasyon için tanımlı kapsam, her ziyaret için fotoğraflı kanıt.",
       "sections": [
         {"type": "split", "eyebrow": "Sorun", "h2": "Lokasyon sayısı artınca standart dağılır.", "p": "Farklı ekipler, değişen uygulama yöntemleri ve dağınık raporlama marka görünümünde sapmalara yol açar. BİGEL CLEAN bu yapıyı tek model altında toplar.",
-         "list": ["Ortak hizmet tanımı ve uygulama standardı", "Merkezi görev ve ziyaret planlaması", "Bölgesel ekiplerle hızlı saha erişimi", "Öncesi ve sonrası fotoğraflı hizmet kanıtı", "Lokasyon ve bölge bazında performans görünürlüğü"], "img": "station.jpg", "tag": "Kanopi ve saha temizliği · Akaryakıt"},
+         "list": ["Ortak hizmet tanımı ve uygulama standardı", "Merkezi görev ve ziyaret planlaması", "Bölgesel ekiplerle hızlı saha erişimi", "Öncesi ve sonrası fotoğraflı hizmet kanıtı", "Lokasyon ve bölge bazında performans görünürlüğü"], "img": "station.jpg", "tag": "Kanopi ve saha temizliği · Akaryakıt", "link": "fuel_clean"},
         {"type": "modules", "eyebrow": "Hizmet modülleri", "h2": "Her alan için tanımlı yöntem, ekipman ve fotoğraf açısı.", "lead": "Modüller tek seferlik ya da periyodik programa dahil edilebilir.",
          "items": [("01", "Kanopi Clean", "Atmosferik kir, toz, egzoz izi, kurum ve biyolojik kirlerin periyodik temizliği."), ("02", "Tabela ve Totem Clean", "Marka görünürlüğünü etkileyen tabela, totem ve yönlendirme elemanlarının yüzeye uygun temizliği."), ("03", "Zemin ve Otopark Clean", "Beton, asfalt, parke, epoksi ve taş yüzeylerde kir, yağ lekesi ve çevre temizliği."), ("04", "Cam ve Cephe Clean", "Vitrin, giriş camı, cam cephe, kompozit, metal, taş ve boyalı yüzeyler."), ("05", "Event Clean", "Etkinlik öncesi hazırlık, etkinlik sırasında destek ve sonrası kapanış temizliği."), ("06", "Night Clean", "İşletmenin çalışma düzenini etkilemeden kapanış sonrası planlanan temizlik."), ("07", "Emergency Clean", "Ani kirlenme, dökülme, kötü hava, vandalizm veya denetim öncesi acil müdahale."), ("08", "Seasonal Clean", "Kış kiri, yosun, yaprak, çamur ve kaygan yüzey risklerine göre mevsimsel program.")]},
         {"type": "flow", "eyebrow": "Yıllık program", "h2": "Her ziyaret aynı dijital akışla yürütülür.", "steps": [("Görev kapsamı", "Lokasyon bilgisi ve tanımlı hizmet."), ("Öncesi fotoğraf", "Standart açılardan başlangıç kaydı."), ("Uygulama", "Yöntem, ekipman ve kimyasal standardı."), ("Sonrası fotoğraf", "Kontrol listesi ve kalite kriteri."), ("Tamamlanma", "Bulgu bildirimi ve kapanış kaydı.")]},
@@ -179,7 +195,7 @@ CONTENT = {
       ]},
     "care": {
       "title": "BİGEL CARE — Fiziksel alan bakımı ve saha müdahalesi",
-      "desc": "Küçük bakım, onarım ve saha müdahale ihtiyaçlarını Türkiye genelinde tek merkezden yönetiyoruz. Tespit, iş emri, uygulama ve fotoğraflı kapanış.",
+      "desc": "Küçük bakım, onarım ve saha müdahalesini Türkiye genelinde tek merkezden yönetiyoruz. Tespit, iş emri, uygulama ve fotoğraflı kapanış.",
       "lead": "Markaların fiziksel noktalarındaki küçük bakım, onarım ve saha müdahale ihtiyaçlarını tek merkezden yönetiyoruz. Tespit, planlama, saha uygulaması, fotoğraflama ve kapanış takibi BİGEL'de.",
       "sections": [
         {"type": "split", "eyebrow": "Kapsam", "h2": "Küçük işler birikmeden çözülür.", "p": "Lokasyonlarda biriken küçük fiziksel problemler müşteri deneyimini ve marka görünümünü etkiler. BİGEL CARE bu işleri tek iş emri sistemiyle yönetir.",
@@ -188,11 +204,11 @@ CONTENT = {
         {"type": "modules", "eyebrow": "Hizmet modülleri", "h2": "On modül, sektöre göre birleştirilir.", "lead": "",
          "items": [("01", "Minor Works", "Vida sıkıştırma, sabitleme, kapı kolu ve aksesuar değişimi, silikon, noktasal boya."), ("02", "Sign Care", "Tabela, totem ve yönlendirme elemanlarının bakımı."), ("03", "Exterior Care", "Cephe, giriş ve dış alan bakımı."), ("04", "Visual Care", "Görsel alan ve marka unsurları."), ("05", "Furniture Care", "Mobilya ve teşhir elemanları."), ("06", "Pavement Care", "Zemin, bordür ve otopark bakımı."), ("07", "Site Care", "Lokasyon fiziksel durum yönetimi."), ("08", "Preventive Care", "Periyodik önleyici bakım."), ("09", "Emergency Care", "Acil saha müdahalesi."), ("10", "Field Audit", "Fotoğraflı kontrol ve aksiyon raporu.")]},
         {"type": "flow", "eyebrow": "İş akışı", "h2": "Talepten fotoğraflı kapanışa.", "steps": [("Talep", "Tek kanal: talep veya denetim bulgusu."), ("Fotoğraflı tespit", "Hasar türü, öncelik ve önerilen aksiyon."), ("Görev onayı", "Kapsam, sorumlu ve hedef tarih."), ("Saha müdahalesi", "Bölgesel ekiple standart uygulama."), ("Kapanış raporu", "Sonrası fotoğrafı ve kalite kontrolü.")]},
-        {"type": "cards3", "eyebrow": "Sektör paketleri", "h2": "Her sektörün fiziksel alanına göre.", "items": [("Station Care", "Akaryakıt istasyonları: kanopi, tabela, pompa adası, bordür, bariyer ve istasyon çevresi."), ("EV Charge Care", "Şarj ünitesi dış gövdesi, zemin, yönlendirme ve aydınlatma dış gövdesi. Elektriksel bakım yetkili uzmanlarla."), ("Restaurant Care", "Dış cephe, tabela, dış oturma, arabaya servis alanı ve iç mekân küçük işler."), ("Auto & ATM Care", "Showroom cephe, sergileme platformu; ATM kabini, şube girişi ve banko."), ("Retail & AVM Care", "Raf, teşhir ünitesi, vitrin çerçevesi; AVM yönlendirme, oturma grupları ve sezonluk dekorasyon."), ("Logistics & Facility Care", "Depo cephe, zemin çizgileri, bariyer; otel, eğitim kurumu ve fabrika girişleri.")]},
+        {"type": "cards3", "eyebrow": "Sektör paketleri", "h2": "Her sektörün fiziksel alanına göre.", "items": [("Station Care", "Akaryakıt istasyonları: kanopi, tabela, pompa adası, bordür, bariyer ve istasyon çevresi.", "fuel_clean"), ("EV Charge Care", "Şarj ünitesi dış gövdesi, zemin, yönlendirme ve aydınlatma dış gövdesi. Elektriksel bakım yetkili uzmanlarla.", "ev_care"), ("Restaurant Care", "Dış cephe, tabela, dış oturma, arabaya servis alanı ve iç mekân küçük işler."), ("Auto & ATM Care", "Showroom cephe, sergileme platformu; ATM kabini, şube girişi ve banko."), ("Retail & AVM Care", "Raf, teşhir ünitesi, vitrin çerçevesi; AVM yönlendirme, oturma grupları ve sezonluk dekorasyon."), ("Logistics & Facility Care", "Depo cephe, zemin çizgileri, bariyer; otel, eğitim kurumu ve fabrika girişleri.")]},
       ]},
     "audit": {
       "title": "BİGEL AUDIT — Saha denetimi, AUDIT 100 ve EV Audit30",
-      "desc": "Marka standardını, görsel uygulamaları, temizlik ve fiziksel durumu sahada ölçülebilir hale getiriyoruz. AUDIT 100 ve EV Audit30 ile fotoğraflı skor.",
+      "desc": "Marka standardını, görsel uygulamaları, temizliği ve fiziksel durumu sahada ölçülebilir kılıyoruz. AUDIT 100 ve EV Audit30 ile fotoğraflı skor.",
       "lead": "Markaların fiziksel noktalarındaki marka standardını, görsel uygulamaları, temizlik durumunu, fiziksel ihtiyaçları ve müşteri deneyimini sahada ölçülebilir hale getiriyoruz. Bağımsız kullanılır ya da CLEAN ve CARE ile bütünleşir.",
       "sections": [
         {"type": "flow", "eyebrow": "Nasıl çalışır", "h2": "Denetimi gözlemle sınırlamayız; karar ve aksiyona dönüştürürüz.", "steps": [("Saha", "Eğitimli ekip, standart kontrol listesiyle inceler."), ("Veri", "Puan, fotoğraf, GPS, tarih ve bulgu kaydedilir."), ("Merkez", "Lokasyonlar tek dashboard'da karşılaştırılır."), ("Karar", "Bulgular öncelik ve sorumluluğa göre sınıflanır."), ("İş emri", "Aksiyon oluşturulur, uygulanır, fotoğrafla kapanır.")]},
@@ -202,12 +218,12 @@ CONTENT = {
          "p": "10 kategori, 100 kontrol noktası. Her madde Uygun 100, Kısmen Uygun 50, Uygun Değil 0 puan alır; kategori ağırlıklarıyla 100 üzerinden lokasyon skoru oluşur. Fotoğraf kuralı soru bazında tanımlıdır: şartlı, zorunlu veya öncesi-sonrası.",
          "weights": [("Dış Alan & Cephe", 10), ("Tabela / Totem / Görsel", 10), ("Temizlik & Hijyen", 10), ("Mobilya / Ekipman", 10), ("Teknik & Fiziksel Durum", 10), ("İş Güvenliği & Risk", 15), ("Marka / Görsel Standart", 15), ("Müşteri Deneyimi", 10), ("Operasyon & Uygulama", 5), ("Yönetim / Veri / Uygunluk", 5)],
          "thresholds": [("g", "90–100 · Standarda uygun"), ("a", "75–89 · İyileştirme gerekli"), ("r", "0–74 · Öncelikli aksiyon")],
-         "badges": ["Zorunlu fotoğraf ve GPS", "Kritik bulguda anlık bildirim", "Lokasyon skor kartı", "JSON / PDF rapor"]},
+         "badges": ["Zorunlu fotoğraf ve GPS", "Kritik bulguda anlık bildirim", "Lokasyon skor kartı", "JSON / PDF rapor"], "more": "fuel_audit"},
         {"type": "sub", "id": "ev", "logo": None, "eyebrow": "Şarj ağları için", "h2": "Şarj noktası saha kalite denetimi.",
          "p": "Uzaktan izleme cihazın teknik durumunu gösterir; Audit30 müşterinin karşılaştığı fiziksel saha koşullarını görünür kılar. 30 standart kontrol, 6 ağırlıklı alan, 100 üzerinden saha skoru. Güvenlik maddelerindeki uygunsuzluk aynı gün bildirim üretir; majör bulgular 24 saat içinde aksiyona bağlanır.",
          "weights": [("Güvenlik · 5 kritik kontrol", 25), ("Cihaz bütünlüğü", 20), ("İşlev işaretleri", 20), ("Kullanıcı deneyimi", 15), ("Temizlik ve çevre", 10), ("Marka standardı", 10)],
          "thresholds": [("g", "≥ 90 · Uygun"), ("a", "75–89 · Takip"), ("r", "< 75 · Aksiyon")],
-         "badges": ["Ön, sağ, sol, ekran, kablo, park alanı fotoğraf seti", "Kritik: anlık · Majör: 24 saat", "Pilot: 10 lokasyon, 2 hafta, 2 tur"]},
+         "badges": ["Ön, sağ, sol, ekran, kablo, park alanı fotoğraf seti", "Kritik: anlık · Majör: 24 saat", "Pilot: 10 lokasyon, 2 hafta, 2 tur"], "more": "ev_audit"},
         {"type": "map", "eyebrow": "BİGEL Map", "h2": "Tüm lokasyonlar tek haritada.", "p": "Lokasyonlar Türkiye haritası üzerinde skor rengiyle gösterilir. Kullanıcı bölgeden şehre, şehirden lokasyona iner; skor kartını, fotoğrafları, bulguları ve aksiyon geçmişini görür.",
          "legend": [("var(--green)", "90–100 · Standarda uygun"), ("var(--amber)", "75–89 · İyileştirme gerekli"), ("var(--red)", "0–74 · Öncelikli aksiyon")],
          "kpis": [("Bölge ve şehir bazında lokasyon sayısı"), ("Ortalama denetim skoru ve kritik bulgu sayısı"), ("Tamamlanan, bekleyen ve açık aksiyonlar")]},
@@ -230,19 +246,19 @@ CONTENT = {
         {"type": "cards3", "eyebrow": "Yönetim çıktıları", "h2": "Merkez ekip ne görür?", "items": [("Ağ görünümü", "Türkiye, bölge, şehir ve lokasyon durumu. Kaynak ve ziyaret önceliği."), ("Hizmet performansı", "Planlanan, tamamlanan ve geciken ziyaretler. Kapasite ve SLA takibi."), ("Kalite skoru", "Kontrol listesi sonucu ve lokasyon skoru. Düşük performanslı noktalar."), ("Bulgu ve iş emri", "Açık kritikler, sorumlular ve hedef tarihler. Müdahale ve bütçe önceliği."), ("Kanıt geçmişi", "Öncesi, sonrası ve kapanış fotoğrafları. Yapılan işin doğrulanması."), ("Örnek pilot", "20–30 lokasyon, 4–6 hafta, CLEAN + CARE + AUDIT. Başlangıç skoru, açık bulgu, SLA ve ikinci ziyaret.")]},
       ]},
   },
-  "sectors": {"title": "Sektörler — Çok lokasyonlu markalar için saha operasyonu", "desc": "Akaryakıt, restoran, perakende, bankacılık, otomotiv, lojistik, AVM, otel, EV şarj, telekom, eğitim ve tesisler için saha hizmetleri.",
-              "eyebrow": "Sektörler", "h1": "Sahadaki standardın merkezden yönetilmesi gereken her sektör.", "lead": "Hizmet kapsamı, her sektörün yüzeyleri ve operasyon saatlerine göre uyarlanır. Aşağıda her sektör için öne çıkan alanları görebilirsiniz.",
+  "sectors": {"title": "Sektörler — Akaryakıt, EV Şarj ve Zincir Markalar", "desc": "Akaryakıt, elektrikli araç şarj, restoran, perakende, bankacılık, otomotiv, lojistik, AVM, otel, telekom, eğitim ve tesisler için saha hizmetleri.",
+              "eyebrow": "Sektörler", "h1": "Akaryakıt ve şarj istasyonlarından perakendeye, standardın merkezden yönetildiği her sektör.", "lead": "Hizmet kapsamı, her sektörün yüzeyleri ve operasyon saatlerine göre uyarlanır. Aşağıda her sektör için öne çıkan alanları görebilirsiniz.",
               "fr_eyebrow": "Franchise ağları", "fr_h2": "Merkez adına tek sözleşme, tüm şubelerde ortak standart.", "fr_p": "Franchise sahiplerinin uygulamaları görünür, ölçülebilir ve merkezden yönetilebilir hale gelir.",
               "fr_list": ["Merkez ile tek sözleşme ve tek hizmet tanımı", "Tüm lokasyonlar için ortak kontrol listesi", "Bölgesel ekiplerle planlı saha ziyaretleri", "Lokasyon bazında skor ve uygunsuzluk takibi", "Merkez yönetim için karşılaştırmalı dashboard"],
               "fit_eyebrow": "İhtiyaca göre çözüm", "fit_h2": "Hangi durumda hangi ürün?",
-              "fit": [("Çok lokasyonlu temizlik", "Periyodik CLEAN programı", "clean"), ("Küçük bakım ve onarım birikiyor", "CARE müdahale planı", "care"), ("Marka standardını ölçmek", "AUDIT ve AUDIT 100", "audit"), ("Şarj ağı saha kalitesi", "EV Audit30", "audit"), ("Dağınık tedarikçi yapısı", "FIELD360 ile tek merkez", "field360"), ("Fotoğraf ve kanıt ihtiyacı", "Dijital ziyaret raporu", "field360")]},
+              "fit": [("Çok lokasyonlu temizlik", "Periyodik CLEAN programı", "clean"), ("Küçük bakım ve onarım birikiyor", "CARE müdahale planı", "care"), ("Marka standardını ölçmek", "AUDIT ve AUDIT 100", "audit"), ("Şarj ağı saha kalitesi", "EV Audit30", "ev_audit"), ("Dağınık tedarikçi yapısı", "FIELD360 ile tek merkez", "field360"), ("Fotoğraf ve kanıt ihtiyacı", "Dijital ziyaret raporu", "field360")]},
   "tiers": {"title": "Abonelik Paketleri — BASIC, PRO, BUSINESS, 360", "desc": "BİGEL abonelik paketleri: temel kontrolden tam entegre saha yönetimine. Fiyatlandırma lokasyon sayısı ve kapsama göre.",
             "eyebrow": "Abonelikler", "h1": "İhtiyacınıza göre ölçeklenen dört paket.", "lead": "Alt paket adı ikinci hiyerarşidedir; ana BİGEL standardı, fotoğraflı kanıt ve raporlama her pakette aynıdır. Fiyatlandırma lokasyon sayısı, bölgesel dağılım, hizmet sıklığı ve kapsama göre hazırlanır.",
             "badge": "En kapsamlı", "cta": "Teklif Al", "cmp_h2": "Paket karşılaştırması",
             "cmp_head": ["Kapsam", "BASIC", "PRO", "BUSINESS", "360"],
             "cmp_rows": [["Periyodik kontrol ziyareti", 1,1,1,1], ["Fotoğraflı lokasyon raporu", 1,1,1,1], ["Bulgu ve öncelik listesi", 1,1,1,1], ["Küçük bakım müdahalesi (CARE)", 0,1,1,1], ["İş emri ve fotoğraflı kapanış", 0,1,1,1], ["Planlı temizlik programı (CLEAN)", 0,0,1,1], ["AUDIT 100 periyodik denetim", 0,0,1,1], ["Yönetim dashboardu, KPI / SLA", 0,0,1,1], ["Öncelikli destek hattı", 0,0,1,1], ["FIELD360 tek operasyon merkezi", 0,0,0,1], ["Atanmış operasyon yöneticisi", 0,0,0,1]],
             "note": "Tüm paketler pilot uygulamayla başlatılabilir. Pilot sonuçlarına göre hizmet sıklığı ve kapsam netleştirilir."},
-  "how": {"title": "Nasıl Çalışıyoruz — Devreye alma, pilot ve yaygınlaştırma", "desc": "İhtiyaç analizinden düzenli raporlamaya BİGEL hizmet devreye alma modeli, kalite güvence ve dijital raporlama.",
+  "how": {"title": "Nasıl Çalışıyoruz — Pilot ve yaygınlaştırma", "desc": "İhtiyaç analizinden düzenli raporlamaya BİGEL hizmet devreye alma modeli, kalite güvence ve dijital raporlama.",
           "eyebrow": "Nasıl çalışıyoruz", "h1": "Merkezde planlanan işin sahada doğru gerçekleşmesini sağlarız.", "lead": "İhtiyaç analiziyle başlar, seçili lokasyonlarda pilotla doğrular, bölgesel ve Türkiye geneli operasyona ölçekleriz.",
           "steps_eyebrow": "Hizmet devreye alma", "steps_h2": "Altı adımda düzenli operasyon.",
           "steps": [("İhtiyaç ve lokasyon analizi", "Saha ağı, hizmet ihtiyacı ve öncelikler."), ("Hizmet kapsamı ve SLA", "Kontrol listeleri, kanıt kuralı ve hedef süreler."), ("Pilot uygulama", "Seçilen lokasyonlarda gerçek saha testi."), ("Sonuç ve aksiyon planı", "Skor, iş yükü, ekip ve ziyaret sıklığı."), ("Yaygınlaştırma", "Bölgesel devreye alma ve düzenli takvim."), ("Düzenli raporlama", "Görev, rapor, aksiyon ve performans toplantıları.")],
@@ -254,7 +270,7 @@ CONTENT = {
           "report": ["Ziyaret tarihi, lokasyon ve ekip bilgisi", "Soru bazlı skorlar ve fotoğraflı kanıtlar", "Kırmızı, sarı ve yeşil durum özeti", "Öncelikli bulgular ve sorumlu aksiyonlar", "Lokasyon, bölge ve dönem karşılaştırmaları", "Yönetim özeti ve kapanış takibi"],
           "s_eyebrow": "Ölçeklenebilir yayılım", "s_h2": "Pilottan Türkiye geneline.",
           "scale": [("1 · Pilot", "Seçili lokasyonlarda standardı doğrulama: kapsam, başlangıç ölçümü, saha uygulaması, sonuç raporu."), ("2 · Bölgesel yayılım", "Modeli öncelikli bölgelere taşıma: ekip planlama, eğitim, SLA takibi, bölgesel performans."), ("3 · Türkiye geneli", "Tüm ağı tek modelle yönetme: merkezi koordinasyon, lokasyon skorları, iş emri, yönetim dashboardu.")]},
-  "about": {"title": "Hakkımızda — BİGEL", "desc": "BİGEL, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur.",
+  "about": {"title": "Hakkımızda — Kurumsal saha operasyonları", "desc": "BİGEL, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur.",
             "eyebrow": "Hakkımızda", "h1": "Usta gönderen firma değil, saha operasyonunuzu emanet edebileceğiniz partner.",
             "lead": "BİGEL, kurumsal markaların saha operasyonlarını yürüten, denetleyen ve raporlayan yeni nesil bir saha hizmetleri platformudur. Yerel saha gücünü merkezi operasyon, denetim ve raporlamayla birleştirir.",
             "story_h2": "Sahadan doğdu, sistemle büyüdü.",
@@ -271,7 +287,7 @@ CONTENT = {
               "eyebrow": "İletişim", "h1": "Saha operasyonunuzu birlikte tasarlayalım.", "lead": "Teklif, pilot veya demo görüşmesi için formu doldurun. Aynı iş günü içinde dönüş yapıyoruz.",
               "f": {"name": "Ad Soyad", "company": "Şirket", "email": "E-posta", "phone": "Telefon", "count": "Lokasyon sayısı", "counts": ["1–10", "11–50", "51–250", "251–1.000", "1.000+"], "solution": "İlgilendiğiniz çözüm", "solutions": ["BİGEL CLEAN", "BİGEL CARE", "BİGEL AUDIT / AUDIT 100", "EV Audit30", "BİGEL FIELD360", "Abonelik paketleri", "Birden fazla"], "msg": "İhtiyacınız", "msg_ph": "Lokasyon yapınız, hizmet ihtiyacınız ve öncelikleriniz…", "consent": "Kişisel verilerimin talebimle ilgili iletişim amacıyla işlenmesini kabul ediyorum.", "send": "Talep Oluştur", "subject": "bigel360.com — Yeni talep"},
               "info": [("Merkez", SITE["address_tr"]), ("Telefon", SITE["phone"]), ("E-posta", SITE["email"]), ("LinkedIn", "linkedin.com/company/bigel360"), ("Çalışma saatleri", "Hafta içi 09:00–18:00")]},
-  "pilot": {"title": "Pilot Başvurusu", "desc": "20–30 lokasyonda 4–6 haftalık pilot: başlangıç ölçümü, fotoğraflı bulgular, lokasyon skorları ve yaygınlaştırma planı. Pilot başvurusu.",
+  "pilot": {"title": "Pilot Uygulama — 20–30 lokasyonda 4–6 hafta", "desc": "20–30 lokasyonda 4–6 haftalık pilot: başlangıç ölçümü, fotoğraflı bulgular, lokasyon skorları ve yaygınlaştırma planı. Pilot başvurusu.",
             "eyebrow": "Pilot uygulama", "h1": "Küçük başlayın. Ölçün. Sonra ölçekleyin.",
             "lead": "Seçili lokasyonlarda kısa bir pilotla başlıyoruz. Pilot bitince elinizde başlangıç skorları, fotoğraflı bulgular ve gerçek saha verisine dayanan bir yaygınlaştırma planı oluyor.",
             "stats": [("20–30", "lokasyon ile temsil gücü yüksek örneklem"), ("4–6", "hafta uygulama dönemi"), ("2", "ziyaret turu: başlangıç ve doğrulama"), ("1", "rapor: skor, bulgu, iş yükü ve takvim")],
@@ -287,7 +303,7 @@ CONTENT = {
             "form_eyebrow": "Pilot başvurusu", "form_h2": "Pilot kapsamını birlikte belirleyelim.",
             "form_lead": "Formu doldurun; aynı iş günü içinde 90 dakikalık bir kapsam toplantısı için sizinle iletişime geçelim.",
             "f": {"name": "Ad Soyad", "company": "Şirket", "email": "E-posta", "phone": "Telefon",
-                  "sector": "Sektör", "sectors": ["Akaryakıt", "Ev şarj istasyonları", "Restoran / Fast food", "Perakende", "Bankacılık", "Otomotiv", "Lojistik / Depo", "AVM / Plaza", "Otel / Turizm", "Telekom", "Eğitim", "Fabrika / Tesis", "Diğer"],
+                  "sector": "Sektör", "sectors": ["Akaryakıt", "EV şarj istasyonları", "Restoran / Fast food", "Perakende", "Bankacılık", "Otomotiv", "Lojistik / Depo", "AVM / Plaza", "Otel / Turizm", "Telekom", "Eğitim", "Fabrika / Tesis", "Diğer"],
                   "count": "Toplam lokasyon sayısı", "counts": ["1–10", "11–50", "51–250", "251–1.000", "1.000+"],
                   "geo": "Şehir / bölge dağılımı", "geo_ph": "Örn. İstanbul 12, Ankara 6, İzmir 4…",
                   "product": "Başlangıç ürünü", "products": ["AUDIT 100", "EV Audit30", "CLEAN", "CARE", "FIELD360", "Henüz karar vermedim"],
@@ -300,6 +316,422 @@ CONTENT = {
   "thanks": {"title": "Teşekkürler", "badge": "Talebiniz alındı", "h1": "Teşekkürler, sizi arayacağız.", "p": "Bilgileriniz operasyon ekibimize ulaştı. Aynı iş günü içinde sizinle iletişime geçiyoruz.",
              "steps_h": "Bundan sonra", "steps": [("Talebiniz bize ulaştı", "Formdaki bilgiler ekibimizin önünde."), ("Sizi arıyoruz", "Aynı iş günü içinde, hafta içi 09:00–18:00."), ("Kapsamı netleştiriyoruz", "Lokasyon yapınıza göre teklif ya da pilot planı hazırlıyoruz.")],
              "b": "Ana sayfaya dön", "b2": "Nasıl çalıştığımızı görün", "urgent": "Acil mi? Hemen ulaşın:"},
+  "landings": {
+    "fuel_clean": {'title': 'Akaryakıt İstasyonu Temizliği ve Bakımı',
+       'desc': 'Kanopi, totem, pompa adası, pist ve otopark temizliği; bordür, bariyer ve küçük onarımlar. 81 ilde tek standart, fotoğraflı kanıt ve iş emri takibi.',
+       'crumb': 'Akaryakıt İstasyonu Temizliği ve Bakımı',
+       'service': 'Akaryakıt istasyonu temizliği ve bakımı',
+       'eyebrow': 'Akaryakıt İstasyonları · CLEAN + CARE',
+       'h1': 'Akaryakıt istasyonu temizliği ve bakımı, her noktada aynı standartta.',
+       'lead': 'Kanopi, totem, pompa adası, pist, otopark ve istasyon çevresinin temizliğini ve küçük bakımını Türkiye genelinde tek standartla planlıyoruz. Her ziyaret merkezi görev planından '
+               'çıkar; öncesi ve sonrası fotoğraf, GPS ve zaman damgasıyla kapanır.',
+       'b1': 'Pilot Başlat',
+       'b2': 'Teklif Al',
+       'sections': [{'eyebrow': 'Kapsam',
+                     'h2': 'Akaryakıt istasyonu temizliği neleri kapsar?',
+                     'lead': 'BİGEL CLEAN, istasyonun müşteriye görünen dış alanını tanımlı yöntem, ekipman ve fotoğraf açısıyla ele alır. Modüller tek seferlik uygulanabilir ya da periyodik '
+                             'programa eklenir.',
+                     'cards': [('Akaryakıt istasyonu kanopisi temizliği',
+                                'Kanopi tavanı ve alın bandında biriken atmosferik kir, toz, egzoz izi, kurum ve biyolojik kirlerin periyodik temizliği.'),
+                               ('Totem ve fiyat panosu temizliği', 'Totem, tabela ve yönlendirme elemanlarının yüzeye uygun yöntemle temizliği. Marka görünürlüğü yoldan bakıldığında da korunur.'),
+                               ('Pompa adası ve pist temizliği',
+                                'Pompa adası çevresi ve ön sahada beton ve asfalt zeminde kir, yağ lekesi ve çevre temizliği; hepsi aynı kontrol listesine bağlanır.'),
+                               ('Cephe, cam ve otopark', 'İstasyon binası ve market cephesinde giriş camı, cam cephe, kompozit ve metal yüzeyler; otopark zemininde kir ve yağ lekesi temizliği.'),
+                               ('Gece, acil ve sezonluk temizlik',
+                                'Night Clean çalışma düzenini bozmadan kapanış sonrası planlanır. Emergency Clean dökülme, kötü hava, vandalizm ve denetim öncesi durumlar için; Seasonal Clean '
+                                'kış kiri, yaprak, çamur ve kaygan yüzey riskine göre kurulur.')]},
+                    {'eyebrow': 'İstasyon bakımı · Station Care',
+                     'h2': 'Küçük arızalar birikmeden kapanır.',
+                     'lead': "BİGEL CARE'in Station Care paketi; kanopi, tabela, pompa adası, bordür, bariyer ve istasyon çevresindeki küçük bakım ve onarım işlerini tek iş emri akışında toplar. "
+                             'Ayrı ayrı usta aramak yerine tek kanaldan talep açılır.',
+                     'steps': [('Tespit', 'Fotoğraflı tespit: hasar türü, öncelik ve önerilen aksiyon.'),
+                               ('İş emri', 'Kapsam, sorumlu ve hedef tarih onaylanır.'),
+                               ('Uygulama', 'Bölgesel ekiple standart uygulama.'),
+                               ('Fotoğraflı kapanış', 'Sonrası fotoğrafı ve kalite kontrolü.')],
+                     'list': ['Minor Works: vida sıkıştırma, sabitleme, silikon, noktasal boya ve aksesuar değişimi',
+                              'Sign Care: tabela, totem ve yönlendirme elemanlarının bakımı',
+                              'Pavement Care: zemin, bordür ve otopark bakımı',
+                              'Preventive Care: arızayı beklemeden periyodik önleyici bakım',
+                              'Emergency Care: acil saha müdahalesi'],
+                     'note': 'Yüksek uzmanlık ve yasal yetki gerektiren işler (elektrik, mekanik tesisat vb.) uygun uzmanlarla koordine edilir; BİGEL tespit, planlama ve kapanış takibini '
+                             'yönetir. Tank temizliği, topraklama ölçümü ve dispenser kalibrasyonu bu hizmetin kapsamında değildir.'},
+                    {'eyebrow': 'Saha güvenliği',
+                     'h2': 'Akışı durmayan bir sahada düzenli ve güvenli çalışma.',
+                     'lead': 'Akaryakıt istasyonunda temizlik ve bakım, müşteri trafiği sürerken yapılır. Bu yüzden ziyaret planı istasyonun çalışma düzenine göre kurulur ve güvenlik maddeleri '
+                             'denetimde ayrıca puanlanır.',
+                     'list': ['Ziyaret saatleri, erişim koşulları ve hedef süreler kapsam ve SLA aşamasında birlikte tanımlanır',
+                              'Uygulama yöntemi, ekipman ve kimyasal kullanımı standart operasyon prosedürüne bağlıdır',
+                              'Ekipler ortak hizmet standardına göre eğitilir; kıyafet, kimlik ve İSG standardına göre değerlendirilir',
+                              'Dökülme ve ani kirlenmede Emergency Clean ile hızlı müdahale',
+                              'Kış aylarında kaygan yüzey riskine karşı Seasonal Clean programı',
+                              "AUDIT 100'de İş Güvenliği & Risk kategorisi %15 ağırlıkla puanlanır; kritik bulguda anlık bildirim üretilir"]},
+                    {'eyebrow': 'Çok lokasyonlu ağlar',
+                     'h2': 'Yüzlerce istasyonda tek temizlik standardı.',
+                     'lead': "BİGEL'in yolculuğu akaryakıt istasyonu ağlarına yönelik dış alan temizlik ve küçük bakım işleriyle başladı. Öğrendiğimiz şey netti: işi yapmak yetmez; her noktada "
+                             'aynı standardı tutmak ve bunu merkeze kanıtlamak gerekir.',
+                     'list': ['Tüm istasyonlar için ortak hizmet tanımı, kontrol listesi ve uygulama standardı',
+                              'Merkezi görev ve ziyaret planlaması; aylık, iki aylık, üç aylık veya mevsimsel program',
+                              'Standart fotoğraf açıları ve kalite kriterleri',
+                              'Lokasyon, bölge ve dönem bazında performans görünürlüğü',
+                              'Zamanında ziyaret, tamamlanma oranı ve aksiyon kapanış süresi KPI ve SLA ile izlenir']},
+                    {'eyebrow': 'Kanıt ve raporlama · FIELD360',
+                     'h2': 'Sahada yapılan iş, merkezde görünür.',
+                     'lead': "Her ziyaret aynı dijital akışla yürütülür ve FIELD360'ta tek kayıt zincirine düşer.",
+                     'steps': [('Görev kapsamı', 'Lokasyon bilgisi ve tanımlı hizmet.'),
+                               ('Öncesi fotoğraf', 'Standart açılardan başlangıç kaydı.'),
+                               ('Uygulama', 'Yöntem, ekipman ve kimyasal standardı.'),
+                               ('Sonrası fotoğraf', 'Kontrol listesi ve kalite kriteri.'),
+                               ('Tamamlanma', 'Bulgu bildirimi ve kapanış kaydı.')],
+                     'list': ['Öncesi ve sonrası fotoğraf, GPS ve zaman damgası',
+                              'Konum, tarih, ekip ve fotoğrafla doğrulanan ziyaret',
+                              'Ziyaretler, skorlar, açık bulgular, iş emirleri ve kapanış kanıtları tek ekranda',
+                              'Planlanan, tamamlanan ve geciken ziyaretlerle SLA takibi'],
+                     'links': [('BİGEL FIELD360', 'field360', '')]},
+                    {'eyebrow': 'Temizlik + bakım + denetim',
+                     'h2': 'Temizlikten denetime tek döngü.',
+                     'lead': 'AUDIT 100, istasyonu 10 kategoride 100 kontrol noktasıyla puanlar. Bu bir marka, görsel standart ve saha durumu denetimidir. Çıkan bulgu CARE iş emrine dönüşür, '
+                             'kapanışı fotoğrafla doğrulanır.',
+                     'steps': [('Saha', 'Eğitimli ekip, standart kontrol listesiyle inceler.'),
+                               ('Veri', 'Puan, fotoğraf, GPS, tarih ve bulgu kaydedilir.'),
+                               ('Merkez', "İstasyonlar tek dashboard'da karşılaştırılır."),
+                               ('Karar', 'Bulgular öncelik ve sorumluluğa göre sınıflanır.'),
+                               ('İş emri', 'Aksiyon oluşturulur, uygulanır, fotoğrafla kapanır.')],
+                     'list': ['Her madde Uygun 100, Kısmen Uygun 50, Uygun Değil 0 puan alır',
+                              'Kategori ağırlıklarıyla 100 üzerinden istasyon skoru oluşur',
+                              '90–100 standarda uygun · 75–89 iyileştirme gerekli · 0–74 öncelikli aksiyon',
+                              'BİGEL Map ile tüm istasyonlar Türkiye haritasında skor rengiyle görünür'],
+                     'links': [('Akaryakıt istasyonu denetimi', 'fuel_audit', '')]},
+                    {'eyebrow': 'Nasıl başlarız',
+                     'h2': '20–30 istasyonla başlayın, sonuçla ölçekleyin.',
+                     'lead': 'Pilot 4–6 hafta sürer ve iki ziyaret turundan oluşur. Sonunda elinizde başlangıç skorları, fotoğraflı bulgular ve gerçek saha verisine dayanan bir yaygınlaştırma '
+                             'planı olur.',
+                     'steps': [('Kapsam ve kriterler', 'İstasyon seti, soru seti ve skor ağırlıkları onaylanır.'),
+                               ('Başlangıç ölçümü', 'Mevcut durum fotoğraf ve kontrol listesiyle kaydedilir.'),
+                               ('Saha uygulaması', 'CLEAN, CARE veya AUDIT bölgesel ekiplerle uygulanır.'),
+                               ('İkinci tur', 'Aksiyonlar kapatılır, skor gelişimi doğrulanır.'),
+                               ('Yaygınlaştırma', 'SLA, bölge ve takvimle ölçekleme planı.')],
+                     'list': ['BASIC: periyodik kontrol ve fotoğraflı lokasyon raporu',
+                              'PRO: kontrole ek olarak küçük bakım, iş emri ve fotoğraflı kapanış',
+                              'BUSINESS: planlı CLEAN programı, AUDIT 100 periyodik denetim, KPI/SLA raporu',
+                              '360: FIELD360 tek operasyon merkezi ve atanmış operasyon yöneticisi'],
+                     'note': 'Fiyatlandırma; lokasyon sayısı, alan ve yüzey türü, ziyaret sıklığı, ekipman ihtiyacı ve erişim koşullarına göre hazırlanır. Pilot uygulama nihai birim fiyatı '
+                             'netleştirir.',
+                     'links': [('Abonelik paketleri', 'tiers', '')]}],
+       'faq': [('Akaryakıt istasyonu temizliği hangi alanları kapsar?',
+                'Kanopi tavanı ve alın bandı, totem ve tabelalar, pompa adaları ve pist, istasyon binası cephesi ve camları, otopark ve istasyon çevresi. Kapsam her istasyon için kontrol '
+                'listesiyle tanımlanır.'),
+               ('Kanopi ve totem temizliği istasyon çalışırken yapılabilir mi?',
+                'Ziyaret saatleri ve erişim koşulları kapsam aşamasında istasyonun çalışma düzenine göre belirlenir. Gerekirse Night Clean modeliyle işletmenin çalışma düzenini etkilemeden '
+                'kapanış sonrası planlanır.'),
+               ('Pist ve pompa adası temizliği ne sıklıkla yapılmalı?',
+                'Sıklık istasyonun yoğunluğuna ve yüzey durumuna göre aylık, iki aylık, üç aylık veya mevsimsel programla belirlenir. Ani dökülme ve kirlenmelerde Emergency Clean devreye girer; '
+                'kesin sıklık pilot verisiyle netleşir.'),
+               ('Küçük onarımlar için ayrı ayrı usta çağırmak gerekir mi?',
+                'Hayır. Station Care; kanopi, tabela, pompa adası, bordür ve bariyerdeki küçük işleri tek iş emri akışında toplar. Elektrik ve mekanik tesisat gibi yasal yetki gerektiren işler '
+                "uygun uzmanlarla koordine edilir, takibi BİGEL'de kalır."),
+               ('Temizlik ve bakım işinin yapıldığı nasıl doğrulanır?',
+                "Her ziyaret öncesi ve sonrası fotoğraf, GPS ve zaman damgası ile kayda geçer; kontrol listesi ve zorunlu fotoğrafla doğrulanır. Tüm kayıtlar FIELD360'ta istasyon bazında "
+                'izlenir.'),
+               ('Yüzlerce istasyonda aynı temizlik standardı nasıl sağlanır?',
+                'Tüm istasyonlar ortak hizmet tanımı, kontrol listesi ve fotoğraf açısıyla çalışır; ziyaretler merkezden planlanır, 81 ile erişen bölgesel ekiplerle uygulanır. Sonuçlar lokasyon '
+                've bölge bazında karşılaştırılır.'),
+               ('Denetimde çıkan bulgular nasıl kapanır?',
+                'AUDIT 100 bulgusu öncelik, sorumlu ve hedef tarihle CARE iş emrine dönüşür. Uygulama sonrası fotoğrafla kapanır, ikinci ziyarette skor gelişimi doğrulanır.')],
+       'cta': {'h2': 'İstasyon ağınız için pilot kapsamını birlikte belirleyelim.',
+               'p': '20–30 istasyonla, 4–6 haftada başlangıç skorunu ve açık bulguları görün. Formu doldurun; aynı iş günü içinde dönüş yapalım.',
+               'b1': 'Pilot Başlat',
+               'b2': 'Teklif Al'}},
+    "fuel_audit": {'title': 'Akaryakıt İstasyonu Denetimi — AUDIT 100',
+       'desc': 'İstasyon ağınızda marka, görsel standart, temizlik, fiziksel durum ve müşteri deneyimi denetimi. 100 kriter, fotoğraflı kanıt, skor ve aksiyon takibi.',
+       'crumb': 'Akaryakıt İstasyonu Denetimi',
+       'service': 'Akaryakıt istasyonu marka ve saha standardı denetimi',
+       'eyebrow': 'Akaryakıt İstasyonları · AUDIT 100',
+       'h1': 'Akaryakıt istasyonu denetimi: 100 kriter, tek skor.',
+       'lead': 'İstasyon ağınızdaki marka standardını, görsel uygulamaları, temizliği, fiziksel durumu ve müşteri deneyimini sahada ölçülebilir hale getiriyoruz. Her istasyon aynı kontrol '
+               'listesiyle denetlenir, fotoğrafla kanıtlanır ve 100 üzerinden skorlanır.',
+       'b1': 'AUDIT 100 Pilotu Başlat',
+       'b2': 'Teklif Al',
+       'sections': [{'eyebrow': 'Kapsam',
+                     'h2': 'Resmi denetimden farkı',
+                     'lead': 'Yakıt kalitesi, ölçü aletleri ve lisans uygunluğu denetimleri yetkili kurumların işidir; BİGEL bu denetimleri yapmaz. AUDIT 100, müşterinin istasyonda gördüğü ve '
+                             'yaşadığı her şeye bakar. Resmi denetimlerin yerini almaz, onları tamamlar.',
+                     'list': ['Marka ve görsel standart: logo, kurumsal renkler, güncel tabela, kampanya materyali ve fiyat iletişimi',
+                              'Temizlik: pist, pompa adaları, cam ve cephe, otopark, çöp alanı ve ortak alanlar',
+                              'Fiziksel durum: bariyer, bordür, korkuluk, kapı, mobilya ve küçük hasarlar',
+                              'Müşteri deneyimi: fark edilirlik, giriş, yönlendirme, kasa ve bekleme alanı']},
+                    {'eyebrow': 'Denetim kategorileri',
+                     'h2': 'İstasyonda ne kontrol edilir?',
+                     'lead': "BİGEL AUDIT'in beş modülü istasyonun fiziksel alanına uyarlanır. Soru seti ve skor ağırlıkları, pilot öncesinde sizinle birlikte onaylanır.",
+                     'list': ['Brand Audit: kanopi ve totem üzerindeki marka unsurları, kurumsal renkler, kampanya materyali ve fiyat iletişimi (BRAND SCORE)',
+                              'Visual Audit: tabela, totem ve fiyat panosu, ışıklı harf, folyo, poster, market vitrini ve dijital ekranlar',
+                              'Clean Audit: pist zemini, pompa adaları, kanopi, cam ve cephe, otopark ve çöp alanı; renk kodlu özet',
+                              'Physical Audit: bariyer, bordür, korkuluk, kapı ve mobilya hasarları; bulgular bakım iş emrine dönüşür',
+                              'Customer Experience Audit: istasyonun yoldan fark edilirliği, giriş-çıkış yönlendirmesi, market girişi, kasa ve bekleme alanı (CX SCORE)']},
+                    {'eyebrow': 'AUDIT 100 skor modeli',
+                     'h2': 'Skor nasıl hesaplanır?',
+                     'lead': '10 kategori, 100 kontrol noktası. Her madde Uygun (100), Kısmen Uygun (50) veya Uygun Değil (0) puan alır; kategori ağırlıklarıyla 100 üzerinden istasyon skoru '
+                             'oluşur. Modeli açıkça yayımlıyoruz: skorun neye dayandığı her zaman görünür.',
+                     'weights': 'audit100'},
+                    {'eyebrow': 'İş güvenliği',
+                     'h2': 'İstasyonda güvenlik önce gelir.',
+                     'lead': "Akaryakıt istasyonu, risk toleransı düşük bir sahadır. Bu yüzden AUDIT 100'de en yüksek ağırlık İş Güvenliği & Risk kategorisine verilir ve kritik bulgular raporu "
+                             'beklemez.',
+                     'list': ["İş Güvenliği & Risk kategorisi skorun %15'ini oluşturur",
+                              'Kritik bulguda anlık bildirim; kritik bulgular aynı gün iletilir',
+                              'Bulgular kritik, yüksek, orta ve düşük olarak önceliklendirilir',
+                              'Saha ekipleri kıyafet, kimlik, İSG ve dijital kayıt standardına göre değerlendirilir',
+                              'Elektrik ve mekanik tesisat gibi yasal yetki gerektiren işler uygun uzmanlarla koordine edilir; BİGEL tespit, planlama ve kapanış takibini yönetir']},
+                    {'eyebrow': 'Kanıt ve raporlama',
+                     'h2': 'Her bulgu fotoğrafla, her ziyaret konumla kanıtlanır.',
+                     'lead': 'Her madde fotoğraf, konum, tarih ve açıklamayla kayda geçer. Fotoğraf kuralı soru bazında tanımlıdır: şartlı, zorunlu veya öncesi-sonrası.',
+                     'list': ['Zorunlu fotoğraf ve GPS ile doğrulanan ziyaret',
+                              'İstasyon bazında skor kartı ve kırmızı-sarı-yeşil durum özeti',
+                              'JSON / PDF rapor',
+                              'BİGEL Map: tüm istasyonlar Türkiye haritasında skor rengiyle; bölgeden şehre, şehirden istasyona inilir',
+                              'İstasyon, bölge ve dönem karşılaştırmaları']},
+                    {'eyebrow': 'Aksiyon',
+                     'h2': 'Bulgudan iş emrine',
+                     'lead': 'Denetim raporla bitmez. Bulgu öncelik ve sorumluya göre sınıflanır; küçük bakım BİGEL CARE, temizlik ihtiyacı BİGEL CLEAN ile sahada çözülür ve kapanış fotoğrafla '
+                             'doğrulanır.',
+                     'steps': [('Saha', 'Eğitimli ekip istasyonu standart kontrol listesiyle inceler.'),
+                               ('Veri', 'Puan, fotoğraf, GPS, tarih ve bulgu kaydedilir.'),
+                               ('Merkez', "İstasyonlar tek dashboard'da karşılaştırılır."),
+                               ('Karar', 'Bulgular öncelik ve sorumluluğa göre sınıflanır.'),
+                               ('İş emri', 'Aksiyon oluşturulur, uygulanır, fotoğrafla kapanır.')],
+                     'links': [('BİGEL CARE', 'care', ''), ('BİGEL CLEAN', 'clean', ''), ('Akaryakıt istasyonu temizliği', 'fuel_clean', '')]},
+                    {'eyebrow': 'Hizmet modelleri',
+                     'h2': 'Tek denetimden sürekli programa.',
+                     'lead': 'Teklif; istasyon sayısı, soru adedi, fotoğraf gereksinimi, seyahat, denetim sıklığı, rapor formatı ve dashboard kapsamına göre hazırlanır.',
+                     'list': ['Lokasyon bazlı audit: seçili istasyonlarda tek seferlik denetim',
+                              'Periyodik audit: aylık, üç aylık, altı aylık veya yıllık program',
+                              'Proje audit: kampanya, açılış veya tabela değişimi sonrası toplu kontrol',
+                              'Franchise ve bayi audit: bayi ağında standart uyumunun merkez adına ölçülmesi',
+                              'Yatırım ve devir: satın alma, kiralama veya devir öncesi fiziksel durumun belgelenmesi']},
+                    {'eyebrow': 'Saha ağı',
+                     'h2': 'Tüm istasyon ağı, tek standart.',
+                     'lead': "BİGEL'in yolculuğu akaryakıt istasyonu ağlarına yönelik saha işleriyle başladı. Bugün merkezi planlama ve kalite kontrolü İstanbul'dan yürütülür; denetimler "
+                             'bölgesel ekiplerle yapılır.',
+                     'list': ['81 ilde erişilebilir yerel ekip ağı',
+                              'Ortak kontrol listesi, fotoğraf açısı ve kapanış kuralı',
+                              'FIELD360 ile denetim, temizlik ve bakım tek sözleşme, tek standart ve tek raporlamada']},
+                    {'eyebrow': 'Pilot',
+                     'h2': 'Önce seçili istasyonlarda ölçün.',
+                     'lead': '20–30 lokasyon, 4–6 hafta, iki ziyaret turu: başlangıç ve doğrulama. Pilot sonunda istasyon skorları, fotoğraflı bulgu listesi ve yaygınlaştırma planı elinizde '
+                             'olur.',
+                     'list': ['Denetim özeti ve kategori skorları',
+                              'Fotoğraflı bulgu listesi: kritik, yüksek, orta, düşük',
+                              'Lokasyon ve bölge karşılaştırması',
+                              'Tahmini iş yükü, ziyaret sıklığı ve uygulama takvimi']}],
+       'faq': [('Bayi standart denetimi nedir, resmi denetimden farkı ne?',
+                'Bayi standart denetimi, istasyonun marka, görsel standart, temizlik, fiziksel durum ve müşteri deneyimi açısından merkezin belirlediği standarda uyup uymadığını ölçer. Yakıt '
+                'kalitesi, ölçü aletleri ve lisans denetimleri yetkili kurumların işidir; BİGEL bu denetimleri yapmaz, onları tamamlayan bir saha standardı denetimi sunar.'),
+               ('Akaryakıt istasyonu denetiminde hangi maddeler kontrol edilir?',
+                'Kanopi ve totemdeki marka unsurları, tabela ve fiyat panosu, pist ve pompa adalarının temizliği, bariyer, bordür ve korkuluk gibi fiziksel unsurlar, market girişi, kasa ve '
+                'yönlendirme kontrol edilir. AUDIT 100 bunları 10 kategoride 100 kontrol noktasıyla ölçer; soru seti pilot öncesinde sizinle onaylanır.'),
+               ('Denetim sonuçları nasıl skorlanır ve raporlanır?',
+                'Her madde Uygun 100, Kısmen Uygun 50 veya Uygun Değil 0 puan alır; kategori ağırlıklarıyla 100 üzerinden istasyon skoru oluşur. 90–100 standarda uygun, 75–89 iyileştirme '
+                'gerekli, 0–74 öncelikli aksiyon anlamına gelir. Sonuçlar istasyon skor kartı, JSON / PDF rapor ve BİGEL Map üzerinden izlenir.'),
+               ('Denetimde çıkan bulgular nasıl aksiyona dönüşür?',
+                'Bulgular öncelik ve sorumluya göre sınıflanır, iş emrine dönüşür ve hedef tarihle takip edilir. Küçük bakım BİGEL CARE, temizlik ihtiyacı BİGEL CLEAN ile sahada çözülür; kapanış '
+                'fotoğrafla doğrulanır.'),
+               ('Denetim ne sıklıkla yapılmalı?',
+                'Periyodik programlar aylık, üç aylık, altı aylık veya yıllık kurulabilir. Kampanya, açılış veya tabela değişimi sonrasında ayrıca proje denetimi yapılabilir. Doğru sıklık, pilot '
+                'sonuçlarına göre birlikte netleştirilir.'),
+               ('Kritik bir güvenlik bulgusu çıkarsa ne olur?',
+                "İş Güvenliği & Risk, AUDIT 100'de en yüksek ağırlığa (%15) sahip kategoridir. Kritik bulgu rapor beklenmeden anlık bildirilir ve öncelikli aksiyon olarak iş emrine bağlanır."),
+               ('İstasyonlarımızda şarj noktaları da var. Onlar nasıl denetlenir?',
+                'Şarj noktaları için EV Audit30 kullanılır: 30 standart kontrol, 6 ağırlıklı alan ve 100 üzerinden saha skoru. Akaryakıt alanı ve şarj noktaları aynı ziyaret planında birlikte '
+                'denetlenebilir.')],
+       'cta': {'h2': 'İstasyon ağınız için AUDIT 100 pilotu başlatın.',
+               'p': 'Seçili istasyonlarda 4–6 haftalık bir pilotla başlangıç skorlarını ölçelim, sonuçlara göre bölgesel ve Türkiye geneli programı birlikte planlayalım.',
+               'b1': 'AUDIT 100 Pilotu Başlat',
+               'b2': 'İletişim'}},
+    "ev_care": {'title': 'Şarj İstasyonu Bakımı ve Temizliği',
+       'desc': 'Elektrikli araç şarj istasyonlarında ünite dış gövdesi, kablo düzeni, park cebi, zemin ve yönlendirme bakımı. Elektriksel bakım yetkili uzmanlarla.',
+       'crumb': 'Şarj İstasyonu Bakımı ve Temizliği',
+       'service': 'Elektrikli araç şarj istasyonu saha bakımı ve temizliği',
+       'eyebrow': 'EV Şarj İstasyonları · CLEAN + CARE',
+       'h1': 'Elektrikli araç şarj istasyonu saha bakımı ve temizliği.',
+       'lead': 'Uzaktan izleme size cihazın teknik durumunu gösterir. Sürücünün istasyonda gördüğü saha koşullarını ise ancak sahadaki ekip korur. BİGEL, şarj ünitesinin dış gövdesini, kablo '
+               'düzenini, park cebini, zemini ve yönlendirmeyi ağınızın tamamında aynı standartla bakımda tutar. Planlamayı, uygulamayı ve fotoğraflı raporlamayı tek merkezden yönetir.',
+       'b1': 'Pilot Başvurusu',
+       'b2': 'Teklif Al',
+       'sections': [{'eyebrow': 'Kapsam',
+                     'h2': 'Saha ve görsel bakım: sürücünün gördüğü her şey.',
+                     'lead': 'Şarj noktasında deneyimi belirleyen tek şey cihazın çalışması değildir. Ünitenin temiz ve sağlam görünmesi, kablonun yerde kalmaması, park cebinin boş ve okunur '
+                             "olması, yönlendirmenin araçtan fark edilmesi de aynı deneyimin parçasıdır. BİGEL CARE'in EV Charge Care paketi bu alanı kapsar.",
+                     'list': ['Şarj ünitesi dış gövdesi ve ekran yüzeyi',
+                              'Kablo düzeni: kablo ve konektörün yerde kalmaması',
+                              'Park cebi, zemin, bordür ve otopark yüzeyi',
+                              'Yönlendirme ve tabela elemanları',
+                              'Aydınlatma armatürlerinin dış gövdesi',
+                              'Cihaz çevresi ve istasyonun dış alanı']},
+                    {'eyebrow': 'Kapsam dışı',
+                     'h2': 'Elektriksel bakım yapmıyoruz. Bunu baştan açıkça söylüyoruz.',
+                     'lead': 'Şarj ünitesinin elektriksel bakımı, periyodik muayenesi ve kalibrasyonu yasal yetki ve yüksek uzmanlık gerektirir. Bu işler yetkili uzmanlar tarafından yürütülür. '
+                             'BİGEL bu işlerin yerine geçmez, onları tamamlar. Sahada fark edilen bulguyu kaydeder, uzmanlık gerektiren işi uygun uzmanla koordine eder, planlamayı ve kapanış '
+                             'takibini yönetir.',
+                     'list': ['Ünitenin içine ve elektriksel bileşenlere müdahale edilmez',
+                              'Sahada görülen fiziksel bulgu fotoğrafla kayda geçer',
+                              'Yetki gerektiren iş uygun uzmanla koordine edilir',
+                              "Tespit, planlama ve kapanış takibi BİGEL'dedir"]},
+                    {'eyebrow': 'BİGEL CLEAN',
+                     'h2': 'Şarj istasyonu temizliği: ünite, ekran, zemin ve park cebi.',
+                     'lead': 'Şarj alanı açık havadadır. Toz, yağmur, çamur ve kış kiri ünite gövdesinde ve zeminde hızla birikir. Temizlik, kapsam aşamasında onaylanan ortak kontrol listesi ve '
+                             'standart prosedürle yapılır. Her yüzey kendi malzemesine uygun yöntemle temizlenir.',
+                     'list': ['Ünite dış gövdesi ve ekran yüzeyinin temizliği',
+                              'Tabela, totem ve yönlendirme elemanlarının yüzeye uygun temizliği',
+                              'Zemin ve park cebinde kir, yağ lekesi ve çevre temizliği',
+                              'Kablo ve konektörün kendi yerinde bırakılması',
+                              'Kış kiri, yaprak ve çamura göre mevsimsel program',
+                              'Ani kirlenme, vandalizm ya da kötü havadan sonra acil müdahale']},
+                    {'eyebrow': 'BİGEL CARE iş akışı',
+                     'h2': 'Tespit, iş emri, fotoğraflı kapanış.',
+                     'lead': 'Sahada görülen her sorun tek iş emri akışında ilerler. Her şarj noktası aynı fotoğraf setiyle kayda geçer: ön, sağ, sol, ekran, kablo ve park alanı. Böylece '
+                             'lokasyonlar ve dönemler aynı açıdan karşılaştırılabilir.',
+                     'steps': [('Talep', 'Tek kanal: işletmeci talebi ya da denetim bulgusu.'),
+                               ('Fotoğraflı tespit', 'Hasar türü, öncelik ve önerilen aksiyon.'),
+                               ('Görev onayı', 'Kapsam, sorumlu ve hedef tarih.'),
+                               ('Saha müdahalesi', 'Bölgesel ekiple standart uygulama.'),
+                               ('Kapanış raporu', 'Sonrası fotoğrafı ve kalite kontrolü.')]},
+                    {'eyebrow': 'EV Audit30',
+                     'h2': 'Saha kalitesini ölçmek için EV Audit30.',
+                     'lead': 'Bakımın etkisini görmek için ölçmek gerekir. EV Audit30, şarj noktasında 30 standart kontrol yapar. Bu kontroller 6 ağırlıklı alanda toplanır ve 100 üzerinden bir '
+                             "saha skoru çıkar. 90 ve üzeri uygun, 75–89 takip, 75'in altı aksiyon anlamına gelir. Güvenlik maddelerinde uygunsuzluk çıkarsa aynı gün bildirim gider, majör "
+                             'bulgular 24 saat içinde aksiyona bağlanır. Ayrıntılar şarj istasyonu denetimi sayfasındadır.',
+                     'list': ['Güvenlik, 5 kritik kontrol: %25', 'Cihaz bütünlüğü: %20', 'İşlev işaretleri: %20', 'Kullanıcı deneyimi: %15', 'Temizlik ve çevre: %10', 'Marka standardı: %10'],
+                     'links': [('Şarj istasyonu denetimini inceleyin', 'ev_audit', '')]},
+                    {'eyebrow': 'FIELD360',
+                     'h2': 'Ağın tamamında tek standart.',
+                     'lead': 'Şarj ağları çoğu zaman şehirlere ve otoyollara dağılmış, az sayıda ünitesi olan çok sayıda noktadan oluşur. FIELD360 bu ağı tek merkezden yönetir. Kontrol '
+                             'listeleri, fotoğraf açıları, kalite kriterleri ve kapanış kuralları her lokasyonda aynıdır.',
+                     'list': ['Merkezi görev ve ziyaret planlaması',
+                              '81 ile erişilebilir bölgesel ekip ağı',
+                              'Konum, zaman, kontrol listesi ve fotoğrafla doğrulanan ziyaret',
+                              'Aylık, iki aylık, üç aylık veya mevsimsel ziyaret programı',
+                              'Birlikte belirlenen KPI ve SLA hedefleri',
+                              'Lokasyon, bölge ve dönem bazında tek dashboard']}],
+       'faq': [('Şarj istasyonu bakımı neleri kapsar, elektriksel bakım dahil mi?',
+                "BİGEL'in kapsamı saha ve görsel bakımdır: ünite dış gövdesi, ekran yüzeyi, kablo düzeni, park cebi, zemin, yönlendirme ve aydınlatma dış gövdesi. Elektriksel bakım, periyodik "
+                'muayene ve kalibrasyon bu kapsama girmez, yetkili uzmanlar tarafından yürütülür. BİGEL bu işlerde tespit, planlama ve kapanış takibini üstlenir.'),
+               ('Şarj istasyonu nasıl temizlenir?',
+                'Temizlik, kapsam aşamasında onaylanan kontrol listesine ve standart prosedüre göre yapılır. Ünite gövdesi, ekran, zemin ve park cebi her yüzeyin malzemesine uygun yöntemle '
+                'temizlenir. Ünitenin içine ya da elektriksel bileşenlerine müdahale edilmez.'),
+               ('Şarj kabloları yerde kalınca ne olur, kablo düzeni nasıl korunur?',
+                'Yerde kalan kablo hem görüntüyü bozar hem de yürüyen ve manevra yapan araçlar için risk oluşturur. Bu yüzden kablo, her ziyaretin zorunlu fotoğraf setinde ayrı bir kare olarak '
+                'kayda geçer. Uygunsuzluk görülürse bulgu olarak işaretlenir. Güvenlik maddelerindeki uygunsuzluklar aynı gün bildirilir.'),
+               ('Şarj park yeri ve yönlendirme düzeni nasıl takip edilir?',
+                "Park cebi ve yönlendirme her ziyarette fotoğrafla kaydedilir. EV Audit30'da bu alan kullanıcı deneyimi başlığı altında skorlanır. Silinmiş zemin işareti ya da hasarlı tabela "
+                'gibi bulgular CARE iş emrine dönüşür ve fotoğraflı kapanışla takip edilir.'),
+               ('Bakımın yapıldığı nasıl raporlanır?',
+                'Her ziyaret GPS, zaman damgası, kontrol listesi ve fotoğrafla kayda geçer. İş emirleri sorumlu, hedef tarih ve kapanış kanıtıyla izlenir. Merkez ekip ise tüm lokasyonları '
+                "lokasyon, bölge ve dönem bazında tek dashboard'da görür."),
+               ('Ziyaret sıklığı nasıl belirlenir?',
+                'Ziyaret sıklığı ağın ihtiyacına göre birlikte belirlenir. Aylık, iki aylık, üç aylık ya da mevsimsel bir program kurulabilir. Ani kirlenme, vandalizm veya kötü hava sonrası için '
+                'ayrıca acil müdahale planlanabilir.'),
+               ('Tüm ağa geçmeden önce deneyebilir miyiz?',
+                'Evet. EV ağları için Audit30 pilotu 10 lokasyonda, 2 haftada ve 2 turda yapılır. Pilot sonunda başlangıç skorları, fotoğraflı bulgular ve aksiyon önerileri elinizde olur.')],
+       'cta': {'h2': 'Şarj ağınızda pilotla başlayın.',
+               'p': 'Audit30 pilotu 10 lokasyonda, 2 haftada ve 2 turda tamamlanır. Başlangıç skorları, fotoğraflı bulgular ve aksiyon önerileri tek raporda toplanır.',
+               'b1': 'Pilot Başvurusu',
+               'b2': 'Teklif Al'}},
+    "ev_audit": {'title': 'Şarj İstasyonu Denetimi — EV Audit30',
+       'desc': 'Şarj noktalarında kullanıcının gördüğü saha koşullarını ölçün: 30 kontrol, 6 ağırlıklı alan, 100 üzerinden skor. Kritik bulguda anlık bildirim.',
+       'crumb': 'Şarj İstasyonu Denetimi',
+       'service': 'Elektrikli araç şarj istasyonu saha denetimi',
+       'eyebrow': 'EV Şarj İstasyonları · EV Audit30',
+       'h1': 'Şarj istasyonu denetimi: EV Audit30 ile saha skoru.',
+       'lead': 'Uzaktan izleme cihazın teknik durumunu gösterir; Audit30 müşterinin karşılaştığı fiziksel saha koşullarını görünür kılar. 30 standart kontrol, 6 ağırlıklı alan ve 100 üzerinden '
+               'tek saha skoru. Her şarj noktası aynı fotoğraf setiyle kayda geçer, bulgular iş emrine dönüşür.',
+       'b1': 'Audit30 Pilotu Başlat',
+       'b2': 'Teklif Al',
+       'sections': [{'eyebrow': 'Kapsam',
+                     'h2': 'Neyi ölçer, neyi ölçmez?',
+                     'lead': 'Bir şarj noktası izleme panelinde çevrimiçi görünebilir; sürücü ise sahada kirli bir ekranla, yere sarkmış bir kabloyla ya da başka bir aracın işgal ettiği park '
+                             'cebiyle karşılaşabilir. EV Audit30 bu boşluğu kapatır: sürücünün gördüğü fiziksel saha kalitesini standart bir kontrol listesiyle ölçer.',
+                     'list': ['Ölçer: cihaz çevresi, ünitenin dış gövdesi, ekran, kablo düzeni, park cebi, zemin, yönlendirme ve marka unsurları.',
+                              'Ölçer: sahada gözle görülebilen işlev işaretleri ve kullanıcı deneyimini etkileyen koşullar.',
+                              'Ölçmez: elektriksel muayene, ölçüm veya cihaz içi teknik test. Elektriksel işler yetkili uzmanlarla koordine edilir.',
+                              'Resmi denetim değildir: EV Audit30, kurum denetimlerinin yerini tutmaz. Şarj ağınızın saha durumunu fotoğraflı ve tarihli kayıtla belgeleyerek iç hazırlığınızı '
+                              'destekler.']},
+                    {'eyebrow': 'Kontrol yapısı',
+                     'h2': '30 kontrol, 6 ağırlıklı alan.',
+                     'lead': 'Her lokasyon aynı 30 standart kontrolle incelenir. Alanlar sürücü ve marka açısından önemine göre ağırlıklandırılır; sonuç 100 üzerinden saha skorudur.',
+                     'weights': 'ev'},
+                    {'eyebrow': 'Sahada neye bakılır',
+                     'h2': 'Şarj istasyonu kontrol listesinin saha alanları.',
+                     'lead': 'Kontrol listesi, sürücünün araca yaklaştığı andan şarjı başlattığı ana kadar karşılaştığı fiziksel noktaları kapsar.',
+                     'list': ['Şarj ünitesinin dış gövdesi ve ekranı',
+                              'Kablo düzeni ve kablonun bırakıldığı konum',
+                              'Park cebi, zemin ve çevre temizliği',
+                              'Yönlendirme elemanları ve aydınlatma dış gövdesi',
+                              'Marka unsurlarının görünürlüğü ve standarda uygunluğu',
+                              'Kullanıcıyı etkileyen güvenlik riskleri']},
+                    {'eyebrow': 'Skorlama',
+                     'h2': 'Skor eşikleri ve yanıt süreleri.',
+                     'lead': 'Skor, hangi lokasyona ne zaman müdahale edileceğini netleştirir. Bulgular önem derecesine göre farklı sürelerle bildirilir ve aksiyona bağlanır.',
+                     'list': ['90 ve üzeri: Uygun.',
+                              '75–89: Takip.',
+                              "75'in altı: Aksiyon.",
+                              'Kritik bulgu: anlık bildirim. Güvenlik maddelerindeki uygunsuzluk aynı gün bildirim üretir.',
+                              'Majör bulgu: 24 saat içinde aksiyona bağlanır.']},
+                    {'eyebrow': 'Kanıt',
+                     'h2': 'Fotoğraf seti: her noktada aynı altı kare.',
+                     'lead': 'Şarj noktaları birbiriyle ancak aynı açılardan kayıt altına alınırsa karşılaştırılabilir. Her Audit30 ziyaretinde standart fotoğraf seti çekilir; kayıt GPS ve zaman '
+                             'damgasıyla doğrulanır.',
+                     'list': ['Ön görünüm', 'Sağ görünüm', 'Sol görünüm', 'Ekran', 'Kablo', 'Park alanı']},
+                    {'eyebrow': 'Aksiyon',
+                     'h2': 'Bulgudan sahaya: tespit, iş emri, kapanış.',
+                     'lead': 'Denetim gözlemle bitmez. Audit30 bulguları BİGEL CARE iş emri akışına aktarılır; uygulama bölgesel ekiplerle yapılır ve sonrası fotoğrafıyla kapanır. Şarj '
+                             'ünitesinin dış gövdesi, zemin, yönlendirme ve aydınlatma dış gövdesi gibi fiziksel işler CARE kapsamındadır. Ayrıntılar için şarj istasyonu bakımı sayfamıza '
+                             'bakabilirsiniz.',
+                     'steps': [('Saha', 'Eğitimli ekip, standart kontrol listesiyle inceler.'),
+                               ('Veri', 'Puan, fotoğraf, GPS, tarih ve bulgu kaydedilir.'),
+                               ('Karar', 'Bulgular öncelik ve sorumluluğa göre sınıflanır.'),
+                               ('İş emri', 'Kapsam, sorumlu ve hedef tarih belirlenir.'),
+                               ('Kapanış', 'Müdahale sonrası fotoğraf ve kalite kontrolüyle kapanır.')],
+                     'links': [('Şarj istasyonu bakımı', 'ev_care', ''), ('BİGEL CARE', 'care', '')]},
+                    {'eyebrow': 'Ağ yönetimi',
+                     'h2': 'Yüzlerce şarj noktası, tek ekranda.',
+                     'lead': 'Lokasyonlar Türkiye haritası üzerinde skor rengiyle gösterilir. Bölgeden şehre, şehirden tek bir şarj noktasına inilir; skor kartı, fotoğraflar, bulgular ve aksiyon '
+                             'geçmişi aynı yerde görülür. Ziyaretler FIELD360 ile planlanır, SLA hedefleri merkezden izlenir.',
+                     'list': ['81 ile erişim, bölgesel saha ekipleri',
+                              'Ortak kontrol listesi, fotoğraf açısı ve kapanış kuralı',
+                              'Ortalama skor, kritik bulgu sayısı ve açık aksiyonlar',
+                              'Planlanan, tamamlanan ve geciken ziyaretlerin takibi',
+                              'Saha ekipleri kıyafet, kimlik, İSG ve dijital kayıt standardına göre değerlendirilir']},
+                    {'eyebrow': 'Pilot',
+                     'h2': 'Audit30 pilotu: 10 lokasyon, 2 hafta, 2 tur.',
+                     'lead': 'Ağın tamamına geçmeden önce seçili lokasyonlarda başlangıç skorunu ölçer, bulguları kapatır ve ikinci turda gelişimi doğrularız.',
+                     'steps': [('Kapsam toplantısı', '90 dakika. Lokasyon yapısı ve pilot başarı kriterleri.'),
+                               ('Pilot planı', 'Lokasyon seti, fotoğraf kuralı, SLA ve takvim tek dokümanda.'),
+                               ('Birinci tur', 'Başlangıç ölçümü; kritik bulgular aynı gün bildirilir.'),
+                               ('İkinci tur', 'Aksiyonlar kapatılır, skor ve açık bulgu gelişimi doğrulanır.'),
+                               ('Sonuç toplantısı', 'Skorlar, bulgular ve yaygınlaştırma planı.')],
+                     'links': [('Pilot başvurusu', 'pilot', 'basvuru')]}],
+       'faq': [('Şarj istasyonu denetiminde neler kontrol edilir?',
+                'EV Audit30, 30 standart kontrolü altı alanda toplar: güvenlik, cihaz bütünlüğü, işlev işaretleri, kullanıcı deneyimi, temizlik ve çevre, marka standardı. Sahada ünitenin dış '
+                'gövdesi, ekran, kablo düzeni, park cebi, zemin ve yönlendirme incelenir.'),
+               ('EV Audit30 resmi (EPDK) denetimin yerini tutar mı?',
+                'Hayır. EV Audit30 resmi bir denetim ya da elektriksel muayene değildir. Şarj noktalarınızın saha durumunu fotoğraflı, GPS ve zaman damgalı kayıtla belgeler; bu kayıt iç '
+                'hazırlığınızı destekler.'),
+               ('Çalışmayan veya sorunlu şarj noktaları sahada nasıl tespit edilir?',
+                'Uzaktan izleme cihazın teknik durumunu gösterir; saha ekibi ise sürücünün gördüğü işlev işaretlerini, ekranı, kabloyu ve park alanını yerinde kontrol eder ve fotoğraflar. '
+                'Uygunsuzluklar bulgu olarak kaydedilir ve önem derecesine göre bildirilir.'),
+               ('Şarj noktası saha kalitesi nasıl skorlanır?',
+                "Altı alan ağırlıklandırılır ve sonuç 100 üzerinden saha skoru olarak hesaplanır. 90 ve üzeri Uygun, 75–89 Takip, 75'in altı Aksiyon olarak sınıflanır."),
+               ('Kritik bir bulguda ne kadar sürede bildirim yapılır?',
+                'Kritik bulgular anlık bildirilir; güvenlik maddelerindeki uygunsuzluk aynı gün bildirim üretir. Majör bulgular 24 saat içinde aksiyona bağlanır.'),
+               ('Audit30 pilotu nasıl işler?',
+                'Pilot 10 lokasyonda, 2 hafta içinde, 2 tur olarak yürütülür. İlk turda başlangıç skoru çıkarılır, ikinci turda aksiyonların kapanışı ve skor gelişimi doğrulanır.'),
+               ('Denetimde çıkan bulgular kim tarafından giderilir?',
+                'Fiziksel bulgular BİGEL CARE iş emri akışıyla bölgesel ekiplere atanır ve sonrası fotoğrafıyla kapanır. Elektriksel bakım gerektiren işler yetkili uzmanlarla koordine edilir; '
+                'BİGEL tespit, planlama ve kapanış takibini yönetir.')],
+       'cta': {'h2': 'Şarj ağınızın saha skorunu ölçelim.',
+               'p': '10 lokasyonda, 2 haftada, 2 turla başlayın. Başlangıç skoru, fotoğraflı bulgular ve yaygınlaştırma planı pilotun sonunda elinizde.',
+               'b1': 'Audit30 Pilotu Başlat',
+               'b2': 'İletişim'}},
+  },
 },
 "en": {
   "meta_suffix": " | BİGEL",
@@ -311,6 +743,9 @@ CONTENT = {
     "field360": {"name": "BİGEL FIELD360", "cat": "Field Management Platform", "tag": "Your entire field, one control centre.", "short": "Cleaning, maintenance, audit and action under one contract, one standard and one reporting flow."},
   },
   "more": "View solution",
+  "ui": {"home": "Home", "faq_eyebrow": "FAQ", "faq_h2": "Frequently asked questions", "rel_eyebrow": "Related pages", "rel_h2": "Related reading", "crumb_label": "Breadcrumb",
+         "short": {"fuel_clean": "Cleaning and maintenance", "fuel_audit": "Audit · AUDIT 100", "ev_care": "Maintenance and cleaning", "ev_audit": "Audit · EV Audit30"},
+         "footer": {"fuel_clean": "Fuel station cleaning", "fuel_audit": "Fuel station audit", "ev_care": "EV charging station maintenance", "ev_audit": "EV charging station audit"}},
   "footer": {"tagline": "Your Strength in the Field.", "desc": "Corporate Field Operations and Service Platform. Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands.", "solutions": "Solutions", "company": "Company", "contact": "Contact", "ev": "EV Audit30", "rights": "All rights reserved.", "privacy": "Privacy & Data Protection"},
   "cta": {"h2": "Let's design your field operation together.", "p": "We start with a pilot on selected sites and scale to regional or nationwide operations based on the results.", "b1": "Start a Pilot", "b2": "Contact"},
   "sectors_list": [
@@ -338,8 +773,8 @@ CONTENT = {
      ["Everything in BUSINESS", "FIELD360 single operations centre", "Visual area and furniture management", "Dedicated operations manager"]),
   ],
   "home": {
-    "title": "BİGEL | Your Strength in the Field",
-    "desc": "Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands. Photo evidence, scores and action tracking.",
+    "title": "Fuel and EV Charging Station Field Operations | BİGEL",
+    "desc": "Cleaning, maintenance and audits in 81 provinces for fuel and EV charging station networks and multi-site brands. Photo evidence and scores.",
     "eyebrow": "Corporate Field Operations",
     "h1": "Your Strength in the Field.",
     "lead": "We plan, execute and report the cleaning, maintenance and audit operations of multi-site brands across Türkiye, to one standard and with photo evidence.",
@@ -358,7 +793,7 @@ CONTENT = {
     "flow_eyebrow": "How we work", "flow_h2": "One chain of record from planning to closure.",
     "flow": [("Plan", "Site, task, team and SLA definition."), ("Execute", "Cleaning or maintenance to a standard procedure."), ("Audit", "Checklist, score and photos."), ("Report", "KPI, SLA and site score."), ("Act", "Work order, owner and closure evidence.")],
     "flow_more": "See the full process",
-    "sec_eyebrow": "Industries", "sec_h2": "For every multi-site brand.", "sec_more": "All industries",
+    "sec_eyebrow": "Industries", "sec_h2": "From fuel and EV charging stations to retail, for every multi-site brand.", "sec_more": "All industries",
     "tier_eyebrow": "Plans", "tier_h2": "Plans that scale with your needs.", "tier_more": "Compare plans",
     "photo_tag": "Real sites, real teams, photo evidence",
   },
@@ -369,7 +804,7 @@ CONTENT = {
       "lead": "We manage the exterior cleaning operations of brands with widespread physical sites across Türkiye, to one standard. A defined scope for every site, photo evidence for every visit.",
       "sections": [
         {"type": "split", "eyebrow": "The problem", "h2": "As sites multiply, the standard drifts.", "p": "Different crews, changing methods and scattered reporting cause deviations in brand appearance. BİGEL CLEAN brings it all under one model.",
-         "list": ["Common service definition and application standard", "Central task and visit planning", "Fast site access through regional teams", "Before and after photo evidence", "Site and regional performance visibility"], "img": "station.jpg", "tag": "Canopy and forecourt cleaning · Fuel"},
+         "list": ["Common service definition and application standard", "Central task and visit planning", "Fast site access through regional teams", "Before and after photo evidence", "Site and regional performance visibility"], "img": "station.jpg", "tag": "Canopy and forecourt cleaning · Fuel", "link": "fuel_clean"},
         {"type": "modules", "eyebrow": "Service modules", "h2": "A defined method, equipment and photo angle for every area.", "lead": "Modules can be one-off or part of a periodic programme.",
          "items": [("01", "Canopy Clean", "Periodic removal of atmospheric dirt, dust, exhaust marks, soot and biological soiling."), ("02", "Signage & Totem Clean", "Surface-appropriate cleaning of signs, totems and wayfinding that affect brand visibility."), ("03", "Floor & Car Park Clean", "Dirt, oil stains and litter on concrete, asphalt, pavers, epoxy and stone."), ("04", "Glass & Façade Clean", "Shopfronts, entrance glass, curtain walls, composite, metal, stone and painted surfaces."), ("05", "Event Clean", "Pre-event preparation, support during the event and post-event closing clean."), ("06", "Night Clean", "Cleaning scheduled after closing hours without disrupting operations."), ("07", "Emergency Clean", "Sudden soiling, spills, bad weather, vandalism or pre-audit rapid response."), ("08", "Seasonal Clean", "Programmes built around winter grime, moss, leaves, mud and slip risks.")]},
         {"type": "flow", "eyebrow": "Annual programme", "h2": "Every visit runs on the same digital flow.", "steps": [("Task scope", "Site information and defined service."), ("Before photo", "Baseline record from standard angles."), ("Execution", "Method, equipment and chemical standard."), ("After photo", "Checklist and quality criteria."), ("Completion", "Findings reported, closure recorded.")]},
@@ -390,7 +825,7 @@ CONTENT = {
         {"type": "modules", "eyebrow": "Service modules", "h2": "Ten modules, combined by industry.", "lead": "",
          "items": [("01", "Minor Works", "Tightening, fixing, handle and accessory replacement, sealant, spot painting."), ("02", "Sign Care", "Signage, totem and wayfinding maintenance."), ("03", "Exterior Care", "Façade, entrance and outdoor area maintenance."), ("04", "Visual Care", "Visual areas and brand elements."), ("05", "Furniture Care", "Furniture and display elements."), ("06", "Pavement Care", "Floors, kerbs and car park maintenance."), ("07", "Site Care", "Site physical condition management."), ("08", "Preventive Care", "Periodic preventive maintenance."), ("09", "Emergency Care", "Emergency field response."), ("10", "Field Audit", "Photo-verified inspection and action report.")]},
         {"type": "flow", "eyebrow": "Workflow", "h2": "From request to photo-verified closure.", "steps": [("Request", "One channel: request or audit finding."), ("Photo assessment", "Damage type, priority and proposed action."), ("Task approval", "Scope, owner and due date."), ("Field intervention", "Standard execution by the regional team."), ("Closure report", "After photo and quality check.")]},
-        {"type": "cards3", "eyebrow": "Industry packages", "h2": "Built around each industry's physical spaces.", "items": [("Station Care", "Fuel stations: canopy, signage, pump islands, kerbs, barriers and surroundings."), ("EV Charge Care", "Charger housing, floor, wayfinding and light fittings. Electrical maintenance by certified specialists."), ("Restaurant Care", "Façade, signage, outdoor seating, drive-thru and minor interior works."), ("Auto & ATM Care", "Showroom façade and display platforms; ATM cabins, branch entrances and counters."), ("Retail & Mall Care", "Shelving, display units, shopfront frames; mall wayfinding, seating and seasonal décor."), ("Logistics & Facility Care", "Warehouse façade, floor markings, barriers; hotel, school and factory entrances.")]},
+        {"type": "cards3", "eyebrow": "Industry packages", "h2": "Built around each industry's physical spaces.", "items": [("Station Care", "Fuel stations: canopy, signage, pump islands, kerbs, barriers and surroundings.", "fuel_clean"), ("EV Charge Care", "Charger housing, floor, wayfinding and light fittings. Electrical maintenance by certified specialists.", "ev_care"), ("Restaurant Care", "Façade, signage, outdoor seating, drive-thru and minor interior works."), ("Auto & ATM Care", "Showroom façade and display platforms; ATM cabins, branch entrances and counters."), ("Retail & Mall Care", "Shelving, display units, shopfront frames; mall wayfinding, seating and seasonal décor."), ("Logistics & Facility Care", "Warehouse façade, floor markings, barriers; hotel, school and factory entrances.")]},
       ]},
     "audit": {
       "title": "BİGEL AUDIT — Field audits, AUDIT 100 and EV Audit30",
@@ -404,12 +839,12 @@ CONTENT = {
          "p": "10 categories, 100 checkpoints. Each item scores Compliant 100, Partial 50 or Non-compliant 0; category weights produce a site score out of 100. The photo rule is defined per question: conditional, mandatory or before-and-after.",
          "weights": [("Exterior & Façade", 10), ("Signage / Totem / Visual", 10), ("Cleanliness & Hygiene", 10), ("Furniture / Equipment", 10), ("Technical & Physical Condition", 10), ("Safety & Risk", 15), ("Brand / Visual Standard", 15), ("Customer Experience", 10), ("Operations & Execution", 5), ("Management / Data / Compliance", 5)],
          "thresholds": [("g", "90–100 · Meets standard"), ("a", "75–89 · Improvement needed"), ("r", "0–74 · Priority action")],
-         "badges": ["Mandatory photo and GPS", "Instant alert on critical findings", "Site scorecard", "JSON / PDF report"]},
+         "badges": ["Mandatory photo and GPS", "Instant alert on critical findings", "Site scorecard", "JSON / PDF report"], "more": "fuel_audit"},
         {"type": "sub", "id": "ev", "logo": None, "eyebrow": "For charging networks", "h2": "Charging point field quality audit.",
          "p": "Remote monitoring shows the device's technical state; Audit30 makes the physical site conditions your customers actually meet visible. 30 standard checks, 6 weighted areas, a site score out of 100. Safety non-conformities trigger a same-day alert; major findings are actioned within 24 hours.",
          "weights": [("Safety · 5 critical checks", 25), ("Device integrity", 20), ("Function indicators", 20), ("User experience", 15), ("Cleanliness & surroundings", 10), ("Brand standard", 10)],
          "thresholds": [("g", "≥ 90 · Compliant"), ("a", "75–89 · Follow-up"), ("r", "< 75 · Action")],
-         "badges": ["Photo set: front, right, left, screen, cable, bay", "Critical: instant · Major: 24 hours", "Pilot: 10 sites, 2 weeks, 2 rounds"]},
+         "badges": ["Photo set: front, right, left, screen, cable, bay", "Critical: instant · Major: 24 hours", "Pilot: 10 sites, 2 weeks, 2 rounds"], "more": "ev_audit"},
         {"type": "map", "eyebrow": "BİGEL Map", "h2": "All sites on one map.", "p": "Sites are shown on a map of Türkiye in their score colour. Users drill from region to city to site and see the scorecard, photos, findings and action history.",
          "legend": [("var(--green)", "90–100 · Meets standard"), ("var(--amber)", "75–89 · Improvement needed"), ("var(--red)", "0–74 · Priority action")],
          "kpis": [("Site count by region and city"), ("Average audit score and critical finding count"), ("Completed, pending and open actions")]},
@@ -432,12 +867,12 @@ CONTENT = {
         {"type": "cards3", "eyebrow": "Management outputs", "h2": "What does head office see?", "items": [("Network view", "Türkiye, region, city and site status. Resource and visit priority."), ("Service performance", "Planned, completed and delayed visits. Capacity and SLA tracking."), ("Quality score", "Checklist results and site score. Low-performing sites identified."), ("Findings & work orders", "Open criticals, owners and due dates. Intervention and budget priority."), ("Evidence history", "Before, after and closure photos. Verification of work done."), ("Sample pilot", "20–30 sites, 4–6 weeks, CLEAN + CARE + AUDIT. Baseline score, open findings, SLA and second visit.")]},
       ]},
   },
-  "sectors": {"title": "Industries — Field operations for multi-site brands", "desc": "Field services for fuel, restaurants, retail, banking, automotive, logistics, malls, hotels, EV charging, telecom, education and facilities.",
-              "eyebrow": "Industries", "h1": "Every industry where the field standard must be managed centrally.", "lead": "Service scope adapts to each industry's surfaces and operating hours. Below are the priority areas for each industry.",
+  "sectors": {"title": "Industries — Fuel, EV Charging and Multi-site Brands", "desc": "Field services for fuel and EV charging stations, restaurants, retail, banking, automotive, logistics, malls, hotels, telecom, education and facilities.",
+              "eyebrow": "Industries", "h1": "From fuel and EV charging stations to retail, every industry where the field standard is managed centrally.", "lead": "Service scope adapts to each industry's surfaces and operating hours. Below are the priority areas for each industry.",
               "fr_eyebrow": "Franchise networks", "fr_h2": "One contract with head office, one standard across every branch.", "fr_p": "Franchisee execution becomes visible, measurable and centrally manageable.",
               "fr_list": ["One contract and one service definition with head office", "A common checklist for all sites", "Planned site visits by regional teams", "Site-level scores and non-conformity tracking", "Comparative dashboard for head office"],
               "fit_eyebrow": "Solution by need", "fit_h2": "Which product for which situation?",
-              "fit": [("Multi-site cleaning", "Periodic CLEAN programme", "clean"), ("Minor maintenance piling up", "CARE response plan", "care"), ("Measuring brand standard", "AUDIT and AUDIT 100", "audit"), ("Charging network site quality", "EV Audit30", "audit"), ("Scattered supplier base", "One centre with FIELD360", "field360"), ("Need for photo evidence", "Digital visit report", "field360")]},
+              "fit": [("Multi-site cleaning", "Periodic CLEAN programme", "clean"), ("Minor maintenance piling up", "CARE response plan", "care"), ("Measuring brand standard", "AUDIT and AUDIT 100", "audit"), ("Charging network site quality", "EV Audit30", "ev_audit"), ("Scattered supplier base", "One centre with FIELD360", "field360"), ("Need for photo evidence", "Digital visit report", "field360")]},
   "tiers": {"title": "Plans — BASIC, PRO, BUSINESS, 360", "desc": "BİGEL subscription plans: from essential control to fully integrated field management. Pricing based on site count and scope.",
             "eyebrow": "Plans", "h1": "Four plans that scale with your needs.", "lead": "The plan name is the second tier; the BİGEL standard, photo evidence and reporting are the same in every plan. Pricing is based on site count, regional spread, service frequency and scope.",
             "badge": "Most complete", "cta": "Get a Quote", "cmp_h2": "Plan comparison",
@@ -456,7 +891,7 @@ CONTENT = {
           "report": ["Visit date, site and team information", "Question-level scores and photo evidence", "Red, amber and green status summary", "Priority findings and assigned actions", "Site, region and period comparisons", "Management summary and closure tracking"],
           "s_eyebrow": "Scalable roll-out", "s_h2": "From pilot to nationwide.",
           "scale": [("1 · Pilot", "Validating the standard at selected sites: scope, baseline measurement, field execution, results report."), ("2 · Regional roll-out", "Taking the model to priority regions: team planning, training, SLA tracking, regional performance."), ("3 · Nationwide", "Managing the whole network with one model: central coordination, site scores, work orders, management dashboard.")]},
-  "about": {"title": "About — BİGEL", "desc": "BİGEL is a new-generation field services platform that runs, audits and reports the field operations of corporate brands.",
+  "about": {"title": "About — Corporate field operations", "desc": "BİGEL is a new-generation field services platform that runs, audits and reports the field operations of corporate brands.",
             "eyebrow": "About", "h1": "Not a company that sends a handyman. A partner you can trust with your field operation.",
             "lead": "BİGEL is a new-generation field services platform that runs, audits and reports the field operations of corporate brands. It combines local field power with central operations, audit and reporting.",
             "story_h2": "Born in the field, grown with a system.",
@@ -473,7 +908,7 @@ CONTENT = {
               "eyebrow": "Contact", "h1": "Let's design your field operation together.", "lead": "Fill in the form for a quote, pilot or demo meeting. We respond within the same business day.",
               "f": {"name": "Full name", "company": "Company", "email": "Email", "phone": "Phone", "count": "Number of sites", "counts": ["1–10", "11–50", "51–250", "251–1,000", "1,000+"], "solution": "Solution of interest", "solutions": ["BİGEL CLEAN", "BİGEL CARE", "BİGEL AUDIT / AUDIT 100", "EV Audit30", "BİGEL FIELD360", "Subscription plans", "More than one"], "msg": "Your needs", "msg_ph": "Your site structure, service needs and priorities…", "consent": "I agree to the processing of my personal data for the purpose of responding to my request.", "send": "Send Request", "subject": "bigel360.com — New request"},
               "info": [("Head office", SITE["address_en"]), ("Phone", SITE["phone"]), ("Email", SITE["email"]), ("LinkedIn", "linkedin.com/company/bigel360"), ("Working hours", "Weekdays 09:00–18:00")]},
-  "pilot": {"title": "Pilot Application", "desc": "A 4–6 week pilot on 20–30 sites: baseline measurement, photo-verified findings, site scores and a roll-out plan. Apply for a pilot.",
+  "pilot": {"title": "Pilot Programme — 20–30 sites in 4–6 weeks", "desc": "A 4–6 week pilot on 20–30 sites: baseline measurement, photo-verified findings, site scores and a roll-out plan. Apply for a pilot.",
             "eyebrow": "Pilot programme", "h1": "Start small. Measure. Then scale.",
             "lead": "We begin with a short pilot on selected sites. When it ends you hold baseline scores, photo-verified findings and a roll-out plan built on real field data.",
             "stats": [("20–30", "sites for a representative sample"), ("4–6", "weeks of execution"), ("2", "visit rounds: baseline and verification"), ("1", "report: scores, findings, workload and calendar")],
@@ -502,6 +937,427 @@ CONTENT = {
   "thanks": {"title": "Thank you", "badge": "Request received", "h1": "Thank you, we'll be in touch.", "p": "Your details have reached our operations team. We will contact you within the same business day.",
              "steps_h": "What happens next", "steps": [("We have your request", "Your details are in front of our team."), ("We call you", "Within the same business day, weekdays 09:00–18:00."), ("We define the scope", "A quote or pilot plan shaped around your sites.")],
              "b": "Back to home", "b2": "See how we work", "urgent": "Urgent? Reach us now:"},
+  "landings": {
+    "fuel_clean": {'title': 'Fuel Station Cleaning and Maintenance',
+       'desc': 'Canopy, totem, pump island, forecourt and car park cleaning plus kerb, barrier and minor repairs. One standard in 81 provinces, photo-verified.',
+       'crumb': 'Fuel Station Cleaning and Maintenance',
+       'service': 'Fuel station cleaning and maintenance',
+       'eyebrow': 'Fuel Stations · CLEAN + CARE',
+       'h1': 'Fuel station cleaning and maintenance, to the same standard at every site.',
+       'lead': 'We plan cleaning and minor maintenance for canopies, totems, pump islands, forecourts, car parks and station surroundings across Türkiye to one standard. Every visit comes from a '
+               'central task plan and closes with before and after photos, GPS and a timestamp.',
+       'b1': 'Start a Pilot',
+       'b2': 'Get a Quote',
+       'sections': [{'eyebrow': 'Scope',
+                     'h2': 'What does fuel station cleaning cover?',
+                     'lead': 'BİGEL CLEAN covers the customer-facing exterior of the station with a defined method, equipment and photo angle for each area. Modules can be one-off or part of a '
+                             'periodic programme.',
+                     'cards': [('Fuel station canopy cleaning', 'Periodic removal of atmospheric dirt, dust, exhaust marks, soot and biological soiling from the canopy ceiling and fascia.'),
+                               ('Totem and price sign cleaning', 'Surface-appropriate cleaning of totems, signage and wayfinding, so the brand stays visible from the road.'),
+                               ('Pump island and forecourt cleaning',
+                                'Dirt, oil stains and litter on concrete and asphalt around pump islands and across the forecourt, all tied to one checklist.'),
+                               ('Façade, glass and car park',
+                                'Entrance glass, curtain walls, composite and metal surfaces on the station building and shop front; dirt and oil stains on car park surfaces.'),
+                               ('Night, emergency and seasonal cleaning',
+                                'Night Clean is scheduled after closing without disrupting operations. Emergency Clean handles spills, bad weather, vandalism and pre-audit needs; Seasonal Clean '
+                                'targets winter grime, leaves, mud and slip risks.')]},
+                    {'eyebrow': 'Station maintenance · Station Care',
+                     'h2': 'Small defects are closed before they pile up.',
+                     'lead': 'The Station Care package of BİGEL CARE brings minor maintenance and repairs on canopies, signage, pump islands, kerbs, barriers and station surroundings into one '
+                             'work-order flow. One channel replaces calling separate tradespeople.',
+                     'steps': [('Detection', 'Photo-verified assessment: damage type, priority and proposed action.'),
+                               ('Work order', 'Scope, owner and due date approved.'),
+                               ('Execution', 'Standard execution by a regional team.'),
+                               ('Photo-verified closure', 'After photo and quality check.')],
+                     'list': ['Minor Works: tightening, fixing, sealant, spot painting and accessory replacement',
+                              'Sign Care: signage, totem and wayfinding maintenance',
+                              'Pavement Care: floors, kerbs and car park maintenance',
+                              'Preventive Care: periodic maintenance before things break',
+                              'Emergency Care: emergency field response'],
+                     'note': 'Work requiring specialist skills or legal certification (electrical, mechanical installations, etc.) is coordinated with qualified specialists; BİGEL manages '
+                             'detection, planning and closure tracking. Tank cleaning, earthing measurement and dispenser calibration are outside the scope of this service.'},
+                    {'eyebrow': 'Site safety',
+                     'h2': 'Orderly, safe work on a site that never stops.',
+                     'lead': "At a fuel station, cleaning and maintenance happen while customers keep coming. Visit plans are built around the station's operating pattern, and safety items are "
+                             'scored separately in the audit.',
+                     'list': ['Visit hours, access conditions and target times are agreed during scope and SLA definition',
+                              'Method, equipment and chemical use follow the standard operating procedure',
+                              'Teams are trained to a common service standard and assessed on uniform, ID and safety standards',
+                              'Rapid response to spills and sudden soiling with Emergency Clean',
+                              'Seasonal Clean programme against slip risk in winter',
+                              'In AUDIT 100, Safety & Risk carries a 15% weight; critical findings trigger an instant alert']},
+                    {'eyebrow': 'Multi-site networks',
+                     'h2': 'One cleaning standard across hundreds of stations.',
+                     'lead': "BİGEL's journey began with exterior cleaning and minor maintenance for fuel station networks. The lesson was clear: doing the work is not enough; every site has to "
+                             'hold the same standard, and head office needs proof.',
+                     'list': ['One service definition, checklist and execution standard for every station',
+                              'Central task and visit planning; monthly, bi-monthly, quarterly or seasonal programmes',
+                              'Standard photo angles and quality criteria',
+                              'Performance visibility by site, region and period',
+                              'On-time visits, completion rate and action closure time tracked through KPIs and SLAs']},
+                    {'eyebrow': 'Evidence and reporting · FIELD360',
+                     'h2': 'Work done in the field, visible at head office.',
+                     'lead': 'Every visit follows the same digital flow and lands in one chain of record in FIELD360.',
+                     'steps': [('Task scope', 'Site details and defined service.'),
+                               ('Before photo', 'Baseline record from standard angles.'),
+                               ('Execution', 'Method, equipment and chemical standard.'),
+                               ('After photo', 'Checklist and quality criteria.'),
+                               ('Completion', 'Finding report and closure record.')],
+                     'list': ['Before and after photos, GPS and timestamp',
+                              'Visits verified by location, date, team and photo',
+                              'Visits, scores, open findings, work orders and closure evidence on one screen',
+                              'SLA tracking of planned, completed and delayed visits'],
+                     'links': [('BİGEL FIELD360', 'field360', '')]},
+                    {'eyebrow': 'Cleaning + maintenance + audit',
+                     'h2': 'One loop from cleaning to audit.',
+                     'lead': 'AUDIT 100 scores the station across 10 categories and 100 checkpoints. It is a brand, visual standard and site condition audit. Each finding becomes a CARE work '
+                             'order, and its closure is verified with a photo.',
+                     'steps': [('Field', 'Trained team inspects with a standard checklist.'),
+                               ('Data', 'Score, photo, GPS, date and finding recorded.'),
+                               ('Centre', 'Stations compared on one dashboard.'),
+                               ('Decision', 'Findings classified by priority and owner.'),
+                               ('Work order', 'Action created, executed and closed with a photo.')],
+                     'list': ['Each item scores Compliant 100, Partial 50 or Non-compliant 0',
+                              'Category weights produce a station score out of 100',
+                              '90–100 compliant · 75–89 improvement needed · 0–74 priority action',
+                              'BİGEL Map shows every station on a map of Türkiye in its score colour'],
+                     'links': [('Fuel station audit', 'fuel_audit', '')]},
+                    {'eyebrow': 'How to start',
+                     'h2': 'Start with 20–30 stations, scale on results.',
+                     'lead': 'The pilot runs for 4–6 weeks over two visit rounds. At the end you hold baseline scores, photo-verified findings and a roll-out plan built on real field data.',
+                     'steps': [('Scope and criteria', 'Station set, question set and score weights approved.'),
+                               ('Baseline', 'Current condition recorded with photos and checklists.'),
+                               ('Field execution', 'CLEAN, CARE or AUDIT delivered by regional teams.'),
+                               ('Second round', 'Actions closed, score progress verified.'),
+                               ('Roll-out', 'Scaling plan with SLAs, regions and calendar.')],
+                     'list': ['BASIC: periodic checks and a photo-verified site report',
+                              'PRO: checks plus minor maintenance, work orders and photo-verified closure',
+                              'BUSINESS: planned CLEAN programme, periodic AUDIT 100, KPI/SLA reporting',
+                              '360: FIELD360 single operations centre and a dedicated operations manager'],
+                     'note': 'Pricing depends on site count, area and surface type, visit frequency, equipment needs and access conditions. The pilot finalises the unit price.',
+                     'links': [('Subscription plans', 'tiers', '')]}],
+       'faq': [('What does fuel station cleaning cover?',
+                'Canopy ceiling and fascia, totems and signage, pump islands and forecourt, building façade and glass, car park and station surroundings. Scope is defined per station with a '
+                'checklist.'),
+               ('Can canopy and totem cleaning be done while the station is open?',
+                "Visit hours and access conditions are set around the station's operating pattern during scoping. Where needed, Night Clean is scheduled after closing without disrupting "
+                'operations.'),
+               ('How often should forecourts and pump islands be cleaned?',
+                'Frequency is set as a monthly, bi-monthly, quarterly or seasonal programme based on traffic and surface condition. Emergency Clean covers sudden spills and soiling; the final '
+                'frequency is confirmed with pilot data.'),
+               ('Do we need to call separate tradespeople for minor repairs?',
+                'No. Station Care brings minor work on canopies, signage, pump islands, kerbs and barriers into one work-order flow. Work requiring legal certification, such as electrical or '
+                'mechanical installations, is coordinated with qualified specialists while BİGEL keeps tracking it.'),
+               ('How is completed cleaning and maintenance verified?',
+                'Every visit is recorded with before and after photos, GPS and a timestamp and verified against the checklist and mandatory photos. All records are tracked per station in '
+                'FIELD360.'),
+               ('How do you keep one cleaning standard across hundreds of stations?',
+                'Every station works to the same service definition, checklist and photo angles; visits are planned centrally and delivered by regional teams reaching all 81 provinces. Results '
+                'are compared by site and region.'),
+               ('How are audit findings closed?',
+                'An AUDIT 100 finding becomes a CARE work order with a priority, owner and due date. It closes with an after photo, and the second visit verifies score progress.')],
+       'cta': {'h2': "Let's define a pilot scope for your station network.",
+               'p': 'See baseline scores and open findings on 20–30 stations in 4–6 weeks. Fill in the form and we will respond within the same business day.',
+               'b1': 'Start a Pilot',
+               'b2': 'Get a Quote'}},
+    "fuel_audit": {'title': 'Fuel Station Brand Standards Audit — AUDIT 100',
+       'desc': 'Brand standards audit for fuel station networks: visual, cleanliness, physical condition and customer experience. 100 criteria, photo evidence, one score.',
+       'crumb': 'Fuel Station Audit',
+       'service': 'Fuel station brand and site standard audit',
+       'eyebrow': 'Fuel Stations · AUDIT 100',
+       'h1': 'Fuel station audit: 100 criteria, one score.',
+       'lead': 'We make brand standard, visual execution, cleanliness, physical condition and customer experience measurable at every station in your network. Each station is audited with the '
+               'same checklist, verified with photos and scored out of 100.',
+       'b1': 'Start an AUDIT 100 Pilot',
+       'b2': 'Get a Quote',
+       'sections': [{'eyebrow': 'Scope',
+                     'h2': 'How it differs from regulatory inspections',
+                     'lead': 'Fuel quality, measuring instruments and licence compliance are inspected by the competent authorities; BİGEL does not carry out those inspections. AUDIT 100 looks '
+                             'at everything a customer sees and experiences at the station. It does not replace official inspections; it complements them.',
+                     'list': ['Brand and visual standard: logo, corporate colours, current signage, campaign material and price communication',
+                              'Cleanliness: forecourt, pump islands, glass and façade, car park, waste area and common areas',
+                              'Physical condition: barriers, kerbs, railings, doors, furniture and minor damage',
+                              'Customer experience: visibility, entrance, wayfinding, checkout and waiting area']},
+                    {'eyebrow': 'Audit categories',
+                     'h2': 'What is checked at the station?',
+                     'lead': "The five BİGEL AUDIT modules are adapted to the station's physical layout. The question set and score weights are approved with you before the pilot.",
+                     'list': ['Brand Audit: brand elements on the canopy and totem, corporate colours, campaign material and price communication (BRAND SCORE)',
+                              'Visual Audit: signage, totem and price board, illuminated letters, vinyl, posters, shop window and digital screens',
+                              'Clean Audit: forecourt surface, pump islands, canopy, glass and façade, car park and waste area; colour-coded summary',
+                              'Physical Audit: damage to barriers, kerbs, railings, doors and furniture; findings become maintenance work orders',
+                              'Customer Experience Audit: visibility from the road, entry and exit wayfinding, shop entrance, checkout and waiting area (CX SCORE)']},
+                    {'eyebrow': 'AUDIT 100 scoring model',
+                     'h2': 'How is the score calculated?',
+                     'lead': '10 categories, 100 checkpoints. Each item scores Compliant (100), Partial (50) or Non-compliant (0); category weights produce a station score out of 100. We publish '
+                             'the model openly, so it is always clear what the score is based on.',
+                     'weights': 'audit100'},
+                    {'eyebrow': 'Safety',
+                     'h2': 'At a fuel station, safety comes first.',
+                     'lead': 'A fuel station leaves little room for risk. That is why Safety & Risk carries the highest weight in AUDIT 100, and critical findings do not wait for the report.',
+                     'list': ['Safety & Risk makes up 15% of the score',
+                              'Instant alert on critical findings; critical findings are reported the same day',
+                              'Findings are prioritised as critical, high, medium or low',
+                              'Field teams are assessed against uniform, ID, occupational health and safety and digital record standards',
+                              'Work requiring legal authorisation, such as electrical or mechanical installations, is coordinated with qualified specialists; BİGEL manages detection, planning '
+                              'and closure tracking']},
+                    {'eyebrow': 'Evidence and reporting',
+                     'h2': 'Every finding is backed by a photo, every visit by a location.',
+                     'lead': 'Each item is recorded with a photo, location, date and note. The photo rule is defined per question: conditional, mandatory or before-and-after.',
+                     'list': ['Visits verified with mandatory photos and GPS',
+                              'Station scorecard with a red-amber-green status summary',
+                              'JSON / PDF report',
+                              'BİGEL Map: every station on a map of Türkiye in its score colour; drill down from region to city to station',
+                              'Station, region and period comparisons']},
+                    {'eyebrow': 'Action',
+                     'h2': 'From finding to work order',
+                     'lead': "An audit doesn't end with a report. Findings are classified by priority and owner; minor maintenance is resolved on site with BİGEL CARE, cleaning needs with BİGEL "
+                             'CLEAN, and closure is verified with a photo.',
+                     'steps': [('Field', 'A trained team inspects the station with a standard checklist.'),
+                               ('Data', 'Score, photo, GPS, date and findings recorded.'),
+                               ('Centre', 'Stations compared on a single dashboard.'),
+                               ('Decision', 'Findings classified by priority and owner.'),
+                               ('Work order', 'Action created, executed, closed with photo.')],
+                     'links': [('BİGEL CARE', 'care', ''), ('BİGEL CLEAN', 'clean', '')]},
+                    {'eyebrow': 'Service models',
+                     'h2': 'From a single audit to a continuous programme.',
+                     'lead': 'Quotes are based on the number of stations, question count, photo requirements, travel, audit frequency, report format and dashboard scope.',
+                     'list': ['Site-based audit: one-off audit at selected stations',
+                              'Periodic audit: monthly, quarterly, semi-annual or annual programme',
+                              'Project audit: bulk check after campaigns, openings or signage changes',
+                              'Franchise and dealer audit: measuring standard compliance across the dealer network on behalf of head office',
+                              'Investment and handover: documenting physical condition before purchase, lease or handover']},
+                    {'eyebrow': 'Field network',
+                     'h2': 'Your whole station network, one standard.',
+                     'lead': 'BİGEL started with field work for fuel station networks. Today central planning and quality control run from Istanbul, while audits are carried out by regional '
+                             'teams.',
+                     'list': ['Local team network reaching all 81 provinces',
+                              'Shared checklist, photo angles and closure rules',
+                              'Audit, cleaning and maintenance under one contract, one standard and one report with FIELD360']},
+                    {'eyebrow': 'Pilot',
+                     'h2': 'Measure selected stations first.',
+                     'lead': '20–30 sites, 4–6 weeks, two visit rounds: baseline and verification. At the end of the pilot you have station scores, a photo-backed findings list and a roll-out '
+                             'plan.',
+                     'list': ['Audit summary and category scores',
+                              'Photo-backed findings list: critical, high, medium, low',
+                              'Site and region comparison',
+                              'Estimated workload, visit frequency and implementation calendar']}],
+       'faq': [('What is a dealer standards audit, and how does it differ from a regulatory inspection?',
+                "A dealer standards audit measures whether a station meets head office's standard for brand, visual execution, cleanliness, physical condition and customer experience. Fuel "
+                'quality, measuring instruments and licensing are inspected by the competent authorities; BİGEL does not do those inspections and instead provides a complementary site standards '
+                'audit.'),
+               ('What is checked in a fuel station audit?',
+                'Brand elements on the canopy and totem, signage and price board, cleanliness of the forecourt and pump islands, physical elements such as barriers, kerbs and railings, plus the '
+                'shop entrance, checkout and wayfinding. AUDIT 100 measures these across 10 categories and 100 checkpoints; the question set is approved with you before the pilot.'),
+               ('How are audit results scored and reported?',
+                'Each item scores Compliant 100, Partial 50 or Non-compliant 0, and category weights produce a station score out of 100. 90–100 means the station meets standard, 75–89 needs '
+                'improvement and 0–74 requires priority action. Results are tracked through the station scorecard, JSON / PDF reports and BİGEL Map.'),
+               ('How do audit findings turn into action?',
+                'Findings are classified by priority and owner, turned into work orders and tracked against a target date. Minor maintenance is resolved with BİGEL CARE and cleaning needs with '
+                'BİGEL CLEAN; closure is verified with a photo.'),
+               ('How often should stations be audited?',
+                'Periodic programmes can be monthly, quarterly, semi-annual or annual. A project audit can also be run after a campaign, opening or signage change. The right frequency is agreed '
+                'with you based on pilot results.'),
+               ('What happens if a critical safety finding is found?',
+                'Safety & Risk is the highest-weighted category in AUDIT 100 (15%). A critical finding triggers an instant alert without waiting for the report and is linked to a work order as a '
+                'priority action.'),
+               ('Our stations also have EV chargers. How are they audited?',
+                'Charging points are audited with EV Audit30: 30 standard checks, 6 weighted areas and a site score out of 100. The fuel forecourt and the chargers can be audited together in the '
+                'same visit plan.')],
+       'cta': {'h2': 'Start an AUDIT 100 pilot for your station network.',
+               'p': "Let's measure baseline scores at selected stations in a 4–6 week pilot, then plan a regional or nationwide programme together based on the results.",
+               'b1': 'Start an AUDIT 100 Pilot',
+               'b2': 'Contact'}},
+    "ev_care": {'title': 'EV Charging Station Site Maintenance and Cleaning',
+       'desc': 'Site upkeep for EV charging stations: charger housing, cable management, bays, floor and wayfinding. Electrical maintenance by certified specialists.',
+       'crumb': 'EV Charging Station Maintenance',
+       'service': 'EV charging station site maintenance and cleaning',
+       'eyebrow': 'EV Charging Stations · CLEAN + CARE',
+       'h1': 'EV charging station site maintenance and cleaning.',
+       'lead': "Remote monitoring shows you the device's technical state. Only a team on site can keep up the conditions drivers actually see. BİGEL maintains charger housings, cable management, "
+               'bays, floors and wayfinding to one standard across your entire network, with planning, execution and photo-verified reporting run from a single centre.',
+       'b1': 'Apply for a pilot',
+       'b2': 'Get a quote',
+       'sections': [{'eyebrow': 'Scope',
+                     'h2': 'Site and visual upkeep: everything the driver sees.',
+                     'lead': 'A charge point experience depends on more than whether the device works. A clean, intact unit, a cable that is not left on the ground, a bay that is clear and easy '
+                             'to read and wayfinding that is visible from the car all shape the same experience. The EV Charge Care package of BİGEL CARE covers this area.',
+                     'list': ['Charger housing and screen surface',
+                              'Cable management: cable and connector kept off the ground',
+                              'Bay, floor, kerbs and car park surface',
+                              'Wayfinding and signage elements',
+                              'Light fitting housings',
+                              'Charger surroundings and site exterior']},
+                    {'eyebrow': 'Out of scope',
+                     'h2': "We don't do electrical maintenance, and we say so up front.",
+                     'lead': 'Electrical maintenance, periodic inspection and calibration of chargers require legal authorisation and specialist expertise, so certified specialists carry them '
+                             'out. BİGEL does not replace that work. It complements it: we record what we see on site, coordinate specialist work with the right specialists, and manage the '
+                             'planning and closure tracking.',
+                     'list': ['No work inside the unit or on electrical components',
+                              'Physical findings on site are recorded with photos',
+                              'Work that needs authorisation is coordinated with the right specialists',
+                              'Detection, planning and closure tracking are handled by BİGEL']},
+                    {'eyebrow': 'BİGEL CLEAN',
+                     'h2': 'EV charger cleaning: unit, screen, floor and bay.',
+                     'lead': 'Charging sites are outdoors, so dust, rain, mud and winter grime quickly build up on housings and floors. Cleaning follows a common checklist and standard procedure '
+                             'approved at the scoping stage, with methods suited to each surface.',
+                     'list': ['Cleaning of charger housings and screen surfaces',
+                              'Surface-appropriate cleaning of signs, totems and wayfinding',
+                              'Dirt, oil stains and litter removed from floors and bays',
+                              'Cables and connectors left in their proper place',
+                              'Seasonal programme for winter grime, leaves and mud',
+                              'Rapid response after sudden soiling, vandalism or bad weather']},
+                    {'eyebrow': 'BİGEL CARE workflow',
+                     'h2': 'Detection, work order, photo-verified closure.',
+                     'lead': 'Every issue found on site follows a single work order flow. Each charge point is recorded with the same photo set: front, right, left, screen, cable and bay. That '
+                             'keeps sites and periods comparable from the same angles.',
+                     'steps': [('Request', 'One channel: operator request or audit finding.'),
+                               ('Photo assessment', 'Damage type, priority and recommended action.'),
+                               ('Task approval', 'Scope, owner and due date.'),
+                               ('Field response', 'Standard execution by a regional team.'),
+                               ('Closure report', 'After photo and quality check.')]},
+                    {'eyebrow': 'EV Audit30',
+                     'h2': 'Measure site quality with EV Audit30.',
+                     'lead': 'You have to measure upkeep to see its effect. EV Audit30 runs 30 standard checks at the charge point, grouped into 6 weighted areas, and produces a site score out '
+                             'of 100. A score of 90 or above is compliant, 75–89 needs follow-up and below 75 needs action. Safety non-conformities trigger a same-day alert, and major findings '
+                             'are actioned within 24 hours. See the charging station audit page for details.',
+                     'list': ['Safety, 5 critical checks: 25%',
+                              'Device integrity: 20%',
+                              'Function indicators: 20%',
+                              'User experience: 15%',
+                              'Cleanliness & surroundings: 10%',
+                              'Brand standard: 10%'],
+                     'links': [('Explore the charging station audit', 'ev_audit', '')]},
+                    {'eyebrow': 'FIELD360',
+                     'h2': 'One standard across the whole network.',
+                     'lead': 'Charging networks are often many small sites spread across cities and highways. FIELD360 runs the network from one centre, with the same checklists, photo angles, '
+                             'quality criteria and closure rules at every site.',
+                     'list': ['Central task and visit planning',
+                              'Regional team network reaching all 81 provinces',
+                              'Visits verified by location, time, checklist and photos',
+                              'Monthly, bi-monthly, quarterly or seasonal visit programme',
+                              'Jointly defined KPI and SLA targets',
+                              'One dashboard by site, region and period']}],
+       'faq': [('What does EV charging station maintenance cover? Is electrical maintenance included?',
+                'BİGEL covers site and visual upkeep: charger housing, screen surface, cable management, bays, floor, wayfinding and light fitting housings. Electrical maintenance, periodic '
+                'inspection and calibration are not included and are carried out by certified specialists. BİGEL handles detection, planning and closure tracking for that work.'),
+               ('How is an EV charging station cleaned?',
+                'Cleaning follows the checklist and standard procedure approved at the scoping stage. Housings, screens, floors and bays are cleaned with methods suited to each surface. No work '
+                'is done inside the unit or on its electrical components.'),
+               ('What happens when charging cables are left on the ground, and how is cable management kept up?',
+                'A cable left on the ground looks poor and is a hazard for people walking and cars manoeuvring. That is why the cable has its own shot in the mandatory photo set on every visit. '
+                'Non-conformities are flagged as findings, and safety non-conformities trigger a same-day alert.'),
+               ('How are charging bays and wayfinding monitored?',
+                'Bays and wayfinding are photographed on every visit, and EV Audit30 scores them under user experience. Findings such as worn floor markings or damaged signs become CARE work '
+                'orders tracked to a photo-verified closure.'),
+               ('How is the maintenance work reported?',
+                'Every visit is recorded with GPS, a timestamp, a checklist and photos. Work orders are tracked with an owner, due date and closure evidence. Head office sees all sites on one '
+                'dashboard by site, region and period.'),
+               ('How is visit frequency decided?',
+                'Visit frequency is agreed with you based on what the network needs. It can be a monthly, bi-monthly, quarterly or seasonal programme. Rapid response can also be scheduled after '
+                'sudden soiling, vandalism or bad weather.'),
+               ('Can we try it before rolling out to the whole network?',
+                'Yes. The Audit30 pilot for EV networks covers 10 sites over 2 weeks in 2 rounds. At the end you have baseline scores, photo-verified findings and action proposals.')],
+       'cta': {'h2': 'Start with a pilot on your charging network.',
+               'p': 'The Audit30 pilot covers 10 sites over 2 weeks in 2 rounds. Baseline scores, photo-verified findings and action proposals come together in one report.',
+               'b1': 'Apply for a pilot',
+               'b2': 'Get a Quote'}},
+    "ev_audit": {'title': 'EV Charging Station Audit — EV Audit30',
+       'desc': 'Measure the site conditions EV drivers actually meet: 30 checks, 6 weighted areas, a score out of 100. Instant alerts on critical findings.',
+       'crumb': 'EV Charging Station Audit',
+       'service': 'EV charging station field audit',
+       'eyebrow': 'EV Charging Stations · EV Audit30',
+       'h1': 'EV charging station audit: a site score with EV Audit30.',
+       'lead': "Remote monitoring shows the device's technical state; Audit30 makes the physical site conditions your customers actually meet visible. 30 standard checks, 6 weighted areas and "
+               'one site score out of 100. Every charging point is recorded with the same photo set, and findings become work orders.',
+       'b1': 'Start an Audit30 Pilot',
+       'b2': 'Get a Quote',
+       'sections': [{'eyebrow': 'Scope',
+                     'h2': 'What it measures, and what it does not.',
+                     'lead': 'A charger can look online in the monitoring dashboard while the driver on site faces a dirty screen, a cable lying on the ground or a bay blocked by another car. EV '
+                             'Audit30 closes that gap by measuring the physical site quality drivers see, with a standard checklist.',
+                     'list': ['Measures: charger surroundings, unit housing, screen, cable management, parking bay, floor, wayfinding and brand elements.',
+                              'Measures: function indicators visible on site and conditions that affect the user experience.',
+                              'Does not measure: electrical inspection, testing or internal diagnostics. Electrical work is coordinated with certified specialists.',
+                              "Not a regulatory audit: EV Audit30 does not replace official inspections. It documents your network's site condition with photo-verified, time-stamped records that "
+                              'support your internal preparation.']},
+                    {'eyebrow': 'Check structure',
+                     'h2': '30 checks, 6 weighted areas.',
+                     'lead': 'Every site is inspected against the same 30 standard checks. Areas are weighted by their importance to drivers and to the brand; the result is a site score out of '
+                             '100.',
+                     'weights': 'ev'},
+                    {'eyebrow': 'On site',
+                     'h2': 'What the charging station checklist covers.',
+                     'lead': 'The checklist follows the physical touchpoints a driver meets, from pulling into the bay to starting a charge.',
+                     'list': ['Charger housing and screen',
+                              'Cable management and where the cable is left',
+                              'Parking bay, floor and surrounding cleanliness',
+                              'Wayfinding and light fittings',
+                              'Visibility and compliance of brand elements',
+                              'Safety risks that affect users']},
+                    {'eyebrow': 'Scoring',
+                     'h2': 'Score thresholds and response times.',
+                     'lead': 'The score tells you which site needs attention and when. Findings are reported and actioned on different timelines depending on severity.',
+                     'list': ['90 and above: Compliant.',
+                              '75–89: Follow-up.',
+                              'Below 75: Action.',
+                              'Critical findings: instant alert. Safety non-conformities trigger a same-day alert.',
+                              'Major findings: actioned within 24 hours.']},
+                    {'eyebrow': 'Evidence',
+                     'h2': 'The photo set: the same six shots at every site.',
+                     'lead': 'Charging points can only be compared if they are recorded from the same angles. Every Audit30 visit captures the standard photo set, verified with GPS and a time '
+                             'stamp.',
+                     'list': ['Front', 'Right side', 'Left side', 'Screen', 'Cable', 'Parking bay']},
+                    {'eyebrow': 'Action',
+                     'h2': 'From finding to fix: detection, work order, closure.',
+                     'lead': 'An audit does not end at observation. Audit30 findings flow into the BİGEL CARE work-order process; regional teams carry out the work and close it with an after '
+                             'photo. Physical work such as charger housing, floor, wayfinding and light fittings falls under CARE. See our EV charging station maintenance page for details.',
+                     'steps': [('Field', 'A trained team inspects against the standard checklist.'),
+                               ('Data', 'Score, photo, GPS, date and finding are recorded.'),
+                               ('Decision', 'Findings are classified by priority and owner.'),
+                               ('Work order', 'Scope, owner and due date are set.'),
+                               ('Closure', 'Closed with an after photo and quality check.')],
+                     'links': [('EV charging station maintenance', 'ev_care', ''), ('BİGEL CARE', 'care', '')]},
+                    {'eyebrow': 'Network management',
+                     'h2': 'Hundreds of charging points, one screen.',
+                     'lead': 'Sites are shown on a map of Türkiye in their score colour. Drill down from region to city to a single charging point and see the scorecard, photos, findings and '
+                             'action history in one place. Visits are planned in FIELD360 and SLA targets are tracked centrally.',
+                     'list': ['Reach across 81 provinces with regional field teams',
+                              'Shared checklist, photo angles and closure rules',
+                              'Average score, critical finding count and open actions',
+                              'Tracking of planned, completed and delayed visits',
+                              'Field teams are assessed against dress, ID, health and safety, and digital record standards']},
+                    {'eyebrow': 'Pilot',
+                     'h2': 'Audit30 pilot: 10 sites, 2 weeks, 2 rounds.',
+                     'lead': 'Before rolling out across the network, we measure a baseline score at selected sites, close the findings and verify progress in a second round.',
+                     'steps': [('Scoping meeting', '90 minutes. Site structure and pilot success criteria.'),
+                               ('Pilot plan', 'Site set, photo rules, SLA and calendar in one document.'),
+                               ('First round', 'Baseline measurement; critical findings reported the same day.'),
+                               ('Second round', 'Actions are closed; score and open-finding progress verified.'),
+                               ('Review meeting', 'Scores, findings and the roll-out plan.')],
+                     'links': [('Pilot application', 'pilot', 'apply')]}],
+       'faq': [('What is checked in an EV charging station audit?',
+                'EV Audit30 groups 30 standard checks into six areas: safety, device integrity, function indicators, user experience, cleanliness and surroundings, and brand standard. On site, '
+                'the team inspects the charger housing, screen, cable management, parking bay, floor and wayfinding.'),
+               ('Does EV Audit30 replace an official (EPDK) inspection?',
+                "No. EV Audit30 is neither an official inspection nor an electrical test. It documents your charging points' site condition with photo, GPS and time-stamped records that support "
+                'your internal preparation.'),
+               ('How are faulty or problematic charging points identified on site?',
+                "Remote monitoring shows the device's technical state, while the field team checks and photographs the function indicators, screen, cable and bay that drivers see. "
+                'Non-conformities are logged as findings and reported according to severity.'),
+               ('How is charging point site quality scored?',
+                'The six areas are weighted and combined into a site score out of 100. 90 and above is Compliant, 75–89 is Follow-up and below 75 is Action.'),
+               ('How quickly are critical findings reported?',
+                'Critical findings are alerted instantly; safety non-conformities trigger a same-day alert. Major findings are actioned within 24 hours.'),
+               ('How does the Audit30 pilot work?',
+                'The pilot runs on 10 sites over 2 weeks in 2 rounds. The first round sets the baseline score; the second verifies action closure and score progress.'),
+               ('Who fixes the findings from the audit?',
+                'Physical findings are assigned to regional teams through the BİGEL CARE work-order process and closed with an after photo. Electrical work is coordinated with certified '
+                'specialists; BİGEL manages detection, planning and closure tracking.')],
+       'cta': {'h2': "Let's measure your charging network's site score.",
+               'p': 'Start with 10 sites, 2 weeks and 2 rounds. At the end of the pilot you hold baseline scores, photo-verified findings and a roll-out plan.',
+               'b1': 'Start an Audit30 Pilot',
+               'b2': 'Contact'}},
+  },
 },
 }
 
@@ -535,8 +1391,13 @@ def sector_cards(lang, n=None):
     L = CONTENT[lang]
     items = L["sectors_list"][:n] if n else L["sectors_list"]
     out = ""
-    for (title, desc), ic in zip(items, SECTOR_ICONS):
-        out += f'<div class="sector">{icon(ic)}<div><h3>{esc(title)}</h3><p>{esc(desc)}</p></div></div>'
+    for i, ((title, desc), ic) in enumerate(zip(items, SECTOR_ICONS)):
+        if i in SECTOR_LINKS:
+            main, second = SECTOR_LINKS[i]
+            more = " · ".join(f'<a href="{href(lang,x)}">{esc(L["ui"]["short"][x])}</a>' for x in (main, second))
+            out += f'<div class="sector">{icon(ic)}<div><h3><a href="{href(lang,main)}">{esc(title)}</a></h3><p>{esc(desc)}</p><p class="sector-links">{more}</p></div></div>'
+        else:
+            out += f'<div class="sector">{icon(ic)}<div><h3>{esc(title)}</h3><p>{esc(desc)}</p></div></div>'
     return f'<div class="sectors">{out}</div>'
 
 def tier_cards(lang, compact=False):
@@ -552,11 +1413,15 @@ def tier_cards(lang, compact=False):
     return f'<div class="tiers">{out}</div>'
 
 def flow(steps):
-    return '<div class="flow">' + "".join(f'<div class="step"><b>{i+1:02d}</b><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(steps)) + "</div>"
+    return f'<div class="flow{" f4" if len(steps) == 4 else ""}">' + "".join(f'<div class="step"><b>{i+1:02d}</b><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(steps)) + "</div>"
 
-def cta_band(lang):
-    L = CONTENT[lang]["cta"]
+def cta_band(lang, L=None):
+    L = L or CONTENT[lang]["cta"]
     return sec(f'<div class="cta-band"><div><h2>{esc(L["h2"])}</h2><p>{esc(L["p"])}</p></div><div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot","basvuru" if lang == "tr" else "apply")}">{esc(L["b1"])}</a><a class="btn btn-ghost" href="{href(lang,"contact","form")}">{esc(L["b2"])}</a></div></div>')
+
+def landing_link(lang, pid):
+    """A text link to a sector landing page, named after it (used on product pages)."""
+    return f'<a class="link" href="{href(lang,pid)}">{esc(CONTENT[lang]["landings"][pid]["crumb"])} →</a>'
 
 def scorecard(lang):
     c = CONTENT[lang]["home"]["card"]
@@ -580,14 +1445,16 @@ def sub_product(lang, s, accent):
     w = "".join(f'<div class="w"><b>%{v}</b><div>{esc(n)}<i style="--w:{v*100//25}%"></i></div></div>' for n, v in s["weights"])
     th = "".join(f'<span class="{c}">{esc(t)}</span>' for c, t in s["thresholds"])
     b = "".join(f'<span class="badge">{esc(x)}</span>' for x in s["badges"])
-    return sec(f'<div class="sub-product" id="{s["id"]}" style="--accent:{accent}"><div>{logo}<span class="eyebrow" style="color:{accent};margin-top:16px">{esc(s["eyebrow"])}</span><h2 style="font-size:clamp(26px,3vw,36px)">{esc(s["h2"])}</h2><p class="muted">{esc(s["p"])}</p><div class="badge-row">{b}</div></div><div><div class="weights">{w}</div><div class="thresholds">{th}</div></div></div>', "alt" if s["id"] == "audit100" else "")
+    more = f'<p style="margin-top:18px">{landing_link(lang, s["more"])}</p>' if s.get("more") else ""
+    return sec(f'<div class="sub-product" id="{s["id"]}" style="--accent:{accent}"><div>{logo}<span class="eyebrow" style="color:{accent};margin-top:16px">{esc(s["eyebrow"])}</span><h2 style="font-size:clamp(26px,3vw,36px)">{esc(s["h2"])}</h2><p class="muted">{esc(s["p"])}</p><div class="badge-row">{b}</div>{more}</div><div><div class="weights">{w}</div><div class="thresholds">{th}</div></div></div>', "alt" if s["id"] == "audit100" else "")
 
 def render_product_section(lang, s, accent):
     t = s["type"]
     if t == "split":
         img = f'<div class="photo"><img src="{asset(lang,"img/"+s["img"])}" alt="" loading="lazy"><span class="tag">{esc(s["tag"])}</span></div>'
         note = f'<p class="note" style="margin-top:18px">{esc(s["note"])}</p>' if s.get("note") else ""
-        txt = f'<div>{head(s["eyebrow"], s["h2"])}<p class="lead">{esc(s["p"])}</p>{ul(s["list"], accent)}{note}</div>'
+        more = f'<p style="margin-top:18px">{landing_link(lang, s["link"])}</p>' if s.get("link") else ""
+        txt = f'<div>{head(s["eyebrow"], s["h2"])}<p class="lead">{esc(s["p"])}</p>{ul(s["list"], accent)}{note}{more}</div>'
         inner = (img + txt) if s.get("reverse") else (txt + img)
         return sec(f'<div class="split">{inner}</div>')
     if t == "modules":
@@ -599,7 +1466,7 @@ def render_product_section(lang, s, accent):
         items = "".join(f'<div class="card">{esc(i)}</div>' for i in s["items"])
         return sec(head(s["eyebrow"], s["h2"]) + f'<div class="kpi">{items}</div>', "alt")
     if t == "cards3":
-        items = "".join(f'<div class="card"><h3>{esc(h)}</h3><p>{esc(d)}</p></div>' for h, d in s["items"])
+        items = "".join(f'<div class="card"><h3>{esc(it[0])}</h3><p>{esc(it[1])}</p>{f"<p style={chr(34)}margin-top:12px{chr(34)}>{landing_link(lang, it[2])}</p>" if len(it) > 2 else ""}</div>' for it in s["items"])
         note = f'<p class="note" style="margin-top:22px">{esc(s["note"])}</p>' if s.get("note") else ""
         return sec(head(s["eyebrow"], s["h2"]) + f'<div class="grid g3">{items}</div>{note}')
     if t == "table":
@@ -618,7 +1485,20 @@ def render_product_section(lang, s, accent):
 # Lock icon for the portal button (Operasyon Merkezi and customers sign in to the BİGEL software).
 LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
 
-def layout(lang, pid, title, desc, body, active=None):
+def page_name(lang, pid):
+    """Short page name for breadcrumbs."""
+    L = CONTENT[lang]
+    if pid in PRODUCTS: return L["products"][pid]["name"]
+    if pid in LANDINGS: return L["landings"][pid]["crumb"]
+    if pid == "contact": return L["footer"]["contact"]
+    return L["nav"][pid]
+
+def page_url(lang, pid):
+    return (f'https://{SITE["domain"]}/{PAGES[pid][0]}' if lang == "tr" else f'https://{SITE["domain"]}/en/{PAGES[pid][1]}').replace("/index.html", "/")
+
+def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None, robots=None):
+    """crumbs: page ids after Home for the BreadcrumbList (default: just this page; none on home).
+    ld_nodes: extra JSON-LD nodes (Service, FAQPage). robots: e.g. "noindex,follow"."""
     L = CONTENT[lang]; N = L["nav"]; F = L["footer"]
     portal_btn = f'<a class="btn btn-outline btn-sm btn-portal" href="{SITE["portal_url"] or href(lang,"portal")}">{LOCK}{esc(N["portal"])}</a>' if SHOW_PORTAL else ""
     sub = "".join(f'<li><a href="{href(lang,p)}" style="--accent:{ACCENT[p]}"><span class="dot"></span><span>{esc(L["products"][p]["name"])}<small>{esc(L["products"][p]["cat"])}</small></span></a></li>' for p in PRODUCTS)
@@ -641,9 +1521,16 @@ def layout(lang, pid, title, desc, body, active=None):
     base = f'https://{SITE["domain"]}'
     # Search appearance: the site name Google shows ("BİGEL", not the bare domain) and the company card,
     # on the home pages, where Google reads them.
+    import json
     ld = ""
+    graph = []
+    if pid not in ("home", "thanks", "portal"):
+        trail = [("home", L["ui"]["home"])] + [(c, page_name(lang, c)) for c in (crumbs or [pid])]
+        graph.append({"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": page_url(lang, c)} for i, (c, n) in enumerate(trail)]})
+    graph += ld_nodes or []
+    if graph:
+        ld = '\n<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>"
     if pid == "home":
-        import json
         ld_data = {"@context": "https://schema.org", "@graph": [
             {"@type": "WebSite", "@id": base + "/#website", "name": "BİGEL", "alternateName": ["BİGEL 360", "bigel360.com"], "url": base + "/", "inLanguage": ["tr", "en"], "publisher": {"@id": base + "/#organization"}},
             {"@type": "Organization", "@id": base + "/#organization", "name": "BİGEL", "url": base + "/", "logo": {"@type": "ImageObject", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512},
@@ -654,7 +1541,8 @@ def layout(lang, pid, title, desc, body, active=None):
         ]}
         ld = '\n<script type="application/ld+json">' + json.dumps(ld_data, ensure_ascii=False) + "</script>"
     footer = (f'<footer class="footer"><div class="container"><div class="footer-grid"><div><img src="{asset(lang,"logo/bigel-white.png")}" alt="BİGEL" loading="lazy"><p><strong style="display:inline;text-transform:none;letter-spacing:0;font-size:15px">{esc(F["tagline"])}</strong></p><p>{esc(F["desc"])}</p></div>'
-              f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"audit","ev")}">{esc(F["ev"])}</a></div>'
+              f'<div><strong>{esc(F["solutions"])}</strong>' + "".join(f'<a href="{href(lang,p)}">{esc(L["products"][p]["name"])}</a>' for p in PRODUCTS) + f'<a href="{href(lang,"ev_audit")}">{esc(F["ev"])}</a></div>'
+              f'<div><strong>{esc(N["sectors"])}</strong>' + "".join(f'<a href="{href(lang,x)}">{esc(L["ui"]["footer"][x])}</a>' for x in LANDINGS) + f'<a href="{href(lang,"sectors")}">{esc(L["home"]["sec_more"])}</a></div>'
               f'<div><strong>{esc(F["company"])}</strong><a href="{href(lang,"about")}">{esc(N["about"])}</a><a href="{href(lang,"how")}">{esc(N["how"])}</a><a href="{href(lang,"sectors")}">{esc(N["sectors"])}</a><a href="{href(lang,"tiers")}">{esc(N["tiers"])}</a><a href="{href(lang,"pilot")}">{esc(N["pilot"])}</a></div>'
               f'<div><strong>{esc(F["contact"])}</strong><a href="mailto:{SITE["email"]}">{SITE["email"]}</a><a href="tel:{SITE["phone_href"]}">{SITE["phone"]}</a><a href="{SITE["linkedin"]}" target="_blank" rel="noopener">LinkedIn</a><a href="{href(lang,"contact","form")}">{esc(N["cta"])}</a></div></div>'
               f'<div class="bottom"><span>© {year} BİGEL · {SITE["domain"]} · {esc(F["rights"])}</span><span><a href="#">{esc(F["privacy"])}</a></span></div></div></footer>')
@@ -664,7 +1552,7 @@ def layout(lang, pid, title, desc, body, active=None):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
-<meta name="description" content="{esc(desc)}">
+<meta name="description" content="{esc(desc)}">{f"{chr(10)}<meta name={chr(34)}robots{chr(34)} content={chr(34)}{robots}{chr(34)}>" if robots else ""}
 <link rel="canonical" href="{canonical}">
 <link rel="alternate" hreflang="tr" href="{tr_url}">
 <link rel="alternate" hreflang="en" href="{en_url}">
@@ -721,11 +1609,60 @@ def page_home(lang):
 
 def page_product(lang, pid):
     L = CONTENT[lang]; P = L["product_pages"][pid]; d = L["products"][pid]; accent = ACCENT[pid]
-    hero = (f'<section class="p-hero" style="--accent:{accent}"><div class="container"><div><span class="eyebrow">{esc(d["name"])} · {esc(d["cat"])}</span><h1>{esc(d["tag"])}</h1><p class="lead">{esc(P["lead"])}</p>'
+    hero = (f'<section class="p-hero" style="--accent:{accent}"><div class="container"><div><span class="eyebrow">{esc(d["name"])} · {esc(d["cat"])}</span><h1>{esc(P["title"])}</h1><p class="slogan">{esc(d["tag"])}</p><p class="lead">{esc(P["lead"])}</p>'
             f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(L["nav"]["cta"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(L["nav"]["how"])}</a></div></div>'
             f'<img class="logo" src="{asset(lang,"logo/"+pid+".png")}" alt="{esc(d["name"])}"></div></section>')
     body = hero + "".join(render_product_section(lang, s, accent) for s in P["sections"]) + cta_band(lang)
-    return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, pid)
+    return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, pid, ld_nodes=[service_ld(lang, pid, d["name"], d["cat"], P["desc"])])
+
+def service_ld(lang, pid, name, service_type, desc):
+    base = f'https://{SITE["domain"]}'
+    return {"@type": "Service", "name": name, "serviceType": service_type, "description": desc, "url": page_url(lang, pid),
+            "provider": {"@type": "Organization", "@id": base + "/#organization", "name": "BİGEL", "url": base + "/"},
+            "areaServed": {"@type": "Country", "name": "Türkiye"}, "inLanguage": lang}
+
+def faq_block(lang, items, accent):
+    U = CONTENT[lang]["ui"]
+    qa = "".join(f'<details class="faq-item"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in items)
+    return sec(head(U["faq_eyebrow"], U["faq_h2"]) + f'<div class="faq" style="--accent:{accent}">{qa}</div>', "alt", "sss" if lang == "tr" else "faq")
+
+def landing_section(lang, s, accent, alt):
+    """One content block of a landing page: heading + optional cards, steps, score weights, list, note and links."""
+    parts = []
+    if s.get("cards"):
+        parts.append('<div class="grid g3">' + "".join(f'<div class="card accent" style="--accent:{accent}"><h3>{esc(h)}</h3><p>{esc(d)}</p></div>' for h, d in s["cards"]) + "</div>")
+    if s.get("steps"):
+        parts.append(flow(s["steps"]))
+    if s.get("weights"):
+        # same score model as on audit.html
+        src = next(x for x in CONTENT[lang]["product_pages"]["audit"]["sections"] if x.get("id") == s["weights"])
+        w = "".join(f'<div class="w"><b>%{v}</b><div>{esc(n)}<i style="--w:{v*100//25}%"></i></div></div>' for n, v in src["weights"])
+        th = "".join(f'<span class="{c}">{esc(t)}</span>' for c, t in src["thresholds"])
+        parts.append(f'<div class="sub-product" style="--accent:{accent};grid-template-columns:1fr;max-width:820px"><div><div class="weights">{w}</div><div class="thresholds">{th}</div></div></div>')
+    if s.get("list"):
+        parts.append(f'<div style="margin-top:{"28px" if parts else "0"};max-width:820px">{ul(s["list"], accent)}</div>')
+    if s.get("note"):
+        parts.append(f'<p class="note" style="margin-top:22px">{esc(s["note"])}</p>')
+    if s.get("links"):
+        parts.append('<p class="link-row">' + "".join(f'<a class="link" href="{href(lang, p, a)}">{esc(t)} →</a>' for t, p, a in s["links"]) + "</p>")
+    return sec(head(s["eyebrow"], s["h2"], s["lead"]) + "".join(parts), "alt" if alt else "")
+
+def page_landing(lang, pid):
+    """Sector landing page (fuel / EV charging stations), built from CONTENT[lang]["landings"][pid]."""
+    L = CONTENT[lang]; P = L["landings"][pid]; U = L["ui"]; accent = ACCENT[pid]
+    trail = [("home", U["home"]), ("sectors", L["nav"]["sectors"]), (pid, P["crumb"])]
+    crumbs = " <span aria-hidden=\"true\">/</span> ".join((f'<a href="{href(lang,c)}">{esc(n)}</a>' if c != pid else f'<span aria-current="page">{esc(n)}</span>') for c, n in trail)
+    hero = (f'<section class="p-hero l-hero" style="--accent:{accent}"><div class="container"><div><nav class="crumbs" aria-label="{esc(U["crumb_label"])}">{crumbs}</nav>'
+            f'<span class="eyebrow">{esc(P["eyebrow"])}</span><h1>{esc(P["h1"])}</h1><p class="lead">{esc(P["lead"])}</p>'
+            f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"pilot","basvuru" if lang == "tr" else "apply")}">{esc(P["b1"])}</a><a class="btn btn-outline" href="{href(lang,"contact","form")}">{esc(P["b2"])}</a></div></div>'
+            f'<div class="l-icon">{icon(LANDING_ICON[pid])}</div></div></section>')
+    secs = "".join(landing_section(lang, s, accent, i % 2 == 0) for i, s in enumerate(P["sections"]))
+    rel = "".join(f'<a class="card accent" style="--accent:{ACCENT[r]};text-decoration:none;display:block" href="{href(lang,r)}"><h3>{esc(page_name(lang, r))} →</h3><p>{esc(L["landings"][r]["desc"] if r in LANDINGS else L["products"][r]["short"])}</p></a>' for r in LANDING_RELATED[pid])
+    related = sec(head(U["rel_eyebrow"], U["rel_h2"]) + f'<div class="grid g4">{rel}</div>')
+    body = hero + secs + faq_block(lang, P["faq"], accent) + related + cta_band(lang, P["cta"])
+    faq_ld = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in P["faq"]]}
+    return layout(lang, pid, P["title"] + L["meta_suffix"], P["desc"], body, "sectors", crumbs=["sectors", pid],
+                  ld_nodes=[service_ld(lang, pid, P["crumb"], P["service"], P["desc"]), faq_ld])
 
 def simple_hero(eyebrow, h1, lead):
     return f'<section class="p-hero"><div class="container" style="grid-template-columns:1fr"><div><span class="eyebrow">{esc(eyebrow)}</span><h1>{esc(h1)}</h1><p class="lead">{esc(lead)}</p></div></div></section>'
@@ -772,7 +1709,7 @@ def page_about(lang):
             + sec(head(A["c_eyebrow"], A["c_h2"]) + f'<div class="grid g3">{ch}</div>')
             + sec(f'<div class="split"><div>{head(A["reg_eyebrow"], A["reg_h2"])}<p class="lead">{esc(A["reg_p"])}</p><div class="badge-row">{regs}</div></div><div class="photo"><img src="{asset(lang,"img/station.jpg")}" alt="" loading="lazy"></div></div>', "alt")
             + cta_band(lang))
-    return layout(lang, "about", A["title"], A["desc"], body, "about")
+    return layout(lang, "about", A["title"] + L["meta_suffix"], A["desc"], body, "about")
 
 def page_contact(lang):
     L = CONTENT[lang]; C = L["contact"]; f = C["f"]
@@ -817,7 +1754,7 @@ def page_pilot(lang):
 def page_portal(lang):
     L = CONTENT[lang]; T = L["portal"]
     body = sec(f'<div class="center" style="padding:40px 0"><span class="eyebrow">BİGEL PORTAL</span><h1 style="font-size:clamp(32px,4vw,52px)">{esc(T["h1"])}</h1><p class="lead" style="margin-inline:auto">{esc(T["p"])}</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="{href(lang,"contact","form")}">{esc(T["b1"])}</a><a class="btn btn-outline" href="{href(lang,"home")}">{esc(T["b2"])}</a></div></div>')
-    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["p"], body)
+    return layout(lang, "portal", T["title"] + L["meta_suffix"], T["p"], body, robots="noindex,follow")
 
 def page_thanks(lang):
     L = CONTENT[lang]; T = L["thanks"]
@@ -830,7 +1767,7 @@ def page_thanks(lang):
             f'<div class="btn-row"><a class="btn btn-primary" href="{href(lang,"home")}">{esc(T["b"])}</a><a class="btn btn-outline" href="{href(lang,"how")}">{esc(T["b2"])}</a></div>'
             f'<p class="thanks-urgent">{esc(T["urgent"])} <a href="tel:{SITE["phone_href"]}">{esc(SITE["phone"])}</a> · <a href="mailto:{SITE["email"]}">{esc(SITE["email"])}</a></p>'
             f'</div></div></section>')
-    return layout(lang, "thanks", T["title"] + L["meta_suffix"], T["p"], body)
+    return layout(lang, "thanks", T["title"] + L["meta_suffix"], T["p"], body, robots="noindex,follow")
 
 # ---------------------------------------------------------------- BUILD
 def build():
@@ -903,14 +1840,19 @@ document.querySelectorAll('input[type="tel"]').forEach(function (el) {
         os.makedirs(outdir, exist_ok=True)
         pages = {"home": page_home(lang), "sectors": page_sectors(lang), "tiers": page_tiers(lang), "how": page_how(lang), "about": page_about(lang), "contact": page_contact(lang), "pilot": page_pilot(lang), "thanks": page_thanks(lang), "portal": page_portal(lang)}
         for p in PRODUCTS: pages[p] = page_product(lang, p)
+        for p in LANDINGS: pages[p] = page_landing(lang, p)
         for pid, html_ in pages.items():
             with open(os.path.join(outdir, PAGES[pid][0 if lang == "tr" else 1]), "w", encoding="utf-8") as fh: fh.write(html_)
             n += 1
     # robots + sitemap
-    urls = [f'https://{SITE["domain"]}/{PAGES[p][0]}' for p in PAGES if p not in ("thanks", "portal")] + [f'https://{SITE["domain"]}/en/{PAGES[p][1]}' for p in PAGES if p not in ("thanks", "portal")]
-    urls = [u.replace("/index.html", "/") for u in urls]
+    indexed = [p for p in PAGES if p not in ("thanks", "portal")]
+    today = __import__('datetime').date.today().isoformat()
+    def entry(p, lang):
+        alt = "".join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{page_url(l, p)}"/>' for h, l in (("tr", "tr"), ("en", "en"), ("x-default", "tr")))
+        return f"  <url><loc>{page_url(lang, p)}</loc><lastmod>{today}</lastmod>{alt}</url>\n"
     with open(os.path.join(ROOT, "sitemap.xml"), "w") as fh:
-        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n")
+        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+                 + "".join(entry(p, "tr") for p in indexed) + "".join(entry(p, "en") for p in indexed) + "</urlset>\n")
     with open(os.path.join(ROOT, "robots.txt"), "w") as fh:
         fh.write(f"User-agent: *\nAllow: /\nSitemap: https://{SITE['domain']}/sitemap.xml\n")
     print(f"built {n} pages")

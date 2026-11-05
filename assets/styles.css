@@ -221,7 +221,7 @@ p{margin:0 0 1em}
 
 /* Footer */
 .footer{background:var(--navy);color:#B7C7D6;padding:56px 0 28px;font-size:14px}
-.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1.15fr 1fr 1fr;gap:28px}
 .footer img{width:150px;margin-bottom:14px}
 .footer strong{display:block;color:#fff;margin-bottom:12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
 .footer a{color:#D7E2EC;text-decoration:none;display:block;padding:4px 0}
@@ -247,7 +247,38 @@ p{margin:0 0 1em}
 .legend span{display:flex;align-items:center;gap:10px}
 .legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
 
+/* 4-step flow */
+.flow.f4{grid-template-columns:repeat(4,1fr)}
+
+/* Sector landing pages (akaryakıt / şarj istasyonu) */
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:18px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.crumbs a{color:var(--muted);text-decoration:none}
+.crumbs a:hover{color:var(--teal);text-decoration:underline}
+.crumbs [aria-current]{color:var(--navy);font-weight:600}
+.l-hero .container{grid-template-columns:1fr auto}
+.l-icon{width:clamp(120px,14vw,180px);aspect-ratio:1;border-radius:28px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;color:var(--accent,var(--teal));box-shadow:var(--shadow)}
+.l-icon svg{width:46%;height:46%}
+.p-hero .slogan{font-size:clamp(18px,1.6vw,22px);font-weight:700;color:var(--navy);margin:-4px 0 12px}
+.link-row{display:flex;flex-wrap:wrap;gap:10px 24px;margin:24px 0 0}
+.sector h3 a{text-decoration:none;color:inherit}
+.sector h3 a:hover{color:var(--teal)}
+.sector .sector-links{margin-top:8px;font-size:13px;font-weight:700}
+.sector .sector-links a{color:var(--teal);text-decoration:none}
+.sector .sector-links a:hover{text-decoration:underline}
+
+/* FAQ (details/summary) */
+.faq{display:grid;gap:12px;max-width:880px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:14px;transition:border-color .15s,box-shadow .15s}
+.faq-item[open]{border-color:var(--accent,var(--teal));box-shadow:var(--shadow)}
+.faq-item summary{cursor:pointer;list-style:none;padding:18px 56px 18px 22px;font-weight:700;color:var(--navy);position:relative;line-height:1.4}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"";position:absolute;right:24px;top:50%;width:9px;height:9px;border-right:2px solid var(--accent,var(--teal));border-bottom:2px solid var(--accent,var(--teal));transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+.faq-item[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+.faq-item summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:14px}
+.faq-item p{margin:0;padding:0 22px 20px;color:var(--muted)}
+
 @media (max-width:1000px){
+  .flow.f4{grid-template-columns:repeat(2,1fr)}
   .g4,.tiers,.sectors{grid-template-columns:repeat(2,1fr)}
   .flow{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr}
@@ -265,11 +296,12 @@ p{margin:0 0 1em}
   .nav-actions .btn{display:none}
   .burger{display:flex;margin-left:0}
   .split,.g2,.g3,.modules,.sub-product,.ba,.cta-band,.map,.p-hero .container,.form .row,.value-grid,.kpi,.timeline{grid-template-columns:1fr}
+  .l-icon{display:none}
   .cta-band .btn-row{justify-content:flex-start}
   .p-hero .logo{order:-1;width:200px}
 }
 @media (max-width:560px){
-  .g4,.tiers,.sectors,.flow,.footer-grid{grid-template-columns:1fr}
+  .g4,.tiers,.sectors,.flow,.flow.f4,.footer-grid{grid-template-columns:1fr}
   .brand img{width:124px}
   .hero-sub{gap:18px}
 }
