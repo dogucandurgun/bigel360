@@ -74,10 +74,10 @@ def org_ld(lang):
     one @id that WebSite, Service and Article nodes point to. Name, address and phone match the footer
     and the contact page character for character."""
     base = f'https://{SITE["domain"]}'
-    return {"@type": ["Organization", "ProfessionalService"], "@id": base + "/#organization", "name": "BİGEL",
+    return {"@type": ["Organization", "ProfessionalService"], "@id": base + "/#organization", "name": "BİGEL360",
             "legalName": SITE["legal_name"],
             "identifier": {"@type": "PropertyValue", "propertyID": "MERSİS", "value": SITE["mersis"]},
-            "alternateName": ["BİGEL360", "BİGEL 360", "bigel360.com"], "url": base + "/",
+            "alternateName": ["BİGEL", "BİGEL 360", "BIGEL360", "Bigel360", "Bigel", "bigel360", "bigel360.com"], "url": base + "/",
             "logo": {"@type": "ImageObject", "@id": base + "/#logo", "url": base + "/assets/icons/icon-512.png", "width": 512, "height": 512, "caption": "BİGEL"},
             "image": base + "/assets/icons/og-image.jpg", "description": CONTENT[lang]["home"]["desc"],
             "email": SITE["email"], "telephone": SITE["phone"],
@@ -236,7 +236,7 @@ CONTENT = {
          "guides": "Rehber", "guides_eyebrow": "Rehber", "guides_h2": "İlgili rehberler", "published": "Yayın tarihi", "by": "Hazırlayan: BİGEL",
          "short": {"fuel_clean": "Temizlik ve bakım", "fuel_audit": "Denetim · AUDIT 100", "ev_care": "Bakım ve temizlik", "ev_audit": "Denetim · EV Audit30"},
          "footer": {"fuel_clean": "Akaryakıt istasyonu temizliği", "fuel_audit": "Akaryakıt istasyonu denetimi", "ev_care": "Şarj istasyonu bakımı", "ev_audit": "Şarj istasyonu denetimi"}},
-  "footer": {"tagline": "Sahadaki Gücünüz.", "desc": "Kurumsal Saha Operasyonları ve Hizmet Platformu. Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi.", "solutions": "Çözümler", "company": "Şirket", "contact": "İletişim", "ev": "EV Audit30", "rights": "Tüm hakları saklıdır.", "registry": "İstanbul Ticaret Sicil No", "privacy": "KVKK ve Gizlilik"},
+  "footer": {"tagline": "Sahadaki Gücünüz.", "desc": "BİGEL360 · Kurumsal Saha Operasyonları ve Hizmet Platformu. Çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım, denetim ve saha operasyon yönetimi.", "solutions": "Çözümler", "company": "Şirket", "contact": "İletişim", "ev": "EV Audit30", "rights": "Tüm hakları saklıdır.", "registry": "İstanbul Ticaret Sicil No", "privacy": "KVKK ve Gizlilik"},
   "cta": {"h2": "Saha operasyonunuzu birlikte tasarlayalım.", "p": "Pilot kapsamını seçili lokasyonlarla başlatır, sonuçlara göre bölgesel ve Türkiye geneli operasyona ölçekleriz.", "b1": "Pilot Başlat", "b2": "İletişim"},
   "sectors_list": [
     ("Akaryakıt İstasyonları", "Kanopi, totem, pompa adası, otopark ve saha çevresi."),
@@ -263,11 +263,11 @@ CONTENT = {
      ["BUSINESS'ın tamamı", "FIELD360 tek operasyon merkezi", "Görsel alan ve mobilya yönetimi", "Atanmış operasyon yöneticisi"]),
   ],
   "home": {
-    "title": "Akaryakıt, Şarj ve Zincir Markalar İçin Saha Operasyonu | BİGEL",
-    "desc": "Akaryakıt ve elektrikli araç şarj istasyonu ağları ile çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım ve denetim. Fotoğraflı kanıt ve skor.",
-    "eyebrow": "Kurumsal Saha Operasyonları",
+    "title": "BİGEL360 | Akaryakıt, Şarj ve Zincir Markalar İçin Saha Operasyonu",
+    "desc": "BİGEL360: akaryakıt ve elektrikli araç şarj istasyonu ağları ile çok lokasyonlu markalar için Türkiye genelinde temizlik, bakım ve denetim. Fotoğraflı kanıt ve skor.",
+    "eyebrow": "BİGEL360 · Kurumsal Saha Operasyonları",
     "h1": "Sahadaki Gücünüz.",
-    "lead": "Çok lokasyonlu markaların temizlik, bakım ve denetim operasyonlarını Türkiye genelinde tek standartla planlıyor, uyguluyor ve fotoğraflı kanıtla raporluyoruz.",
+    "lead": "BİGEL360 olarak çok lokasyonlu markaların temizlik, bakım ve denetim operasyonlarını Türkiye genelinde tek standartla planlıyor, uyguluyor ve fotoğraflı kanıtla raporluyoruz.",
     "b1": "Çözümleri İncele", "b2": "Teklif Al",
     "sub": [("81", "ile erişim"), ("4", "ürün, tek standart"), ("100", "kriterli dijital denetim")],
     "card": {"loc": "Örnek Lokasyon · Kadıköy / İstanbul", "meta": "Denetim 12.09.2026 · Ekip MAR-04", "status": "Aksiyon gerekli",
@@ -858,7 +858,7 @@ CONTENT = {
          "guides": "Guides", "guides_eyebrow": "Guides", "guides_h2": "Related guides", "published": "Published", "by": "By BİGEL",
          "short": {"fuel_clean": "Cleaning and maintenance", "fuel_audit": "Audit · AUDIT 100", "ev_care": "Maintenance and cleaning", "ev_audit": "Audit · EV Audit30"},
          "footer": {"fuel_clean": "Fuel station cleaning", "fuel_audit": "Fuel station audit", "ev_care": "EV charging station maintenance", "ev_audit": "EV charging station audit"}},
-  "footer": {"tagline": "Your Strength in the Field.", "desc": "Corporate Field Operations and Service Platform. Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands.", "solutions": "Solutions", "company": "Company", "contact": "Contact", "ev": "EV Audit30", "rights": "All rights reserved.", "registry": "Istanbul Trade Registry No", "privacy": "Privacy & Data Protection"},
+  "footer": {"tagline": "Your Strength in the Field.", "desc": "BİGEL360 · Corporate Field Operations and Service Platform. Cleaning, maintenance, audit and field operations management across Türkiye for multi-site brands.", "solutions": "Solutions", "company": "Company", "contact": "Contact", "ev": "EV Audit30", "rights": "All rights reserved.", "registry": "Istanbul Trade Registry No", "privacy": "Privacy & Data Protection"},
   "cta": {"h2": "Let's design your field operation together.", "p": "We start with a pilot on selected sites and scale to regional or nationwide operations based on the results.", "b1": "Start a Pilot", "b2": "Contact"},
   "sectors_list": [
     ("Fuel Stations", "Canopy, totem, pump islands, car park and site surroundings."),
@@ -885,11 +885,11 @@ CONTENT = {
      ["Everything in BUSINESS", "FIELD360 single operations centre", "Visual area and furniture management", "Dedicated operations manager"]),
   ],
   "home": {
-    "title": "Field Operations for Fuel, EV Charging and Retail Chains | BİGEL",
-    "desc": "Cleaning, maintenance and audits across Türkiye for fuel and EV charging station networks and multi-site brands. Photo evidence and scores.",
-    "eyebrow": "Corporate Field Operations",
+    "title": "BİGEL360 | Field Operations for Fuel, EV Charging and Retail Chains",
+    "desc": "BİGEL360: cleaning, maintenance and audits across Türkiye for fuel and EV charging station networks and multi-site brands. Photo evidence and scores.",
+    "eyebrow": "BİGEL360 · Corporate Field Operations",
     "h1": "Your Strength in the Field.",
-    "lead": "We plan, execute and report the cleaning, maintenance and audit operations of multi-site brands across Türkiye, to one standard and with photo evidence.",
+    "lead": "At BİGEL360 we plan, execute and report the cleaning, maintenance and audit operations of multi-site brands across Türkiye, to one standard and with photo evidence.",
     "b1": "Explore Solutions", "b2": "Get a Quote",
     "sub": [("81", "provinces covered"), ("4", "products, one standard"), ("100", "criteria digital audit")],
     "card": {"loc": "Sample Site · Kadıköy / Istanbul", "meta": "Audit 12 Sep 2026 · Team MAR-04", "status": "Action required",
@@ -2561,7 +2561,7 @@ def layout(lang, pid, title, desc, body, active=None, crumbs=None, ld_nodes=None
     ld = ""
     graph = [org_ld(lang)]
     if pid == "home":
-        graph.append({"@type": "WebSite", "@id": base + "/#website", "name": "BİGEL", "alternateName": ["BİGEL360", "BİGEL 360", "bigel360.com"], "url": base + "/", "inLanguage": ["tr", "en"], "publisher": {"@id": base + "/#organization"}})
+        graph.append({"@type": "WebSite", "@id": base + "/#website", "name": "BİGEL360", "alternateName": ["BİGEL", "BİGEL 360", "BIGEL360", "Bigel360", "Bigel", "bigel360", "bigel360.com"], "url": base + "/", "inLanguage": ["tr", "en"], "publisher": {"@id": base + "/#organization"}})
     if pid not in ("home", "thanks", "portal", "notfound"):
         trail = [("home", L["ui"]["home"])] + [(c, page_name(lang, c)) for c in (crumbs or [pid])]
         graph.append({"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": page_url(lang, c)} for i, (c, n) in enumerate(trail)]})
